@@ -65,11 +65,13 @@
     "scripts/m00_release_gate.sh",
     "scripts/m00_readiness_audit.sh",
     "scripts/repository_governance_check.sh",
+    "scripts/m00_release_authorization_check.sh",
     "tests/foundation_guard_test.sh",
     "tests/m00_release_gate_test.sh",
     "tests/architecture_boundaries_test.sh",
     "tests/m00_readiness_test.sh",
     "tests/repository_governance_test.sh",
+    "tests/m00_release_authorization_test.sh",
     ".github/workflows/foundation-guard.yml",
     ".github/workflows/m00-readiness.yml"
   ],
@@ -102,6 +104,7 @@
     "technology_bootstrap": "AUTHORIZED",
     "repository_governance": "REQUIRED",
     "m00_readiness_audit": "REQUIRED",
+    "m00_release_authorization": "REQUIRED",
     "m00_release_gate": "REQUIRED"
   },
   "change_intake": "CALPQ-PRIPOJ",
