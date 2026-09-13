@@ -20,6 +20,13 @@ required=(
   docs/contracts/DOCUMENT_INTAKE_SECURITY_PRIVACY_MODEL.md
   docs/prep/M01_DOCUMENT_INTAKE_BASELINE.md
   docs/prep/M01_DOCUMENT_INTAKE_TEST_MATRIX.md
+  docs/contracts/SUBJECT_IDENTITY_MODEL.md
+  docs/contracts/ENTITY_RESOLUTION_MODEL.md
+  docs/contracts/REGISTRY_LINKING_MODEL.md
+  docs/contracts/ACCOUNT_SUBJECT_BINDING_MODEL.md
+  docs/contracts/IDENTITY_MERGE_SPLIT_GOVERNANCE.md
+  docs/prep/M01_SUBJECT_IDENTITY_BASELINE.md
+  docs/prep/M01_SUBJECT_IDENTITY_TEST_MATRIX.md
 )
 
 for file in "${required[@]}"; do
@@ -42,8 +49,17 @@ grep -q 'archive is not the legal source of truth' docs/contracts/CREDENTIAL_ARC
 grep -q 'minimum-necessary data exposure' docs/contracts/DOCUMENT_INTAKE_SECURITY_PRIVACY_MODEL.md || fail 'privacy minimization missing'
 grep -q 'verified document or signature does not automatically equal' docs/prep/M01_DOCUMENT_INTAKE_BASELINE.md || fail 'verification/grant separation missing'
 
+grep -q 'A login account, wallet unit, registry record or credential artifact is never itself the canonical subject' docs/contracts/SUBJECT_IDENTITY_MODEL.md || fail 'canonical subject boundary missing'
+grep -q 'POSSIBLE_MATCH' docs/contracts/ENTITY_RESOLUTION_MODEL.md || fail 'resolution uncertainty state missing'
+grep -q 'Only `VERIFIED` links may be used as authoritative identity evidence' docs/contracts/REGISTRY_LINKING_MODEL.md || fail 'registry verification boundary missing'
+grep -q 'successful login proves control of an account' docs/contracts/ACCOUNT_SUBJECT_BINDING_MODEL.md || fail 'authentication identity boundary missing'
+grep -q 'MUST NOT be silently transferred' docs/contracts/IDENTITY_MERGE_SPLIT_GOVERNANCE.md || fail 'merge grant-transfer boundary missing'
+grep -q 'AI/OCR may propose matches but cannot independently approve' docs/prep/M01_SUBJECT_IDENTITY_BASELINE.md || fail 'AI merge boundary missing'
+grep -q 'NOT_ADMITTED_FOR_IMPLEMENTATION' docs/prep/M01_SUBJECT_IDENTITY_TEST_MATRIX.md || fail 'subject identity admission boundary missing'
+
 grep -q '"m00_release_status": "BLOCKED"' foundation/manifest.json || fail 'M00 unexpectedly released'
 grep -q '"feature_development": "FROZEN"' foundation/manifest.json || fail 'feature development unexpectedly enabled'
 
+printf 'M01 SUBJECT IDENTITY: PASS\n'
 printf 'M01 DOCUMENT INTAKE: PASS\n'
 printf 'M01 PASSPORT GAP: PASS\n'
