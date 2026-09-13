@@ -31,3 +31,6 @@ jobs:
       - name: Run architecture boundary tests
         shell: bash
         run: bash tests/architecture_boundaries_test.sh
+      - name: Run M00 release eligibility self-test
+        shell: bash
+        run: bash tests/m00_release_authorization_test.sh
