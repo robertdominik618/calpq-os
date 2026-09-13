@@ -16,9 +16,9 @@ Mandatory scenarios:
 10. Access/Privacy/Audit layers are represented.
 11. Security layer is represented.
 12. Persistence/API/Application/Tenant layers are represented.
-13. PREP-0015 is not falsely marked machine-enforced.
-14. PREP-0015 can be nonblocking for pure Core primitives.
-15. PREP-0015 becomes blocking before async/recovery integration completeness.
+13. PREP-0015 is repository-backed and machine-enforced.
+14. duplicate delivery/retry/recovery cannot create a second accepted domain transition.
+15. projection/rebuild/restore behavior cannot rewrite authoritative history.
 16. First vertical candidate does not issue AuthorizationGrant.
 17. First vertical candidate uses canonical Subject identity.
 18. First vertical candidate preserves original vs derived evidence separation.
