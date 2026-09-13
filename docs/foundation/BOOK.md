@@ -22,7 +22,9 @@ The Book is the canonical map of CALPQ. It explains where binding rules live and
 | Accessibility baseline | `docs/foundation/ACCESSIBILITY_BASELINE.md` |
 | Regulatory source governance | `docs/foundation/REGULATORY_SOURCE_GOVERNANCE.md` |
 | M00 release decision | `docs/foundation/M00_RELEASE_GATE.md` |
-| Technology decision | `docs/adr/ADR-0001-technology-stack-gate.md` |
+| Technology gate | `docs/adr/ADR-0001-technology-stack-gate.md` |
+| Technology stack proposal | `docs/adr/ADR-0002-technology-stack-selection.md` |
+| Technology evaluation evidence | `docs/architecture/TECHNOLOGY_STACK_EVALUATION_2026-09-13.md` |
 | ADR template | `docs/templates/ADR_TEMPLATE.md` |
 | Contract template | `docs/templates/CONTRACT_TEMPLATE.md` |
 | Machine Foundation guard | `scripts/foundation_guard.sh` |
@@ -31,6 +33,8 @@ The Book is the canonical map of CALPQ. It explains where binding rules live and
 ## Current milestone
 
 `M00 FOUNDATION` establishes governance, architectural boundaries, testability, cross-cutting baselines and machine-enforced rules that keep product feature work frozen until the release gate is explicitly approved.
+
+The current technology selection is only `PROPOSED`. `ADR-0002` has not yet changed the approved state of the repository; the manifest therefore remains `technology_stack.status = NOT_YET_APPROVED` and `m00_release_status = BLOCKED`.
 
 ## Product concepts already known
 
