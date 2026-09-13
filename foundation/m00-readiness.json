@@ -3,14 +3,14 @@
   "audit_id": "CALPQ-M00-RC-0001",
   "audit_date": "2026-09-13",
   "audited_ref": "foundation/calpq-fnd-0001",
-  "internal_readiness": "PENDING_CI",
+  "internal_readiness": "PASS",
   "repository_governance": "BLOCKED",
   "release_recommendation": "REJECT_UNTIL_BLOCKERS_CLEARED",
   "gates": {
     "G1_foundation_artifacts": "PASS",
     "G2_cross_cutting_baselines": "PASS",
     "G3_governance_mechanics": "PASS",
-    "G4_machine_enforcement": "PENDING_CI",
+    "G4_machine_enforcement": "PASS",
     "G5_technology_decision": "PASS",
     "G6_repository_governance": "BLOCKED",
     "G7_explicit_release_decision": "PENDING"
