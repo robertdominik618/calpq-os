@@ -13,4 +13,6 @@ grep -q 'OpenAPI `3.1.x`' docs/contracts/API_VERSIONING_COMPATIBILITY_MODEL.md |
 grep -q 'at-least-once' docs/contracts/API_ASYNC_JOB_EVENT_MODEL.md || fail 'delivery semantics missing'
 grep -q 'feature_development": "FROZEN' foundation/manifest.json || fail 'feature development unexpectedly enabled'
 
+bash tests/m01_tenant_isolation_test.sh
+
 printf 'M01 API WIRE: PASS\n'
