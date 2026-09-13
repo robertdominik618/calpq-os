@@ -9,6 +9,7 @@ ID: `CALPQ-BOOK-0001`
 |---|---|
 | Project state | `foundation/manifest.json` |
 | M00 readiness state | `foundation/m00-readiness.json` |
+| Pending M00 release decision | `foundation/m00-release-decision.json` |
 | Importable GitHub main ruleset | `foundation/github-main-ruleset.json` |
 | Non-negotiable rules | `docs/foundation/CONSTITUTION.md` |
 | Architecture | `docs/foundation/ARCHITECTURE.md` |
@@ -30,7 +31,7 @@ ID: `CALPQ-BOOK-0001`
 
 ## Current milestone
 
-Technology selection is approved, M00 remains blocked and product feature development remains frozen. `CALPQ-M00-RC-0001` is the active release-candidate audit. The current external blocker is repository governance on `main`; an importable ruleset blueprint is prepared but does not satisfy the blocker until activated in GitHub.
+Technology selection is approved, M00 remains blocked and product feature development remains frozen. `CALPQ-M00-RC-0001` is internally ready, but repository governance on `main` is still blocked. `CALPQ-M00-REL-0001` therefore remains `PENDING` and records no approved state transition.
 
 ## Change intake
 
