@@ -21,6 +21,7 @@
     ".node-version",
     "foundation/manifest.json",
     "foundation/m00-readiness.json",
+    "foundation/m00-release-decision.json",
     "foundation/github-main-ruleset.json",
     "docs/foundation/CONSTITUTION.md",
     "docs/foundation/BOOK.md",
@@ -105,6 +106,7 @@
     "repository_governance": "REQUIRED",
     "m00_readiness_audit": "REQUIRED",
     "m00_release_authorization": "REQUIRED",
+    "m00_release_decision": "PENDING",
     "m00_release_gate": "REQUIRED"
   },
   "change_intake": "CALPQ-PRIPOJ",
