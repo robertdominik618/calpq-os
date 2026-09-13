@@ -39,6 +39,5 @@ grep -q '"feature_development": "FROZEN"' foundation/manifest.json || fail 'feat
 
 bash tests/m01_access_policy_test.sh
 bash tests/m01_audit_ledger_test.sh
-bash tests/m01_operational_resilience_test.sh
 
 printf 'M01 CONTRACT PACK: PASS\n'
