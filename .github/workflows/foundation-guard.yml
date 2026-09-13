@@ -17,3 +17,6 @@ jobs:
       - name: Run Foundation Guard
         shell: bash
         run: bash scripts/foundation_guard.sh
+      - name: Run Foundation Guard self-tests
+        shell: bash
+        run: bash tests/foundation_guard_test.sh
