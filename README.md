@@ -6,11 +6,16 @@ CALPQ OS je projektový základ pro systém práce s kompetencemi, kvalifikacemi
 
 - Milestone: `M00 FOUNDATION`
 - Foundation development: `AUTHORIZED`
+- Technology stack: `APPROVED — ADR-0002`
+- Technology bootstrap: `AUTHORIZED`
+- M00 release: `BLOCKED`
 - Product feature development: `FROZEN`
-- První implementační jednotka: `CALPQ-FND-0001 — Foundation Framework`
-- Technologický stack: `NOT YET APPROVED`
 
-Dokud M00 Foundation neprojde definovanými quality gates, nesmí být do repozitáře zaváděn produkční feature kód.
+Schválení technologického stacku nepovoluje produktové funkce. Do samostatného M00 release rozhodnutí jsou povoleny pouze Foundation artefakty, workspace konfigurace, prázdné architektonické shells a jejich kontroly.
+
+## Schválená technologická baseline
+
+TypeScript-first monorepo; React Native + Expo pro iOS/iPadOS a Android; web/PWA; Node.js LTS + Fastify; PostgreSQL; explicitní porty pro storage, identity, AI, OCR a externí registry. Podrobnosti jsou v `docs/adr/ADR-0002-technology-stack-selection.md`.
 
 ## Závazné principy
 
@@ -25,27 +30,8 @@ Dokud M00 Foundation neprojde definovanými quality gates, nesmí být do repozi
 9. Plugins do not modify Core.
 10. Every commit improves the project.
 
-## Foundation scope
+## Bootstrap vrstvy
 
-M00 Foundation musí před uvolněním feature developmentu obsahovat a ověřit minimálně:
+`packages/core`, `packages/application`, `packages/contracts`, `packages/adapters`, `apps/mobile`, `apps/web`, `apps/api`, `workers/background`.
 
-- Constitution
-- Book
-- Architecture
-- Apple HIG alignment
-- Human Workflow Guidelines
-- Foundation Framework
-- Test Framework
-- governance pro ADR, contracts, security/privacy, accessibility a změnové řízení
-
-## Governance
-
-Nové produktové nápady vstupují do projektu přes proces `CALPQ-PRIPOJ`. Změny technologie, enginů nebo základních kontraktů vyžadují impact analýzu, ADR, testovací dopad a explicitní schválení před implementací.
-
-## Právní a bezpečnostní hranice
-
-CALPQ musí respektovat české a evropské právní požadavky, privacy, security a accessibility. AI, OCR nebo extrakce dat nesmí být zaměňovány za právní ověření oprávnění nebo autoritativní rozhodnutí, pokud takový status nebyl doložen odpovídajícím zdrojem a procesem.
-
----
-
-Repository initialized for CALPQ-FND-0001 on 2026-09-13.
+Tyto vrstvy jsou během M00 source-empty. Foundation Guard blokuje produkční source code do explicitního M00 release.

@@ -3,49 +3,30 @@
 Status: `M00 FOUNDATION / WORKING BASELINE`  
 ID: `CALPQ-BOOK-0001`
 
-## Purpose
-
-The Book is the canonical map of CALPQ. It explains where binding rules live and prevents architecture from being reconstructed from chat history.
-
 ## Canonical sources
 
 | Area | Canonical artifact |
 |---|---|
-| Project status | `foundation/manifest.json` |
+| Project state | `foundation/manifest.json` |
 | Non-negotiable rules | `docs/foundation/CONSTITUTION.md` |
-| Layering and boundaries | `docs/foundation/ARCHITECTURE.md` |
-| Apple UX policy | `docs/foundation/APPLE_HIG_POLICY.md` |
+| Architecture | `docs/foundation/ARCHITECTURE.md` |
+| Apple UX | `docs/foundation/APPLE_HIG_POLICY.md` |
 | Human workflow | `docs/foundation/HUMAN_WORKFLOW_GUIDELINES.md` |
-| Foundation enforcement model | `docs/foundation/FOUNDATION_FRAMEWORK.md` |
+| Foundation enforcement | `docs/foundation/FOUNDATION_FRAMEWORK.md` |
 | Test policy | `docs/foundation/TEST_FRAMEWORK.md` |
-| Security & privacy baseline | `docs/foundation/SECURITY_PRIVACY_BASELINE.md` |
-| Accessibility baseline | `docs/foundation/ACCESSIBILITY_BASELINE.md` |
-| Regulatory source governance | `docs/foundation/REGULATORY_SOURCE_GOVERNANCE.md` |
-| M00 release decision | `docs/foundation/M00_RELEASE_GATE.md` |
-| Technology gate | `docs/adr/ADR-0001-technology-stack-gate.md` |
-| Technology stack proposal | `docs/adr/ADR-0002-technology-stack-selection.md` |
-| Technology evaluation evidence | `docs/architecture/TECHNOLOGY_STACK_EVALUATION_2026-09-13.md` |
-| ADR template | `docs/templates/ADR_TEMPLATE.md` |
-| Contract template | `docs/templates/CONTRACT_TEMPLATE.md` |
-| Machine Foundation guard | `scripts/foundation_guard.sh` |
-| M00 state consistency guard | `scripts/m00_release_gate.sh` |
+| Security/privacy | `docs/foundation/SECURITY_PRIVACY_BASELINE.md` |
+| Accessibility | `docs/foundation/ACCESSIBILITY_BASELINE.md` |
+| Regulatory sources | `docs/foundation/REGULATORY_SOURCE_GOVERNANCE.md` |
+| M00 release gate | `docs/foundation/M00_RELEASE_GATE.md` |
+| Technology gate history | `docs/adr/ADR-0001-technology-stack-gate.md` |
+| Accepted technology | `docs/adr/ADR-0002-technology-stack-selection.md` |
+| Technology evaluation | `docs/architecture/TECHNOLOGY_STACK_EVALUATION_2026-09-13.md` |
+| Monorepo bootstrap | `docs/architecture/MONOREPO_BOOTSTRAP.md` |
 
 ## Current milestone
 
-`M00 FOUNDATION` establishes governance, architectural boundaries, testability, cross-cutting baselines and machine-enforced rules that keep product feature work frozen until the release gate is explicitly approved.
-
-The current technology selection is only `PROPOSED`. `ADR-0002` has not yet changed the approved state of the repository; the manifest therefore remains `technology_stack.status = NOT_YET_APPROVED` and `m00_release_status = BLOCKED`.
-
-## Proposed technology direction
-
-ADR-0002 proposes a TypeScript-first modular architecture: React Native/Expo for iOS/iPadOS and Android, Expo/React Native Web for browser delivery, an installable PWA as the Windows baseline, Node.js LTS + Fastify for the API, PostgreSQL for authoritative relational persistence, and provider-neutral ports for identity, object storage, AI, OCR and external sources.
-
-This paragraph records the proposal only. It does not authorize package manifests, feature code or an M00 release.
-
-## Product concepts already known
-
-Product concepts may be documented and queued, but are not implementation authorization. This includes Credential/Professional Passport concepts, Document Intake & Credential Archive, lifecycle/renewal intelligence, verification/evidence concepts, B2B compliance concepts and Civic & Election Competence (`CALPQ-MOD-ELC`).
+Technology selection is approved, M00 remains blocked and product feature development remains frozen. Only the bootstrap class explicitly authorized by ADR-0002 is permitted.
 
 ## Change intake
 
-New product ideas enter through `CALPQ-PRIPOJ`. Material architecture changes require impact analysis and an ADR before code.
+New product ideas enter through `CALPQ-PRIPOJ`. Material architecture changes require impact analysis and an ADR before implementation.

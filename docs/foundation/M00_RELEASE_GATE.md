@@ -10,34 +10,19 @@ This gate defines the conditions that must be satisfied before CALPQ may change 
 
 ## Gate groups
 
-### G1 — Foundation artifacts
+1. Foundation artifacts are present and internally consistent.
+2. Security/privacy, accessibility and regulatory-source baselines exist.
+3. ADR and contract governance is established.
+4. Foundation Guard and its negative self-tests pass in CI.
+5. Technology stack has an accepted ADR and bootstrap boundaries are tested.
+6. An explicit project decision releases M00.
 
-The Constitution, Book, Architecture, Apple HIG Policy, Human Workflow Guidelines, Foundation Framework and Test Framework must exist and be internally consistent.
+## Current state
 
-### G2 — Cross-cutting baselines
+`ADR-0002` is accepted and the technology bootstrap is authorized. This satisfies only the technology prerequisite. It does not release M00.
 
-Security/privacy, accessibility and regulatory-source governance must have approved Foundation baselines.
+While `foundation/manifest.json` contains `m00_release_status = BLOCKED`, `feature_development` must remain `FROZEN` even though the technology stack is approved.
 
-### G3 — Governance mechanics
+## Release evidence
 
-ADR and contract templates must exist. Material decisions must have a defined approval and traceability path.
-
-### G4 — Machine enforcement
-
-Foundation Guard and its negative self-tests must pass in CI.
-
-### G5 — Technology decision
-
-The technology stack must have its own approved ADR. Until then, production feature implementation remains blocked.
-
-### G6 — Explicit release decision
-
-M00 is not released merely because documents exist. An explicit project approval must change the machine-readable release state.
-
-## State rule
-
-While `foundation/m00-release-gate.json` is `BLOCKED`, `feature_development` must remain `FROZEN`. Any attempt to unfreeze feature development before the release gate is approved is a Foundation violation.
-
-## Evidence
-
-The release decision must be represented in Git history and identify the revision whose checks were reviewed. A later feature branch must be able to point to that approved Foundation state.
+A future M00 release must be represented in Git history, identify the reviewed revision and update the machine-readable state deliberately. Release may not occur as an incidental side effect of a technology or feature commit.
