@@ -27,4 +27,6 @@ grep -q 'minimum-necessary disclosure' docs/prep/M01_B2B_ASSIGNMENT_BASELINE.md 
 grep -q '"m00_release_status": "BLOCKED"' foundation/manifest.json || fail 'M00 unexpectedly released'
 grep -q '"feature_development": "FROZEN"' foundation/manifest.json || fail 'feature development unexpectedly enabled'
 
+bash tests/m01_continuous_compliance_test.sh
+
 printf 'M01 B2B ASSIGNMENT: PASS\n'
