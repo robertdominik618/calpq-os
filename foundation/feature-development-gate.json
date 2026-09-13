@@ -1,0 +1,9 @@
+{
+  "schema_version": 1,
+  "gate_id": "CALPQ-FEATURE-GATE-0001",
+  "state": "LOCKED",
+  "release_decision_id": "CALPQ-M00-REL-0001",
+  "opened_revision": null,
+  "opened_by_transition": null,
+  "last_updated": "2026-09-13"
+}
