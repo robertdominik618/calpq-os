@@ -40,3 +40,6 @@ jobs:
       - name: Run M01 credential-domain guard
         shell: bash
         run: bash tests/m01_credential_domain_test.sh
+      - name: Run M01 passport-gap guard
+        shell: bash
+        run: bash tests/m01_passport_gap_test.sh
