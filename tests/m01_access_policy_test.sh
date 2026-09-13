@@ -29,5 +29,6 @@ grep -q '"m00_release_status": "BLOCKED"' foundation/manifest.json || fail 'M00 
 grep -q '"feature_development": "FROZEN"' foundation/manifest.json || fail 'feature development unexpectedly enabled'
 
 bash tests/m01_privacy_lifecycle_test.sh
+bash tests/m01_security_architecture_test.sh
 
 printf 'M01 ACCESS GOVERNANCE: PASS\n'
