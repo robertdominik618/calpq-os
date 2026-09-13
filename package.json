@@ -3,7 +3,11 @@
   "version": "0.0.0",
   "private": true,
   "type": "module",
-  "engines": { "node": ">=24 <25" },
+  "packageManager": "pnpm@12.3.4",
+  "engines": {
+    "node": ">=24 <25",
+    "pnpm": "12.3.4"
+  },
   "scripts": {
     "check:foundation": "bash scripts/foundation_guard.sh",
     "check:m00": "bash scripts/m00_release_gate.sh",
