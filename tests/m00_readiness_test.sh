@@ -36,4 +36,14 @@ if run_audit >/dev/null 2>&1; then
 fi
 printf 'TEST PASS: toolchain drift rejected\n'
 
+copy_fixture
+jq '(.rules[] | select(.type == "required_status_checks") | .parameters.required_status_checks) |= map(select(.context != "M00 repository governance"))' \
+  "$fixture/work/foundation/github-main-ruleset.json" > "$fixture/work/foundation/github-main-ruleset.tmp"
+mv "$fixture/work/foundation/github-main-ruleset.tmp" "$fixture/work/foundation/github-main-ruleset.json"
+if run_audit >/dev/null 2>&1; then
+  printf 'TEST FAIL: weakened GitHub ruleset blueprint was accepted\n' >&2
+  exit 1
+fi
+printf 'TEST PASS: weakened GitHub ruleset blueprint rejected\n'
+
 printf 'M00 READINESS SELF-TESTS: PASS\n'
