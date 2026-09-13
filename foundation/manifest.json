@@ -1,0 +1,53 @@
+{
+  "schema_version": 1,
+  "project": "CALPQ",
+  "milestone": "M00 FOUNDATION",
+  "foundation_unit": "CALPQ-FND-0001",
+  "foundation_development": "AUTHORIZED",
+  "feature_development": "FROZEN",
+  "technology_stack": {
+    "status": "NOT_YET_APPROVED",
+    "approval_required": true,
+    "adr_required": true
+  },
+  "required_artifacts": [
+    "README.md",
+    "foundation/manifest.json",
+    "docs/foundation/CONSTITUTION.md",
+    "docs/foundation/BOOK.md",
+    "docs/foundation/ARCHITECTURE.md",
+    "docs/foundation/APPLE_HIG_POLICY.md",
+    "docs/foundation/HUMAN_WORKFLOW_GUIDELINES.md",
+    "docs/foundation/TEST_FRAMEWORK.md",
+    "docs/adr/ADR-0001-technology-stack-gate.md",
+    "scripts/foundation_guard.sh",
+    ".github/workflows/foundation-guard.yml"
+  ],
+  "principles": [
+    "architecture_before_implementation",
+    "quality_before_speed",
+    "simplicity_before_complexity",
+    "reusable_modules",
+    "documented_decisions",
+    "testable_features",
+    "ui_without_business_logic",
+    "core_without_ui_dependency",
+    "plugins_do_not_modify_core",
+    "every_commit_improves_project"
+  ],
+  "quality_gates": {
+    "constitution": "REQUIRED",
+    "book": "REQUIRED",
+    "architecture": "REQUIRED",
+    "apple_hig": "REQUIRED",
+    "human_workflow": "REQUIRED",
+    "foundation_framework": "REQUIRED",
+    "test_framework": "REQUIRED",
+    "security_privacy": "REQUIRED",
+    "accessibility": "REQUIRED",
+    "adr_governance": "REQUIRED",
+    "legal_boundary": "REQUIRED"
+  },
+  "change_intake": "CALPQ-PRIPOJ",
+  "last_updated": "2026-09-13"
+}
