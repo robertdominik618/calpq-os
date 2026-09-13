@@ -39,7 +39,7 @@ grep -q 'MUST NOT be overwritten' docs/contracts/ORIGINAL_DOCUMENT_ARCHIVE_MODEL
 grep -q 'never authoritative facts' docs/contracts/EXTRACTION_PROPOSAL_REVIEW_MODEL.md || fail 'extraction proposal boundary missing'
 grep -q 'UNVERIFIED | VERIFIED | FAILED | STALE | REVIEW_REQUIRED | NOT_APPLICABLE' docs/contracts/DOCUMENT_VERIFICATION_BOUNDARY.md || fail 'verification states missing'
 grep -q 'archive is not the legal source of truth' docs/contracts/CREDENTIAL_ARCHIVE_LINKING_MODEL.md || fail 'archive authority boundary missing'
-grep -q 'minimum data necessary' docs/contracts/DOCUMENT_INTAKE_SECURITY_PRIVACY_MODEL.md || fail 'privacy minimization missing'
+grep -q 'minimum-necessary data exposure' docs/contracts/DOCUMENT_INTAKE_SECURITY_PRIVACY_MODEL.md || fail 'privacy minimization missing'
 grep -q 'verified document or signature does not automatically equal' docs/prep/M01_DOCUMENT_INTAKE_BASELINE.md || fail 'verification/grant separation missing'
 
 grep -q '"m00_release_status": "BLOCKED"' foundation/manifest.json || fail 'M00 unexpectedly released'
