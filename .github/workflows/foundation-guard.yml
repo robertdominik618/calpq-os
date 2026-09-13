@@ -37,3 +37,6 @@ jobs:
       - name: Run M01 contract-pack guard
         shell: bash
         run: bash tests/m01_contract_pack_test.sh
+      - name: Run M01 credential-domain guard
+        shell: bash
+        run: bash tests/m01_credential_domain_test.sh
