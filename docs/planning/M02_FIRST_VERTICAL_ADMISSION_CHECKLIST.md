@@ -7,7 +7,16 @@ ID: `CALPQ-M02-PLAN-0004`
 `Credential Evidence -> Verification -> Eligibility -> Passport Projection`
 
 ## Admission status
+`BLOCKED_PENDING_M00`
+
 No `ADMITTED_FOR_IMPLEMENTATION` decision is issued while M00 feature development remains frozen.
+
+## Required FV-00 package
+Before admission, all four admission artifacts must exist and be reviewed:
+- `FV00_VERTICAL_ADMISSION_RECORD.md`;
+- `FV00_DOMAIN_STATE_BOUNDARY.md`;
+- `FV00_COMMAND_EVENT_CATALOG.md`;
+- complete 1:1 traceability from scenarios 1-45 to FV work packages and executable evidence, recorded in FV-00 Issue #7 if repository file creation is connector-blocked.
 
 ## Checklist against M01 Vertical Admission Gate
 
@@ -17,19 +26,19 @@ No `ADMITTED_FOR_IMPLEMENTATION` decision is issued while M00 feature developmen
 - use deterministic, versioned fixtures for the first implementation proof.
 
 ### 2. Aggregate/domain boundary
-Before admission, implementation PR must identify which state is aggregate-owned versus immutable decision/evidence records and read projections. Database schema is not accepted as the aggregate definition.
+Implementation must preserve explicit aggregate-owned mutable state, immutable evidence/decision records and read projections as separate concepts. Database schema is not the aggregate definition.
 
 ### 3. State model
-Before admission, enumerate permitted states/transitions for the mutable records in scope and explicitly list forbidden transitions. Verification, eligibility and passport projection states remain separate.
+Permitted outcomes/states and forbidden transitions are defined in the FV-00 domain/state boundary.
 
 ### 4. Command catalog
-Before admission, every mutation command must define actor context, target, expected revision, evidence inputs, Core preconditions, idempotency identity and explicit domain outcomes.
+Every mutation command defines target, expected revision where applicable, evidence inputs, deterministic preconditions, idempotency identity and explicit outcomes.
 
 ### 5. Event catalog
-Before admission, every accepted mutation identifies domain facts, event identity, correlation/causation, aggregate revision and minimum necessary payload.
+Every accepted mutation identifies a stable fact/event identity with correlation/causation and minimum-necessary payload.
 
 ### 6. Evidence/provenance
-Original, derived, asserted, imported, verified and stale evidence remain distinguishable. Exact source/rule/version references are preserved for historical replay.
+Original, derived, asserted, imported, verified and stale evidence remain distinguishable. Exact source/rule/version references are preserved.
 
 ### 7. Idempotency/concurrency
 Duplicate command/event delivery is expected. Optimistic revision checks are mandatory. Silent last-write-wins is forbidden.
@@ -38,7 +47,7 @@ Duplicate command/event delivery is expected. Optimistic revision checks are man
 Domain outcomes remain separate from validation, authorization, concurrency, dependency and infrastructure failures.
 
 ### 9. Test matrix
-`M02_FIRST_VERTICAL_ACCEPTANCE_MATRIX.md` is the baseline mandatory scenario set. Implementation adds executable tests for every implemented invariant.
+`M02_FIRST_VERTICAL_ACCEPTANCE_MATRIX.md` is mandatory. Implementation adds executable tests for every implemented invariant.
 
 ### 10. Architecture review
 - Core framework-free;
