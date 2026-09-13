@@ -36,6 +36,12 @@ The Book is the canonical map of CALPQ. It explains where binding rules live and
 
 The current technology selection is only `PROPOSED`. `ADR-0002` has not yet changed the approved state of the repository; the manifest therefore remains `technology_stack.status = NOT_YET_APPROVED` and `m00_release_status = BLOCKED`.
 
+## Proposed technology direction
+
+ADR-0002 proposes a TypeScript-first modular architecture: React Native/Expo for iOS/iPadOS and Android, Expo/React Native Web for browser delivery, an installable PWA as the Windows baseline, Node.js LTS + Fastify for the API, PostgreSQL for authoritative relational persistence, and provider-neutral ports for identity, object storage, AI, OCR and external sources.
+
+This paragraph records the proposal only. It does not authorize package manifests, feature code or an M00 release.
+
 ## Product concepts already known
 
 Product concepts may be documented and queued, but are not implementation authorization. This includes Credential/Professional Passport concepts, Document Intake & Credential Archive, lifecycle/renewal intelligence, verification/evidence concepts, B2B compliance concepts and Civic & Election Competence (`CALPQ-MOD-ELC`).
