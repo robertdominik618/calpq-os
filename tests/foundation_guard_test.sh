@@ -43,6 +43,10 @@ copy_fixture
 expect_pass "valid M00 foundation" run_guard
 
 copy_fixture
+rm "$fixture/work/docs/foundation/ACCESSIBILITY_BASELINE.md"
+expect_reject "missing manifest-required artifact" run_guard
+
+copy_fixture
 mkdir -p "$fixture/work/src"
 expect_reject "feature directory while frozen" run_guard
 
