@@ -8,6 +8,7 @@
   "m00_release_status": "BLOCKED",
   "technology_stack": {
     "status": "NOT_YET_APPROVED",
+    "proposal": "ADR-0002",
     "approval_required": true,
     "adr_required": true
   },
@@ -26,6 +27,8 @@
     "docs/foundation/REGULATORY_SOURCE_GOVERNANCE.md",
     "docs/foundation/M00_RELEASE_GATE.md",
     "docs/adr/ADR-0001-technology-stack-gate.md",
+    "docs/adr/ADR-0002-technology-stack-selection.md",
+    "docs/architecture/TECHNOLOGY_STACK_EVALUATION_2026-09-13.md",
     "docs/templates/ADR_TEMPLATE.md",
     "docs/templates/CONTRACT_TEMPLATE.md",
     "scripts/foundation_guard.sh",
@@ -59,6 +62,7 @@
     "adr_governance": "REQUIRED",
     "contract_governance": "REQUIRED",
     "legal_boundary": "REQUIRED",
+    "technology_selection": "PROPOSED",
     "m00_release_gate": "REQUIRED"
   },
   "change_intake": "CALPQ-PRIPOJ",
