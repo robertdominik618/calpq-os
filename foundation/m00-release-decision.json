@@ -1,0 +1,25 @@
+{
+  "schema_version": 1,
+  "decision_id": "CALPQ-M00-REL-0001",
+  "status": "PENDING",
+  "release_candidate": "CALPQ-M00-RC-0001",
+  "audited_ref": "foundation/calpq-fnd-0001",
+  "audited_revision": "205a29d9047453f9ea657414b385f11e273e8d0d",
+  "current_state": {
+    "m00_release_status": "BLOCKED",
+    "feature_development": "FROZEN",
+    "internal_readiness": "PASS",
+    "repository_governance": "BLOCKED"
+  },
+  "remaining_blockers": [
+    "M00-BLK-001"
+  ],
+  "approval_preconditions": [
+    "G1-G6 are PASS on the reviewed revision",
+    "M00-BLK-001 is closed only after repository governance passes",
+    "m00_release_authorization_check.sh passes against real GitHub state",
+    "explicit CALPQ governance approval is recorded"
+  ],
+  "approved_transition": null,
+  "last_updated": "2026-09-13"
+}

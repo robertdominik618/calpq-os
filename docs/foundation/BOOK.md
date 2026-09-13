@@ -1,0 +1,38 @@
+# CALPQ Book — Foundation Map
+
+Status: `M00 FOUNDATION / WORKING BASELINE`  
+ID: `CALPQ-BOOK-0001`
+
+## Canonical sources
+
+| Area | Canonical artifact |
+|---|---|
+| Project state | `foundation/manifest.json` |
+| M00 readiness state | `foundation/m00-readiness.json` |
+| Pending M00 release decision | `foundation/m00-release-decision.json` |
+| Importable GitHub main ruleset | `foundation/github-main-ruleset.json` |
+| Non-negotiable rules | `docs/foundation/CONSTITUTION.md` |
+| Architecture | `docs/foundation/ARCHITECTURE.md` |
+| Apple UX | `docs/foundation/APPLE_HIG_POLICY.md` |
+| Human workflow | `docs/foundation/HUMAN_WORKFLOW_GUIDELINES.md` |
+| Foundation enforcement | `docs/foundation/FOUNDATION_FRAMEWORK.md` |
+| Test policy | `docs/foundation/TEST_FRAMEWORK.md` |
+| Security/privacy | `docs/foundation/SECURITY_PRIVACY_BASELINE.md` |
+| Accessibility | `docs/foundation/ACCESSIBILITY_BASELINE.md` |
+| Regulatory sources | `docs/foundation/REGULATORY_SOURCE_GOVERNANCE.md` |
+| Repository governance | `docs/foundation/REPOSITORY_GOVERNANCE.md` |
+| GitHub main ruleset procedure | `docs/foundation/GITHUB_MAIN_RULESET.md` |
+| M00 release gate | `docs/foundation/M00_RELEASE_GATE.md` |
+| M00 readiness audit | `docs/foundation/M00_READINESS_AUDIT.md` |
+| Technology gate history | `docs/adr/ADR-0001-technology-stack-gate.md` |
+| Accepted technology | `docs/adr/ADR-0002-technology-stack-selection.md` |
+| Technology evaluation | `docs/architecture/TECHNOLOGY_STACK_EVALUATION_2026-09-13.md` |
+| Monorepo bootstrap | `docs/architecture/MONOREPO_BOOTSTRAP.md` |
+
+## Current milestone
+
+Technology selection is approved, M00 remains blocked and product feature development remains frozen. `CALPQ-M00-RC-0001` is internally ready, but repository governance on `main` is still blocked. `CALPQ-M00-REL-0001` therefore remains `PENDING` and records no approved state transition.
+
+## Change intake
+
+New product ideas enter through `CALPQ-PRIPOJ`. Material architecture changes require impact analysis and an ADR before implementation.

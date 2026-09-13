@@ -1,0 +1,19 @@
+{
+  "name": "calpq-os",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "packageManager": "pnpm@12.3.4",
+  "engines": {
+    "node": ">=24.21.0 <25",
+    "pnpm": "12.3.4"
+  },
+  "scripts": {
+    "check:foundation": "bash scripts/foundation_guard.sh",
+    "check:m00": "bash scripts/m00_release_gate.sh",
+    "audit:m00": "bash scripts/m00_readiness_audit.sh",
+    "test:architecture": "bash tests/architecture_boundaries_test.sh",
+    "test:governance": "bash tests/repository_governance_test.sh",
+    "test:foundation": "bash tests/foundation_guard_test.sh && bash tests/m00_release_gate_test.sh && bash tests/architecture_boundaries_test.sh && bash tests/m00_readiness_test.sh && bash tests/repository_governance_test.sh"
+  }
+}

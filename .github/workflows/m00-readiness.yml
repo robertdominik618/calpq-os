@@ -1,0 +1,38 @@
+name: M00 Readiness
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  internal-readiness:
+    name: M00 internal readiness
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Run internal M00 readiness audit
+        run: bash scripts/m00_readiness_audit.sh
+      - name: Run M00 readiness self-tests
+        run: bash tests/m00_readiness_test.sh
+      - name: Run repository governance self-tests
+        run: bash tests/repository_governance_test.sh
+
+  repository-governance:
+    name: M00 repository governance
+    needs: internal-readiness
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Verify main protection
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: bash scripts/repository_governance_check.sh

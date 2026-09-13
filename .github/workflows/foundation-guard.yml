@@ -1,0 +1,39 @@
+name: Foundation Guard
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  foundation-guard:
+    name: Enforce M00 Foundation gate
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Run Foundation Guard
+        shell: bash
+        run: bash scripts/foundation_guard.sh
+      - name: Run Foundation Guard self-tests
+        shell: bash
+        run: bash tests/foundation_guard_test.sh
+      - name: Run feature-development gate self-tests
+        shell: bash
+        run: bash tests/feature_development_gate_test.sh
+      - name: Check M00 release-state consistency
+        shell: bash
+        run: bash scripts/m00_release_gate.sh
+      - name: Run M00 release-gate self-tests
+        shell: bash
+        run: bash tests/m00_release_gate_test.sh
+      - name: Run architecture boundary tests
+        shell: bash
+        run: bash tests/architecture_boundaries_test.sh
+      - name: Run M00 release eligibility self-test
+        shell: bash
+        run: bash tests/m00_release_authorization_test.sh

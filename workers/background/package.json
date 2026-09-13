@@ -1,0 +1,6 @@
+{
+  "name": "@calpq/worker-background",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module"
+}
