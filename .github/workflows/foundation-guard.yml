@@ -1,0 +1,19 @@
+name: Foundation Guard
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  foundation-guard:
+    name: Enforce M00 Foundation gate
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Run Foundation Guard
+        shell: bash
+        run: bash scripts/foundation_guard.sh
