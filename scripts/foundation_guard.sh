@@ -43,4 +43,8 @@ if grep -q '"feature_development": "FROZEN"' foundation/manifest.json; then
   done
 fi
 
+[[ -f foundation/feature-development-gate.json ]] || fail "feature development gate record missing"
+[[ -f scripts/feature_development_gate.sh ]] || fail "feature development gate script missing"
+bash scripts/feature_development_gate.sh >/dev/null
+
 printf 'FOUNDATION GUARD: PASS\n'
