@@ -31,4 +31,5 @@ implementation="$(find packages apps workers -type f \( -name '*.ts' -o -name '*
 grep -q '"m00_release_status": "BLOCKED"' foundation/manifest.json || fail 'M00 unexpectedly released'
 grep -q '"feature_development": "FROZEN"' foundation/manifest.json || fail 'feature development unexpectedly enabled'
 
+bash tests/m01_regulatory_radar_test.sh
 printf 'M01 CONTINUOUS COMPLIANCE: PASS\n'
