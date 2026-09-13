@@ -54,6 +54,7 @@ grep -q 'Applied migrations are immutable' docs/contracts/SCHEMA_MIGRATION_EVOLU
 grep -q 'legal/catalog version changes are domain versioning, not schema migration' docs/prep/M01_PERSISTENCE_TRANSACTION_BASELINE.md || fail 'persistence domain/schema boundary missing'
 printf 'M01 PERSISTENCE TRANSACTION: PASS\n'
 
+bash tests/m01_api_wire_test.sh
 bash tests/m01_access_policy_test.sh
 bash tests/m01_audit_ledger_test.sh
 
