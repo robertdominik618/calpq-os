@@ -14,6 +14,7 @@ required_files=(
   "docs/foundation/ARCHITECTURE.md"
   "docs/foundation/APPLE_HIG_POLICY.md"
   "docs/foundation/HUMAN_WORKFLOW_GUIDELINES.md"
+  "docs/foundation/FOUNDATION_FRAMEWORK.md"
   "docs/foundation/TEST_FRAMEWORK.md"
   "docs/adr/ADR-0001-technology-stack-gate.md"
   "scripts/foundation_guard.sh"
