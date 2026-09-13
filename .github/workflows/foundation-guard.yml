@@ -46,3 +46,6 @@ jobs:
       - name: Run M01 B2B assignment guard
         shell: bash
         run: bash tests/m01_b2b_assignment_test.sh
+      - name: Run M02 planning readiness guard
+        shell: bash
+        run: bash tests/m02_planning_readiness_test.sh
