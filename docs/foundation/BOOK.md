@@ -9,6 +9,7 @@ ID: `CALPQ-BOOK-0001`
 |---|---|
 | Project state | `foundation/manifest.json` |
 | M00 readiness state | `foundation/m00-readiness.json` |
+| Importable GitHub main ruleset | `foundation/github-main-ruleset.json` |
 | Non-negotiable rules | `docs/foundation/CONSTITUTION.md` |
 | Architecture | `docs/foundation/ARCHITECTURE.md` |
 | Apple UX | `docs/foundation/APPLE_HIG_POLICY.md` |
@@ -19,6 +20,7 @@ ID: `CALPQ-BOOK-0001`
 | Accessibility | `docs/foundation/ACCESSIBILITY_BASELINE.md` |
 | Regulatory sources | `docs/foundation/REGULATORY_SOURCE_GOVERNANCE.md` |
 | Repository governance | `docs/foundation/REPOSITORY_GOVERNANCE.md` |
+| GitHub main ruleset procedure | `docs/foundation/GITHUB_MAIN_RULESET.md` |
 | M00 release gate | `docs/foundation/M00_RELEASE_GATE.md` |
 | M00 readiness audit | `docs/foundation/M00_READINESS_AUDIT.md` |
 | Technology gate history | `docs/adr/ADR-0001-technology-stack-gate.md` |
@@ -28,7 +30,7 @@ ID: `CALPQ-BOOK-0001`
 
 ## Current milestone
 
-Technology selection is approved, M00 remains blocked and product feature development remains frozen. `CALPQ-M00-RC-0001` is the active release-candidate audit. The current external blocker is repository governance on `main`.
+Technology selection is approved, M00 remains blocked and product feature development remains frozen. `CALPQ-M00-RC-0001` is the active release-candidate audit. The current external blocker is repository governance on `main`; an importable ruleset blueprint is prepared but does not satisfy the blocker until activated in GitHub.
 
 ## Change intake
 
