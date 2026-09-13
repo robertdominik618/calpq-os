@@ -17,6 +17,7 @@ required_files=(
   "docs/foundation/TEST_FRAMEWORK.md"
   "docs/adr/ADR-0001-technology-stack-gate.md"
   "scripts/foundation_guard.sh"
+  "tests/foundation_guard_test.sh"
   ".github/workflows/foundation-guard.yml"
 )
 
