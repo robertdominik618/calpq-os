@@ -19,8 +19,7 @@ required=(
 
 for file in "${required[@]}"; do
   [[ -f "$file" ]] || fail "missing contract artifact: $file"
-  grep -q 'PRE-M01 DESIGN / NO IMPLEMENTATION AUTHORIZATION' "$file" \
-    || fail "missing no-implementation boundary: $file"
+  grep -q 'PRE-M01 DESIGN / NO IMPLEMENTATION AUTHORIZATION' "$file" || fail "missing no-implementation boundary: $file"
 done
 
 grep -q 'UUIDv7' docs/contracts/CORE_PRIMITIVES.md || fail 'UUIDv7 identity policy missing'
@@ -37,14 +36,7 @@ implementation="$(find packages apps workers -type f \( -name '*.ts' -o -name '*
 grep -q '"m00_release_status": "BLOCKED"' foundation/manifest.json || fail 'M00 unexpectedly released'
 grep -q '"feature_development": "FROZEN"' foundation/manifest.json || fail 'feature development unexpectedly enabled'
 
-for file in \
-  docs/contracts/PERSISTENCE_AUTHORITY_BOUNDARY.md \
-  docs/contracts/UNIT_OF_WORK_TRANSACTION_MODEL.md \
-  docs/contracts/OUTBOX_INBOX_DELIVERY_MODEL.md \
-  docs/contracts/SCHEMA_MIGRATION_EVOLUTION_MODEL.md \
-  docs/contracts/DATA_INTEGRITY_RECONCILIATION_MODEL.md \
-  docs/prep/M01_PERSISTENCE_TRANSACTION_BASELINE.md \
-  docs/prep/M01_PERSISTENCE_TRANSACTION_TEST_MATRIX.md; do
+for file in docs/contracts/PERSISTENCE_AUTHORITY_BOUNDARY.md docs/contracts/UNIT_OF_WORK_TRANSACTION_MODEL.md docs/contracts/OUTBOX_INBOX_DELIVERY_MODEL.md docs/contracts/SCHEMA_MIGRATION_EVOLUTION_MODEL.md docs/contracts/DATA_INTEGRITY_RECONCILIATION_MODEL.md docs/prep/M01_PERSISTENCE_TRANSACTION_BASELINE.md docs/prep/M01_PERSISTENCE_TRANSACTION_TEST_MATRIX.md; do
   [[ -f "$file" ]] || fail "missing persistence artifact: $file"
 done
 
@@ -54,6 +46,7 @@ grep -q 'Applied migrations are immutable' docs/contracts/SCHEMA_MIGRATION_EVOLU
 grep -q 'legal/catalog version changes are domain versioning, not schema migration' docs/prep/M01_PERSISTENCE_TRANSACTION_BASELINE.md || fail 'persistence domain/schema boundary missing'
 printf 'M01 PERSISTENCE TRANSACTION: PASS\n'
 
+bash tests/m01_application_layer_test.sh
 bash tests/m01_api_wire_test.sh
 bash tests/m01_access_policy_test.sh
 bash tests/m01_audit_ledger_test.sh
