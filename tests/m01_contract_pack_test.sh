@@ -31,11 +31,12 @@ grep -q 'No silent last-write-wins' docs/contracts/IDEMPOTENCY_AND_CONCURRENCY.m
 grep -q 'Single mutation authority' docs/contracts/STATE_TRANSITION_INVARIANTS.md || fail 'aggregate mutation invariant missing'
 grep -q 'ADMITTED_FOR_IMPLEMENTATION' docs/prep/M01_VERTICAL_ADMISSION_GATE.md || fail 'vertical admission result missing'
 
-# Pre-M01 preparation must remain design-only while M00 is blocked.
 implementation="$(find packages apps workers -type f \( -name '*.ts' -o -name '*.tsx' -o -name '*.js' -o -name '*.jsx' \) -print -quit)"
 [[ -z "$implementation" ]] || fail "implementation source detected before M00 release: $implementation"
 
 grep -q '"m00_release_status": "BLOCKED"' foundation/manifest.json || fail 'M00 unexpectedly released'
 grep -q '"feature_development": "FROZEN"' foundation/manifest.json || fail 'feature development unexpectedly enabled'
+
+bash tests/m01_access_policy_test.sh
 
 printf 'M01 CONTRACT PACK: PASS\n'
