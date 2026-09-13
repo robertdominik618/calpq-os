@@ -9,17 +9,16 @@ ID: `CALPQ-M01-PREP-0022-H`
 ## Governance
 `M00_GOVERNANCE_BLOCKED`
 
-Feature development remains `FROZEN`. This record does not release M00, authorize product source, mark any PR ready or authorize merge.
+Feature development remains `FROZEN`. This handoff supersedes the earlier deferred architecture outcome recorded by PREP-0021.
 
 ## Closed M01 gap
-PREP-0015 Operational Resilience is now repository-backed by its contract, baseline and machine matrix. Exit CI must emit `M01 OPERATIONAL RESILIENCE: PASS`.
+PREP-0015 Operational Resilience is repository-backed by its contract, baseline and machine matrix. Exit CI must emit `M01 OPERATIONAL RESILIENCE: PASS`.
 
 ## Conditions before product source
-- M00 governance is separately satisfied and explicitly released;
-- feature development is explicitly authorized after that release;
+- M00 governance is separately satisfied;
+- feature development is separately authorized;
 - implementation starts from a green governed base;
-- the selected vertical receives its own admission decision;
-- existing merge/release actions remain separate decisions.
+- the selected vertical receives its own admission decision.
 
 ## First vertical candidate
 `Credential Evidence -> Verification -> Eligibility -> Passport Projection`
