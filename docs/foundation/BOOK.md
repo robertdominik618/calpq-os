@@ -16,6 +16,7 @@ The Book is the canonical map of CALPQ. It explains where binding rules live and
 | Layering and boundaries | `docs/foundation/ARCHITECTURE.md` |
 | Apple UX policy | `docs/foundation/APPLE_HIG_POLICY.md` |
 | Human workflow | `docs/foundation/HUMAN_WORKFLOW_GUIDELINES.md` |
+| Foundation enforcement model | `docs/foundation/FOUNDATION_FRAMEWORK.md` |
 | Test policy | `docs/foundation/TEST_FRAMEWORK.md` |
 | Technology decision | `docs/adr/ADR-0001-technology-stack-gate.md` |
 | Machine guard | `scripts/foundation_guard.sh` |
