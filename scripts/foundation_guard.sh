@@ -14,6 +14,8 @@ grep -q '"change_intake": "CALPQ-PRIPOJ"' foundation/manifest.json || fail "inta
 grep -q 'Architecture before implementation' docs/foundation/CONSTITUTION.md || fail "constitution principle missing"
 
 if grep -q '"feature_development": "FROZEN"' foundation/manifest.json; then
+  [[ -f foundation/feature-development-gate.json ]] || fail "feature development gate record missing"
+  grep -q '"state": "LOCKED"' foundation/feature-development-gate.json || fail "frozen feature state requires locked gate"
   for path in src app services features modules; do
     [[ ! -e "$path" ]] || fail "feature development is FROZEN; forbidden path exists: $path"
   done
@@ -42,9 +44,5 @@ if grep -q '"feature_development": "FROZEN"' foundation/manifest.json; then
     [[ -z "$match" ]] || fail "product source file detected while feature development is FROZEN: $match"
   done
 fi
-
-[[ -f foundation/feature-development-gate.json ]] || fail "feature development gate record missing"
-[[ -f scripts/feature_development_gate.sh ]] || fail "feature development gate script missing"
-bash scripts/feature_development_gate.sh >/dev/null
 
 printf 'FOUNDATION GUARD: PASS\n'

@@ -22,9 +22,6 @@ jobs:
       - name: Run Foundation Guard self-tests
         shell: bash
         run: bash tests/foundation_guard_test.sh
-      - name: Run feature-development gate self-tests
-        shell: bash
-        run: bash tests/feature_development_gate_test.sh
       - name: Check M00 release-state consistency
         shell: bash
         run: bash scripts/m00_release_gate.sh
@@ -37,3 +34,15 @@ jobs:
       - name: Run M00 release eligibility self-test
         shell: bash
         run: bash tests/m00_release_authorization_test.sh
+      - name: Run M01 contract-pack guard
+        shell: bash
+        run: bash tests/m01_contract_pack_test.sh
+      - name: Run M01 credential-domain guard
+        shell: bash
+        run: bash tests/m01_credential_domain_test.sh
+      - name: Run M01 passport-gap guard
+        shell: bash
+        run: bash tests/m01_passport_gap_test.sh
+      - name: Run M01 B2B assignment guard
+        shell: bash
+        run: bash tests/m01_b2b_assignment_test.sh

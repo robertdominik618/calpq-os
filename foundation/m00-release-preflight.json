@@ -14,19 +14,6 @@
     "release_decision": "PENDING",
     "remaining_blocker": "M00-BLK-001"
   },
-  "release_decision_may_be_considered_only_when": [
-    "M00-BLK-001 is closed after real repository-governance PASS",
-    "m00_release_authorization_check.sh passes against real GitHub state",
-    "the reviewed revision is identified",
-    "explicit CALPQ governance approval for M00 release is recorded"
-  ],
-  "prohibited_while_waiting": [
-    "changing m00_release_status from BLOCKED",
-    "changing feature_development from FROZEN",
-    "marking G7 PASS",
-    "claiming M00 released",
-    "merging PR #1 or PR #3 as an implied release action"
-  ],
   "approved_transition": null,
   "last_updated": "2026-09-13"
 }

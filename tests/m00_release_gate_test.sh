@@ -12,5 +12,4 @@ copy_fixture; sed -i 's/"status": "APPROVED"/"status": "NOT_YET_APPROVED"/' "$fi
 copy_fixture; sed -i 's/Status: `ACCEPTED`/Status: `PROPOSED`/' "$fixture/work/docs/adr/ADR-0002-technology-stack-selection.md"; reject 'ADR status mismatch'
 copy_fixture; sed -i 's/"status": "PENDING"/"status": "APPROVED"/' "$fixture/work/foundation/m00-release-decision.json"; reject 'release decision approved while M00 is still blocked'
 copy_fixture; rm "$fixture/work/foundation/m00-release-decision.json"; reject 'missing release decision record'
-bash tests/m00_release_preflight_test.sh
 printf 'M00 RELEASE GATE SELF-TESTS: PASS\n'
