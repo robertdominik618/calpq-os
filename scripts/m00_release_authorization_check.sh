@@ -13,7 +13,7 @@ grep -q '"status": "APPROVED"' foundation/manifest.json \
 grep -q 'Status: `ACCEPTED`' docs/adr/ADR-0002-technology-stack-selection.md \
   || fail "ADR-0002 is not accepted"
 
-bash scripts/m00_readiness_audit.sh >/dev/null \
+bash scripts/m00_readiness_audit.sh >/dev/null
 bash scripts/repository_governance_check.sh >/dev/null
 
 printf 'M00 RELEASE AUTHORIZATION: ELIGIBLE FOR EXPLICIT RELEASE DECISION\n'
