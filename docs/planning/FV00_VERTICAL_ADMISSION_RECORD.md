@@ -1,6 +1,6 @@
 # CALPQ FV-00 Vertical Admission Record
 
-Status: `PLANNING / BLOCKED_PENDING_M00`
+Status: `PLANNING COMPLETE / READY_FOR_FORMAL_ADMISSION_AFTER_M00`
 ID: `CALPQ-M02-FV00-ADM-0001`
 
 ## Candidate
@@ -10,6 +10,9 @@ ID: `CALPQ-M02-FV00-ADM-0001`
 `BLOCKED_PENDING_M00`
 
 This record does **not** issue `ADMITTED_FOR_IMPLEMENTATION` while M00 repository governance is blocked, M00 release is not explicitly approved, or the Feature Development Gate is not OPEN.
+
+## Planning readiness
+The pre-admission package is complete and machine-checked. Domain/state boundary, command/event catalog, 45-scenario acceptance matrix, 45/45 traceability and M02 planning readiness guard are present. Formal admission is intentionally deferred until the project-wide M00 prerequisites are satisfied.
 
 ## Purpose
 Prove the CALPQ architecture end-to-end using the smallest useful regulated flow that exercises identity, immutable evidence, verification, eligibility, projection, Application orchestration, persistence, tenant isolation, access governance and auditability without issuing or mutating `AuthorizationGrant`.
