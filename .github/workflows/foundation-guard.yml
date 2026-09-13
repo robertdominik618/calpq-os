@@ -22,6 +22,9 @@ jobs:
       - name: Run Foundation Guard self-tests
         shell: bash
         run: bash tests/foundation_guard_test.sh
+      - name: Run feature-development gate self-tests
+        shell: bash
+        run: bash tests/feature_development_gate_test.sh
       - name: Check M00 release-state consistency
         shell: bash
         run: bash scripts/m00_release_gate.sh
