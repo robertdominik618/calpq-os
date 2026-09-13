@@ -18,12 +18,19 @@ The Book is the canonical map of CALPQ. It explains where binding rules live and
 | Human workflow | `docs/foundation/HUMAN_WORKFLOW_GUIDELINES.md` |
 | Foundation enforcement model | `docs/foundation/FOUNDATION_FRAMEWORK.md` |
 | Test policy | `docs/foundation/TEST_FRAMEWORK.md` |
+| Security & privacy baseline | `docs/foundation/SECURITY_PRIVACY_BASELINE.md` |
+| Accessibility baseline | `docs/foundation/ACCESSIBILITY_BASELINE.md` |
+| Regulatory source governance | `docs/foundation/REGULATORY_SOURCE_GOVERNANCE.md` |
+| M00 release decision | `docs/foundation/M00_RELEASE_GATE.md` |
 | Technology decision | `docs/adr/ADR-0001-technology-stack-gate.md` |
-| Machine guard | `scripts/foundation_guard.sh` |
+| ADR template | `docs/templates/ADR_TEMPLATE.md` |
+| Contract template | `docs/templates/CONTRACT_TEMPLATE.md` |
+| Machine Foundation guard | `scripts/foundation_guard.sh` |
+| M00 state consistency guard | `scripts/m00_release_gate.sh` |
 
 ## Current milestone
 
-`M00 FOUNDATION` establishes governance, architectural boundaries, testability, security/privacy/accessibility expectations and the mechanism that keeps product feature work frozen until the gate is explicitly released.
+`M00 FOUNDATION` establishes governance, architectural boundaries, testability, cross-cutting baselines and machine-enforced rules that keep product feature work frozen until the release gate is explicitly approved.
 
 ## Product concepts already known
 
