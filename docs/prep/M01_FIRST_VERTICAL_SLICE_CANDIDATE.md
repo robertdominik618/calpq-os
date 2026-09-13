@@ -18,25 +18,19 @@ Prove the CALPQ architecture end-to-end with the smallest useful regulated flow 
 6. immutable `EligibilityAssessment`;
 7. Professional Passport read projection.
 
-## Explicit non-goals for first slice
+## Explicit non-goals
 - issuing or mutating `AuthorizationGrant`;
 - recognition/equivalence workflows;
 - B2B assignment decisions;
-- renewal automation;
-- Regulatory Radar automation;
-- production external notifications;
-- provider-specific AI/OCR authority;
-- cross-tenant sharing beyond already approved access/tenant contracts.
+- renewal or Regulatory Radar automation;
+- provider-specific AI/OCR authority.
 
 ## Required architecture use
-The slice must use existing typed IDs, Clock/IdGenerator ports, provenance/evidence states, command/event envelopes, optimistic revision, UnitOfWork, outbox/inbox semantics, Application use cases, API wire contracts, TenantContext, AccessDecision and Audit references.
+Typed IDs, Clock/IdGenerator ports, provenance/evidence states, command/event envelopes, optimistic revision, UnitOfWork, outbox/inbox semantics, Application use cases, API wire contracts, TenantContext, AccessDecision, Audit references and Operational Resilience invariants.
 
 ## Admission assessment
-Design prerequisites are materially present, but current result is:
+Architecture prerequisites are materially complete, including machine-enforced Operational Resilience. Current implementation result remains:
 
 `M00_GOVERNANCE_BLOCKED`
 
-The slice is a **first candidate**, not `ADMITTED_FOR_IMPLEMENTATION` while M00 feature development remains frozen.
-
-## PREP-0015 condition
-The deferred operational-resilience guard does not block initial pure Core/application construction after a future M00 release, but must be closed before this vertical is treated as integration/production complete with workers, retries, projection recovery or external-provider fallback.
+The slice is a candidate, not `ADMITTED_FOR_IMPLEMENTATION`, while M00 feature development remains frozen.
