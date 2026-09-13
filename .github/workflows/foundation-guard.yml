@@ -1,12 +1,9 @@
 name: Foundation Guard
-
 on:
   push:
   pull_request:
-
 permissions:
   contents: read
-
 jobs:
   foundation-guard:
     name: Enforce M00 Foundation gate
@@ -15,14 +12,12 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
       - name: Run Foundation Guard
-        shell: bash
         run: bash scripts/foundation_guard.sh
       - name: Run Foundation Guard self-tests
-        shell: bash
         run: bash tests/foundation_guard_test.sh
       - name: Check M00 release-state consistency
-        shell: bash
         run: bash scripts/m00_release_gate.sh
       - name: Run M00 release-gate self-tests
-        shell: bash
         run: bash tests/m00_release_gate_test.sh
+      - name: Run architecture boundary tests
+        run: bash tests/architecture_boundaries_test.sh
