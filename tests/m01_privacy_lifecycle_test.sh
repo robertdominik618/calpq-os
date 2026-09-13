@@ -13,7 +13,7 @@ for file in "${required[@]}"; do
   grep -q 'PRE-M01 DESIGN / NO IMPLEMENTATION AUTHORIZATION' "$file" || fail "missing pre-M01 boundary: $file"
 done
 
-grep -q 'account closure' docs/contracts/PRIVACY_LIFECYCLE_MODEL.md || fail 'account/domain separation missing'
+grep -q 'Account closure' docs/contracts/PRIVACY_LIFECYCLE_MODEL.md || fail 'account/domain separation missing'
 grep -q 'preservation hold' docs/contracts/PRIVACY_LIFECYCLE_MODEL.md || fail 'preservation hold missing'
 grep -q 'does not grant wider access' docs/contracts/PRIVACY_LIFECYCLE_MODEL.md || fail 'hold/access boundary missing'
 grep -q 'Derived data' docs/contracts/PRIVACY_LIFECYCLE_MODEL.md || fail 'derived lifecycle rule missing'
