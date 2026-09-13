@@ -6,7 +6,7 @@ Audited branch: `foundation/calpq-fnd-0001`
 
 ## Executive conclusion
 
-The CALPQ Foundation is internally close to release-ready, but M00 must **not** be released yet. One critical external repository-governance blocker remains: GitHub reports `main` as unprotected and the repository currently has no rulesets. Until the reviewed CI path is enforced at the repository level, Foundation controls can be bypassed by a direct push.
+The CALPQ Foundation is **internally ready for the M00 release decision**, but M00 must **not** be released yet. One critical external repository-governance blocker remains: GitHub reports `main` as unprotected and the repository currently has no rulesets. Until the reviewed CI path is enforced at repository level, Foundation controls can be bypassed by a direct push.
 
 Recommendation: `REJECT M00 RELEASE UNTIL M00-BLK-001 IS CLEARED`.
 
@@ -17,10 +17,16 @@ Recommendation: `REJECT M00 RELEASE UNTIL M00-BLK-001 IS CLEARED`.
 | G1 Foundation artifacts | PASS | Manifest-driven required artifacts; Constitution, Book, Architecture, HIG, Human Workflow, Foundation Framework and Test Framework present. |
 | G2 Cross-cutting baselines | PASS | Security/Privacy, Accessibility and Regulatory Source Governance strengthened to testable normative requirements. |
 | G3 Governance mechanics | PASS | ADR governance, contract template, CALPQ-PRIPOJ path and explicit release gate exist. |
-| G4 Machine enforcement | PENDING_CI | Foundation Guard, M00 state tests, architecture tests and readiness self-tests must pass on the audit revision. |
+| G4 Machine enforcement | PASS | Foundation Guard, M00 state tests, architecture tests and readiness self-tests passed in CI. |
 | G5 Technology decision | PASS | ADR-0002 accepted; TypeScript-first bootstrap approved; product feature development remains frozen. |
 | G6 Repository governance | BLOCKED | GitHub branch metadata reports `main protected=false`; ruleset collection is empty. |
 | G7 Explicit release decision | PENDING | Must happen only after every release blocker is cleared and reviewed. |
+
+## CI evidence
+
+On the audited release-candidate line, Foundation Guard completed successfully and `M00 internal readiness` completed successfully. The separate `M00 repository governance` job failed specifically on `Verify main protection`, matching blocker M00-BLK-001 rather than indicating an internal Foundation defect.
+
+The final audit revision must reproduce the same pattern: Foundation/internal checks green; repository governance blocked until GitHub protection is configured.
 
 ## Remediations completed during audit
 
@@ -33,6 +39,7 @@ Recommendation: `REJECT M00 RELEASE UNTIL M00-BLK-001 IS CLEARED`.
 7. SHA-pinned `actions/checkout` and disabled persisted checkout credentials.
 8. Extended architecture tests to detect toolchain drift and require a pnpm lockfile once dependency declarations are introduced.
 9. Added executable internal readiness and repository-governance checks with negative self-tests.
+10. Opened GitHub Issue #2 (`M00-BLK-001`) to track the external release blocker.
 
 ## Critical blocker
 
