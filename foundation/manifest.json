@@ -16,7 +16,11 @@
   },
   "required_artifacts": [
     "README.md",
+    ".gitignore",
+    ".npmrc",
+    ".node-version",
     "foundation/manifest.json",
+    "foundation/m00-readiness.json",
     "docs/foundation/CONSTITUTION.md",
     "docs/foundation/BOOK.md",
     "docs/foundation/ARCHITECTURE.md",
@@ -27,7 +31,9 @@
     "docs/foundation/SECURITY_PRIVACY_BASELINE.md",
     "docs/foundation/ACCESSIBILITY_BASELINE.md",
     "docs/foundation/REGULATORY_SOURCE_GOVERNANCE.md",
+    "docs/foundation/REPOSITORY_GOVERNANCE.md",
     "docs/foundation/M00_RELEASE_GATE.md",
+    "docs/foundation/M00_READINESS_AUDIT.md",
     "docs/adr/ADR-0001-technology-stack-gate.md",
     "docs/adr/ADR-0002-technology-stack-selection.md",
     "docs/architecture/TECHNOLOGY_STACK_EVALUATION_2026-09-13.md",
@@ -55,10 +61,15 @@
     "workers/background/README.md",
     "scripts/foundation_guard.sh",
     "scripts/m00_release_gate.sh",
+    "scripts/m00_readiness_audit.sh",
+    "scripts/repository_governance_check.sh",
     "tests/foundation_guard_test.sh",
     "tests/m00_release_gate_test.sh",
     "tests/architecture_boundaries_test.sh",
-    ".github/workflows/foundation-guard.yml"
+    "tests/m00_readiness_test.sh",
+    "tests/repository_governance_test.sh",
+    ".github/workflows/foundation-guard.yml",
+    ".github/workflows/m00-readiness.yml"
   ],
   "principles": [
     "architecture_before_implementation",
@@ -87,6 +98,8 @@
     "legal_boundary": "REQUIRED",
     "technology_selection": "APPROVED",
     "technology_bootstrap": "AUTHORIZED",
+    "repository_governance": "REQUIRED",
+    "m00_readiness_audit": "REQUIRED",
     "m00_release_gate": "REQUIRED"
   },
   "change_intake": "CALPQ-PRIPOJ",
