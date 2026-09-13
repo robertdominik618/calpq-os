@@ -14,5 +14,6 @@ grep -q 'at-least-once' docs/contracts/API_ASYNC_JOB_EVENT_MODEL.md || fail 'del
 grep -q 'feature_development": "FROZEN' foundation/manifest.json || fail 'feature development unexpectedly enabled'
 
 bash tests/m01_tenant_isolation_test.sh
+bash tests/m01_exit_readiness_test.sh
 
 printf 'M01 API WIRE: PASS\n'
