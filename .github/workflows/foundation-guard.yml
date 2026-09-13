@@ -43,3 +43,6 @@ jobs:
       - name: Run M01 passport-gap guard
         shell: bash
         run: bash tests/m01_passport_gap_test.sh
+      - name: Run M01 B2B assignment guard
+        shell: bash
+        run: bash tests/m01_b2b_assignment_test.sh
