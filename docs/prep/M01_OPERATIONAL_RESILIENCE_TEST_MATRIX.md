@@ -14,5 +14,5 @@ Mandatory groups:
 7. observability: telemetry is diagnostic, excludes raw evidence/secrets and does not mutate domain state;
 8. recovery governance: reconciliation/recovery is audit-linked and cannot bypass approval boundaries;
 9. Core boundary: no queue, retry scheduler, telemetry backend or provider SDK dependency;
-10. replay/rebuild cannot issue or mutate `AuthorizationGrant`;
+10. rebuild/replay cannot issue or mutate `AuthorizationGrant`;
 11. feature development remains frozen while M00 release is blocked.
