@@ -10,6 +10,7 @@ fail() {
 
 required_files="$(
   sed -n '/"required_artifacts": \[/,/\]/p' foundation/manifest.json \
+    | sed '1d;$d' \
     | sed -n 's/.*"\([^"]*\)".*/\1/p'
 )"
 
