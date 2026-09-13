@@ -34,3 +34,6 @@ jobs:
       - name: Run M00 release eligibility self-test
         shell: bash
         run: bash tests/m00_release_authorization_test.sh
+      - name: Run M01 contract-pack guard
+        shell: bash
+        run: bash tests/m01_contract_pack_test.sh
