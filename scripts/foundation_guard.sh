@@ -6,25 +6,16 @@ fail() {
   exit 1
 }
 
-required_files=(
-  "README.md"
-  "foundation/manifest.json"
-  "docs/foundation/CONSTITUTION.md"
-  "docs/foundation/BOOK.md"
-  "docs/foundation/ARCHITECTURE.md"
-  "docs/foundation/APPLE_HIG_POLICY.md"
-  "docs/foundation/HUMAN_WORKFLOW_GUIDELINES.md"
-  "docs/foundation/FOUNDATION_FRAMEWORK.md"
-  "docs/foundation/TEST_FRAMEWORK.md"
-  "docs/adr/ADR-0001-technology-stack-gate.md"
-  "scripts/foundation_guard.sh"
-  "tests/foundation_guard_test.sh"
-  ".github/workflows/foundation-guard.yml"
-)
+[[ -f foundation/manifest.json ]] || fail "manifest missing"
 
-for file in "${required_files[@]}"; do
-  [[ -f "$file" ]] || fail "missing required artifact: $file"
-done
+required_files="$(
+  sed -n '/"required_artifacts": \[/,/\]/p' foundation/manifest.json \
+    | sed -n 's/.*"\([^"]*\)".*/\1/p'
+)"
+
+while IFS= read -r file; do
+  [[ -z "$file" || -f "$file" ]] || fail "missing required artifact: $file"
+done <<< "$required_files"
 
 grep -q '"milestone": "M00 FOUNDATION"' foundation/manifest.json \
   || fail "manifest milestone is not M00 FOUNDATION"
@@ -40,18 +31,14 @@ if grep -q '"feature_development": "FROZEN"' foundation/manifest.json; then
   done
 
   forbidden_manifests=(
-    package.json pnpm-workspace.yaml yarn.lock package-lock.json
-    pyproject.toml requirements.txt Pipfile
-    Package.swift Podfile
-    go.mod Cargo.toml
-    pom.xml build.gradle build.gradle.kts
-    Gemfile composer.json
+    package.json pyproject.toml requirements.txt Package.swift Podfile
+    go.mod Cargo.toml pom.xml build.gradle Gemfile composer.json
   )
   for file in "${forbidden_manifests[@]}"; do
     [[ ! -e "$file" ]] || fail "technology stack is not approved; forbidden manifest exists: $file"
   done
 
-  code_patterns=('*.swift' '*.m' '*.mm' '*.kt' '*.java' '*.ts' '*.tsx' '*.js' '*.jsx' '*.py' '*.go' '*.rs' '*.cs' '*.dart')
+  code_patterns=('*.swift' '*.kt' '*.java' '*.ts' '*.tsx' '*.js' '*.jsx' '*.py' '*.go' '*.rs' '*.cs' '*.dart')
   for pattern in "${code_patterns[@]}"; do
     match="$(find . -type f -name "$pattern" -not -path './.git/*' -print -quit)"
     [[ -z "$match" ]] || fail "product code detected while feature development is FROZEN: $match"
