@@ -27,10 +27,34 @@ grep -q 'External credential formats' docs/interoperability/CREDENTIAL_INTEROPER
 grep -q 'duplicate command ID' docs/prep/M01_CREDENTIAL_DOMAIN_TEST_MATRIX.md || fail 'idempotency scenario missing'
 grep -q 'NOT_ADMITTED_FOR_IMPLEMENTATION' docs/prep/M01_CREDENTIAL_DOMAIN_TEST_MATRIX.md || fail 'admission boundary missing'
 
+trust_required=(
+  docs/contracts/TRUST_REGISTRY_MODEL.md
+  docs/contracts/AUTHORITY_RESOLUTION_MODEL.md
+  docs/contracts/VERIFICATION_ORCHESTRATION_MODEL.md
+  docs/contracts/VERIFIER_RELYING_PARTY_TRUST_MODEL.md
+  docs/architecture/TRUST_SOURCE_ADAPTER_BOUNDARY.md
+  docs/prep/M01_TRUST_REGISTRY_BASELINE.md
+  docs/prep/M01_TRUST_REGISTRY_TEST_MATRIX.md
+)
+
+for file in "${trust_required[@]}"; do
+  [[ -f "$file" ]] || fail "missing trust artifact: $file"
+  grep -q 'PRE-M01 DESIGN / NO IMPLEMENTATION AUTHORIZATION' "$file" || fail "trust boundary missing: $file"
+done
+
+grep -q 'Authority MUST NOT be inferred' docs/contracts/TRUST_REGISTRY_MODEL.md || fail 'identity-authority boundary missing'
+grep -q 'cryptographic signature' docs/contracts/AUTHORITY_RESOLUTION_MODEL.md || fail 'signature-authority boundary missing'
+grep -q 'Provider outage yields `INDETERMINATE`' docs/contracts/VERIFICATION_ORCHESTRATION_MODEL.md || fail 'provider outage semantic missing'
+grep -q 'minimum necessary claims' docs/contracts/VERIFIER_RELYING_PARTY_TRUST_MODEL.md || fail 'verifier minimization missing'
+grep -q 'Core MUST NOT depend' docs/architecture/TRUST_SOURCE_ADAPTER_BOUNDARY.md || fail 'trust adapter boundary missing'
+grep -q 'verification never creates EligibilityAssessment or AuthorizationGrant by itself' docs/prep/M01_TRUST_REGISTRY_BASELINE.md || fail 'verification non-escalation missing'
+grep -q 'AI may recommend a route but cannot promote authority state by itself' docs/prep/M01_TRUST_REGISTRY_TEST_MATRIX.md || fail 'AI authority scenario missing'
+
 implementation="$(find packages apps workers -type f \( -name '*.ts' -o -name '*.tsx' -o -name '*.js' -o -name '*.jsx' \) -print -quit)"
 [[ -z "$implementation" ]] || fail "implementation source detected before M00 release: $implementation"
 
 grep -q '"m00_release_status": "BLOCKED"' foundation/manifest.json || fail 'M00 unexpectedly released'
 grep -q '"feature_development": "FROZEN"' foundation/manifest.json || fail 'feature development unexpectedly enabled'
 
+printf 'M01 TRUST REGISTRY: PASS\n'
 printf 'M01 CREDENTIAL DOMAIN: PASS\n'
