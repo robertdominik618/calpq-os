@@ -38,5 +38,6 @@ grep -q '"m00_release_status": "BLOCKED"' foundation/manifest.json || fail 'M00 
 grep -q '"feature_development": "FROZEN"' foundation/manifest.json || fail 'feature development unexpectedly enabled'
 
 bash tests/m01_access_policy_test.sh
+bash tests/m01_audit_ledger_test.sh
 
 printf 'M01 CONTRACT PACK: PASS\n'
