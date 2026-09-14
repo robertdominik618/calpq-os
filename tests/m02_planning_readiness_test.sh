@@ -21,6 +21,16 @@ required=(
   docs/planning/FV04_TEST_CONTRACT.md
   docs/planning/FV05_IMPLEMENTATION_CONTRACT.md
   docs/planning/FV05_TEST_CONTRACT.md
+  docs/planning/FV06_IMPLEMENTATION_CONTRACT.md
+  docs/planning/FV06_TEST_INDEX.md
+  docs/planning/FV07_IMPLEMENTATION_CONTRACT.md
+  docs/planning/FV07_TEST_INDEX.md
+  docs/planning/FV08_IMPLEMENTATION_CONTRACT.md
+  docs/planning/FV08_TEST_INDEX.md
+  docs/planning/FV09_IMPLEMENTATION_CONTRACT.md
+  docs/planning/FV09_TEST_INDEX.md
+  docs/planning/FV10_IMPLEMENTATION_CONTRACT.md
+  docs/planning/FV10_TEST_INDEX.md
 )
 for f in "${required[@]}"; do [[ -f "$f" ]] || fail "missing $f"; done
 
@@ -36,16 +46,13 @@ done
 extra="$(awk '$1 < 1 || $1 > 45 {print; exit}' "$tmp")"
 [[ -z "$extra" ]] || fail "traceability contains out-of-range scenario $extra"
 
-for n in $(seq -w 0 15); do
-  grep -q "FV-${n}" docs/planning/M02_FIRST_VERTICAL_BACKLOG.md || fail "missing FV-${n} backlog item"
-done
+for n in $(seq -w 0 15); do grep -q "FV-${n}" docs/planning/M02_FIRST_VERTICAL_BACKLOG.md || fail "missing FV-${n} backlog item"; done
 
 grep -q '^`BLOCKED_PENDING_M00`$' docs/planning/FV00_VERTICAL_ADMISSION_RECORD.md || fail "FV-00 must remain blocked pending M00"
 grep -q '"state": "LOCKED"' foundation/feature-development-gate.json || fail "feature gate must remain locked"
 
-for f in FV01_IMPLEMENTATION_CONTRACT.md FV01_TEST_CONTRACT.md FV02_IMPLEMENTATION_CONTRACT.md FV02_TEST_CONTRACT.md FV03_IMPLEMENTATION_CONTRACT.md FV03_TEST_INDEX.md FV04_IMPLEMENTATION_CONTRACT.md FV04_TEST_CONTRACT.md FV05_IMPLEMENTATION_CONTRACT.md FV05_TEST_CONTRACT.md; do
-  grep -q 'BLOCKED' "docs/planning/$f" || fail "$f must remain blocked"
-done
+blocked_files=(FV01_IMPLEMENTATION_CONTRACT.md FV01_TEST_CONTRACT.md FV02_IMPLEMENTATION_CONTRACT.md FV02_TEST_CONTRACT.md FV03_IMPLEMENTATION_CONTRACT.md FV03_TEST_INDEX.md FV04_IMPLEMENTATION_CONTRACT.md FV04_TEST_CONTRACT.md FV05_IMPLEMENTATION_CONTRACT.md FV05_TEST_CONTRACT.md FV06_IMPLEMENTATION_CONTRACT.md FV06_TEST_INDEX.md FV07_IMPLEMENTATION_CONTRACT.md FV07_TEST_INDEX.md FV08_IMPLEMENTATION_CONTRACT.md FV08_TEST_INDEX.md FV09_IMPLEMENTATION_CONTRACT.md FV09_TEST_INDEX.md FV10_IMPLEMENTATION_CONTRACT.md FV10_TEST_INDEX.md)
+for f in "${blocked_files[@]}"; do grep -q 'BLOCKED' "docs/planning/$f" || fail "$f must remain blocked"; done
 
 count_tests(){ local file="$1" expected="$2"; local got; got="$(grep -Ec '^[0-9]+\.' "docs/planning/$file")"; [[ "$got" -eq "$expected" ]] || fail "$file expected $expected tests, got $got"; }
 count_tests FV01_TEST_CONTRACT.md 21
@@ -53,11 +60,21 @@ count_tests FV02_TEST_CONTRACT.md 12
 count_tests FV03_TEST_INDEX.md 20
 count_tests FV04_TEST_CONTRACT.md 18
 count_tests FV05_TEST_CONTRACT.md 18
+count_tests FV06_TEST_INDEX.md 16
+count_tests FV07_TEST_INDEX.md 18
+count_tests FV08_TEST_INDEX.md 16
+count_tests FV09_TEST_INDEX.md 20
+count_tests FV10_TEST_INDEX.md 20
 
-grep -q 'UUIDv7' docs/planning/FV01_IMPLEMENTATION_CONTRACT.md || fail "FV-01 UUIDv7 contract missing"
-grep -q 'Clock' docs/planning/FV02_IMPLEMENTATION_CONTRACT.md || fail "FV-02 Clock contract missing"
-grep -q 'Provenance' docs/planning/FV03_IMPLEMENTATION_CONTRACT.md || fail "FV-03 provenance contract missing"
-grep -q 'expected revision' docs/planning/FV04_IMPLEMENTATION_CONTRACT.md || fail "FV-04 revision contract missing"
-grep -q 'CredentialArtifact' docs/planning/FV05_IMPLEMENTATION_CONTRACT.md || fail "FV-05 credential artifact contract missing"
+grep -q 'UUIDv7' docs/planning/FV01_IMPLEMENTATION_CONTRACT.md || fail "FV-01 contract missing"
+grep -q 'Clock' docs/planning/FV02_IMPLEMENTATION_CONTRACT.md || fail "FV-02 contract missing"
+grep -q 'Provenance' docs/planning/FV03_IMPLEMENTATION_CONTRACT.md || fail "FV-03 contract missing"
+grep -q 'expected revision' docs/planning/FV04_IMPLEMENTATION_CONTRACT.md || fail "FV-04 contract missing"
+grep -q 'CredentialArtifact' docs/planning/FV05_IMPLEMENTATION_CONTRACT.md || fail "FV-05 contract missing"
+grep -q 'ApplicationExecutionContext' docs/planning/FV06_IMPLEMENTATION_CONTRACT.md || fail "FV-06 contract missing"
+grep -q 'UnitOfWork' docs/planning/FV07_IMPLEMENTATION_CONTRACT.md || fail "FV-07 contract missing"
+grep -q 'outbox' docs/planning/FV08_IMPLEMENTATION_CONTRACT.md || fail "FV-08 contract missing"
+grep -q 'original artifact' docs/planning/FV09_IMPLEMENTATION_CONTRACT.md || fail "FV-09 contract missing"
+grep -q 'verification' docs/planning/FV10_IMPLEMENTATION_CONTRACT.md || fail "FV-10 contract missing"
 
-printf 'M02 PLANNING READINESS: PASS / FV-00 TRACEABLE / FV-01..FV-05 CORE KERNEL READY BUT BLOCKED\n'
+printf 'M02 PLANNING READINESS: PASS / FV-00 TRACEABLE / FV-01..FV-10 READY BUT BLOCKED / 179 TEST POINTS\n'
