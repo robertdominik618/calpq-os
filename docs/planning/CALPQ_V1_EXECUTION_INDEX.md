@@ -101,15 +101,18 @@ Exit: evidence-backed explicit GA decision.
 - `tests/m02_batch_execution_readiness_test.sh`;
 - `tests/program_execution_readiness_test.sh`;
 - `tests/m03_m08_execution_readiness_test.sh`;
-- `tests/m09_m12_execution_readiness_test.sh`.
+- `tests/m09_m12_execution_readiness_test.sh`;
+- `tests/v1_execution_index_test.sh`.
 
 ## Current verified CI snapshot
-On head `59309682926a1d6ecf9b5bc4892e7e7a0933c355`:
+On head `78b2082843288f561b9394d35b6341ebf3b8e54b`:
+- CALPQ v1 Execution Index: SUCCESS;
 - Foundation Guard: SUCCESS;
 - Program Execution Readiness: SUCCESS;
 - M02 Batch Readiness: SUCCESS;
 - M03-M08 Execution Readiness: SUCCESS;
 - M09-M12 Execution Readiness: SUCCESS;
+- M00 internal readiness: SUCCESS;
 - M00 Readiness overall: FAILURE only because repository-governance `Verify main protection` remains unresolved.
 
 ## Universal non-negotiable boundaries
