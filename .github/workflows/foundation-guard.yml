@@ -55,3 +55,6 @@ jobs:
       - name: Run M06-M08 planning readiness guard
         shell: bash
         run: bash tests/m06_m08_planning_readiness_test.sh
+      - name: Run M09-M12 planning readiness guard
+        shell: bash
+        run: bash tests/m09_m12_planning_readiness_test.sh

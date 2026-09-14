@@ -2,7 +2,7 @@
 
 Status: `MASTER ROADMAP / PLANNING BASELINE`
 
-This roadmap distinguishes repository-backed milestones from proposed future milestones. It does not authorize product implementation or change M00 governance state.
+This roadmap distinguishes repository-backed milestones from implementation admission. It does not authorize product implementation or change M00 governance state.
 
 ## M01 — Architecture & Core Contract Baseline
 Status: `REPOSITORY-BACKED / ARCHITECTURE COMPLETE`
@@ -59,28 +59,32 @@ Planning evidence: `docs/planning/M08_ORGANIZATION_B2B_ASSIGNMENT_BASELINE.md` a
 Exit: an organization can determine whether a specific person may be assigned to a specific governed activity, including conditions and review states.
 
 ## M09 — Trust, Selective Sharing & Interoperability
-Status: `PROPOSED`
+Status: `REPOSITORY-BACKED PLANNING / IMPLEMENTATION NOT ADMITTED`
 Purpose: make CALPQ evidence portable and verifiable across relying parties.
-Scope: selective disclosure, relying-party trust, consent/purpose limitation, verification links, registry linking, VC/EUDI-wallet/ISO mdoc boundaries, signed presentations and interoperable external mappings.
+Scope: selective disclosure, relying-party trust, consent/purpose limitation, verification presentations, registry linking, VC/EUDI-wallet/ISO mdoc boundaries and interoperable external mappings.
+Planning evidence: `docs/planning/M09_TRUST_SHARING_INTEROPERABILITY_BASELINE.md` and shared M09-M12 readiness guard.
 Exit: users and organizations can disclose minimum necessary verified claims with provenance while CALPQ Core remains format/provider neutral.
 
 ## M10 — Intelligence Layer & Guided Decisions
-Status: `PROPOSED`
+Status: `REPOSITORY-BACKED PLANNING / IMPLEMENTATION NOT ADMITTED`
 Purpose: add useful AI assistance without granting AI authority over regulated truth.
 Scope: Next Best Action Engine, What-if simulator, conversational guidance, explanation generation, semantic/intent search, document assistance and human-review support.
 Boundary: deterministic Core remains authoritative; AI may assist, summarize, search, classify and explain but cannot self-verify evidence, change eligibility or issue authorization.
+Planning evidence: `docs/planning/M10_INTELLIGENCE_GUIDED_DECISIONS_BASELINE.md` and shared M09-M12 readiness guard.
 Exit: users get proactive guidance while every material conclusion remains source/evidence/rule backed.
 
 ## M11 — Production UX, Operations & Platform Integration
-Status: `PROPOSED`
+Status: `REPOSITORY-BACKED PLANNING / IMPLEMENTATION NOT ADMITTED`
 Purpose: turn domain capabilities into robust daily-use applications and operating workflows.
 Scope: React Native/Expo mobile, web/PWA, offline/cache strategy where safe, notifications, background jobs, admin/review surfaces, observability, support diagnostics, import/export, performance, accessibility and operational tooling.
+Planning evidence: `docs/planning/M11_PRODUCTION_UX_OPERATIONS_BASELINE.md` and shared M09-M12 readiness guard.
 Exit: CALPQ can be operated reliably by end users, reviewers and organizations across supported surfaces.
 
 ## M12 — Production Hardening, Pilot & General Availability
-Status: `PROPOSED`
+Status: `REPOSITORY-BACKED PLANNING / IMPLEMENTATION NOT ADMITTED`
 Purpose: prove the whole system under production constraints and release it safely.
 Scope: security hardening, privacy lifecycle verification, backup/restore and disaster recovery, penetration/security testing, load/performance testing, auditability, data migration/reconciliation, pilot cohorts, support/runbooks, SLOs and release governance.
+Planning evidence: `docs/planning/M12_PRODUCTION_HARDENING_GA_BASELINE.md` and shared M09-M12 readiness guard.
 Exit: GA release decision backed by production evidence rather than architecture readiness alone.
 
 ## Dependency spine
@@ -92,6 +96,7 @@ M03, M04 and M05 may partially overlap after M02 stabilizes, but no milestone ma
 - M01: architecture complete;
 - M02: full pre-implementation readiness complete, product implementation not started;
 - M03-M05: repository-backed planning baselines complete, implementation not admitted;
-- M06-M08: repository-backed planning baselines complete on a dedicated stacked planning branch, implementation not admitted;
-- M09-M12: proposed roadmap only, not yet individually planning-baselined or implementation-approved;
+- M06-M08: repository-backed planning baselines complete, implementation not admitted;
+- M09-M12: repository-backed planning baselines complete on the final stacked planning branch, implementation not admitted;
+- all milestone planning through M12 is now repository-backed and machine-guarded on the planning stack;
 - current critical external blocker remains M00 repository governance / main protection.
