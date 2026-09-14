@@ -3,7 +3,18 @@
   "gate_id": "CALPQ-FEATURE-GATE-0001",
   "state": "LOCKED",
   "release_decision_id": "CALPQ-M00-REL-0001",
+  "opening_transition_id": "CALPQ-FEATURE-GATE-OPEN-0001",
+  "approval_preconditions": [
+    "M00 release status is RELEASED",
+    "explicit M00 release decision is APPROVED",
+    "M00 release evidence has no remaining blockers",
+    "CALPQ main protection remains externally observable",
+    "separate explicit feature-development approval is recorded"
+  ],
   "opened_revision": null,
   "opened_by_transition": null,
-  "last_updated": "2026-09-13"
+  "approved_by": null,
+  "approved_at": null,
+  "next_gate": null,
+  "last_updated": "2026-09-14"
 }

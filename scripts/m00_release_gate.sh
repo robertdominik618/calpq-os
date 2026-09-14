@@ -6,6 +6,7 @@ fail() { printf 'M00 RELEASE GATE: %s\n' "$1" >&2; exit 1; }
 command -v jq >/dev/null 2>&1 || fail "jq is required"
 [[ -f foundation/m00-release-decision.json ]] || fail "M00 release decision record missing"
 [[ -f foundation/m00-release-preflight.json ]] || fail "M00 release preflight record missing"
+[[ -f foundation/feature-development-gate.json ]] || fail "feature development gate record missing"
 
 jq -e '.technology_stack.status == "APPROVED" and .technology_stack.decision == "ADR-0002"' foundation/manifest.json >/dev/null \
   || fail "technology stack/decision is not approved"
@@ -18,17 +19,17 @@ release_status="$(jq -r '.m00_release_status' foundation/manifest.json)"
 feature_status="$(jq -r '.feature_development' foundation/manifest.json)"
 decision_status="$(jq -r '.status' foundation/m00-release-decision.json)"
 
-[[ "$feature_status" == "FROZEN" ]] \
-  || fail "feature development must remain FROZEN until separately governed feature gate transition"
-
 case "$release_status" in
   BLOCKED)
+    [[ "$feature_status" == "FROZEN" ]] \
+      || fail "feature development cannot leave FROZEN while M00 is BLOCKED"
     [[ "$decision_status" == "PENDING" ]] \
       || fail "blocked M00 requires a pending release decision"
     jq -e '.current_state.m00_release_status == "BLOCKED" and .current_state.feature_development == "FROZEN"' foundation/m00-release-decision.json >/dev/null \
       || fail "pending release decision record disagrees with blocked manifest"
     jq -e '.status == "WAITING_FOR_G6" and .current_project_state.m00_release_status == "BLOCKED" and .current_project_state.feature_development == "FROZEN" and .current_project_state.release_decision == "PENDING"' foundation/m00-release-preflight.json >/dev/null \
       || fail "blocked release preflight is inconsistent"
+    bash scripts/feature_development_gate_check.sh >/dev/null
     printf 'M00 RELEASE GATE: BLOCKED / DECISION PENDING / STACK APPROVED / FEATURE FROZEN\n'
     ;;
   RELEASED)
@@ -40,7 +41,16 @@ case "$release_status" in
       || fail "approved release decision evidence is incomplete or inconsistent"
     jq -e '.status == "COMPLETED" and .required_gate_state.g6_repository_governance == "PASS" and .required_gate_state.g7_explicit_release_decision == "APPROVED" and .current_project_state.m00_release_status == "RELEASED" and .current_project_state.feature_development == "FROZEN" and .current_project_state.release_decision == "APPROVED" and .current_project_state.remaining_blocker == null' foundation/m00-release-preflight.json >/dev/null \
       || fail "completed release preflight is inconsistent"
-    printf 'M00 RELEASE GATE: RELEASED / DECISION APPROVED / FEATURE STILL FROZEN / NEXT GATE SEPARATE\n'
+    case "$feature_status" in
+      FROZEN|AUTHORIZED) ;;
+      *) fail "unexpected feature state after M00 release: $feature_status" ;;
+    esac
+    bash scripts/feature_development_gate_check.sh >/dev/null
+    if [[ "$feature_status" == "FROZEN" ]]; then
+      printf 'M00 RELEASE GATE: RELEASED / DECISION APPROVED / FEATURE FROZEN / FEATURE GATE LOCKED\n'
+    else
+      printf 'M00 RELEASE GATE: RELEASED / DECISION APPROVED / FEATURE AUTHORIZED BY SEPARATE GATE\n'
+    fi
     ;;
   *)
     fail "unexpected M00 release state: $release_status"
