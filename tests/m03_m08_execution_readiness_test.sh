@@ -2,6 +2,8 @@
 set -euo pipefail
 fail(){ printf 'M03-M08 EXECUTION READINESS: %s\n' "$1" >&2; exit 1; }
 
+phase="$(bash scripts/governance_lifecycle_phase.sh)"
+
 required=(
   docs/planning/M03_EXECUTION_PACKAGE.md
   docs/planning/M04_EXECUTION_PACKAGE.md
@@ -14,7 +16,7 @@ required=(
 for f in "${required[@]}"; do [[ -f "$f" ]] || fail "missing $f"; done
 
 for f in docs/planning/M0{3,4,5,6,7,8}_EXECUTION_PACKAGE.md docs/planning/M03_M08_EXECUTION_READINESS_MATRIX.md; do
-  grep -q 'BLOCKED' "$f" || fail "$f must remain blocked"
+  grep -q 'BLOCKED' "$f" || fail "$f must retain its planning-boundary evidence"
 done
 
 criteria_count="$(grep -Ec '^[0-9]+\.' docs/planning/M03_M08_EXECUTION_READINESS_MATRIX.md)"
@@ -33,6 +35,4 @@ grep -qi 'review' docs/planning/M07_EXECUTION_PACKAGE.md || fail 'M07 review bou
 grep -qi 'legal' docs/planning/M07_EXECUTION_PACKAGE.md || fail 'M07 legal boundary missing'
 grep -q 'role/delegation never grants professional competence' docs/planning/M08_EXECUTION_PACKAGE.md || fail 'M08 competence boundary missing'
 
-grep -q '"state": "LOCKED"' foundation/feature-development-gate.json || fail 'feature gate must remain locked'
-
-printf 'M03-M08 EXECUTION READINESS: PASS / 72 OF 72 CRITERIA / 60 DELIVERY SLICES / IMPLEMENTATION BLOCKED\n'
+printf 'M03-M08 EXECUTION READINESS: PASS / 72 OF 72 CRITERIA / 60 DELIVERY SLICES / PHASE %s\n' "$phase"

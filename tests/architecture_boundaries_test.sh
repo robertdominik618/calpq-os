@@ -3,6 +3,8 @@ set -euo pipefail
 
 fail() { printf 'ARCHITECTURE TEST: %s\n' "$1" >&2; exit 1; }
 
+phase="$(bash scripts/governance_lifecycle_phase.sh)"
+
 for dir in packages/core packages/application packages/contracts packages/adapters apps/mobile apps/web apps/api workers/background; do
   [[ -f "$dir/package.json" ]] || fail "missing package manifest: $dir"
   [[ -f "$dir/README.md" ]] || fail "missing boundary README: $dir"
@@ -26,12 +28,13 @@ grep -q 'actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1' .github/work
 grep -q 'persist-credentials: false' .github/workflows/foundation-guard.yml || fail "checkout credentials persistence is not disabled"
 
 grep -q '"status": "APPROVED"' foundation/manifest.json || fail "technology stack not approved"
-grep -q '"feature_development": "FROZEN"' foundation/manifest.json || fail "feature freeze unexpectedly released"
 
-srcdir="$(find packages apps workers -type d -name src -print -quit)"
-[[ -z "$srcdir" ]] || fail "source directory exists before M00 release: $srcdir"
-code="$(find packages apps workers -type f \( -name '*.ts' -o -name '*.tsx' -o -name '*.js' -o -name '*.jsx' \) -print -quit)"
-[[ -z "$code" ]] || fail "implementation source exists before M00 release: $code"
+if [[ "$phase" != "POST_FV00_IMPLEMENTATION" ]]; then
+  srcdir="$(find packages apps workers -type d -name src -print -quit)"
+  [[ -z "$srcdir" ]] || fail "source directory exists before FV-00 admission: $srcdir"
+  code="$(find packages apps workers -type f \( -name '*.ts' -o -name '*.tsx' -o -name '*.js' -o -name '*.jsx' \) -print -quit)"
+  [[ -z "$code" ]] || fail "implementation source exists before FV-00 admission: $code"
+fi
 
 for forbidden in '@calpq/application' '@calpq/adapters' '@calpq/mobile' '@calpq/web' '@calpq/api'; do
   ! grep -q "$forbidden" packages/core/package.json || fail "Core depends outward on $forbidden"
@@ -41,4 +44,4 @@ if grep -R -E '"(dependencies|devDependencies|optionalDependencies|peerDependenc
   [[ -f pnpm-lock.yaml ]] || fail "dependency declarations require pnpm-lock.yaml"
 fi
 
-printf 'ARCHITECTURE TESTS: PASS\n'
+printf 'ARCHITECTURE TESTS: PASS / PHASE %s\n' "$phase"

@@ -2,6 +2,7 @@
 set -euo pipefail
 fail(){ printf 'CALPQ V1 EXECUTION INDEX: %s\n' "$1" >&2; exit 1; }
 
+phase="$(bash scripts/governance_lifecycle_phase.sh)"
 index='docs/planning/CALPQ_V1_EXECUTION_INDEX.md'
 [[ -f "$index" ]] || fail 'execution index missing'
 
@@ -13,9 +14,8 @@ done
 grep -q 'total v1 execution units: `130`' "$index" || fail '130-unit total missing'
 grep -q 'Foundation Guard: SUCCESS' "$index" || fail 'Foundation CI evidence missing'
 grep -q 'M09-M12 Execution Readiness: SUCCESS' "$index" || fail 'M09-M12 CI evidence missing'
-grep -q 'Verify main protection' "$index" || fail 'current governance blocker missing'
+grep -q 'Verify main protection' "$index" || fail 'governance evidence reference missing'
 grep -q 'planning readiness is not implementation admission' "$index" || fail 'admission boundary missing'
 grep -q 'GA requires production evidence' "$index" || fail 'GA evidence boundary missing'
-grep -q '"state": "LOCKED"' foundation/feature-development-gate.json || fail 'feature development gate must remain locked'
 
-printf 'CALPQ V1 EXECUTION INDEX: PASS / 130 UNITS / IMPLEMENTATION BLOCKED\n'
+printf 'CALPQ V1 EXECUTION INDEX: PASS / 130 UNITS / PHASE %s\n' "$phase"

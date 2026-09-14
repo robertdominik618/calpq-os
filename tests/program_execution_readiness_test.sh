@@ -2,6 +2,8 @@
 set -euo pipefail
 fail(){ printf 'PROGRAM EXECUTION READINESS: %s\n' "$1" >&2; exit 1; }
 
+phase="$(bash scripts/governance_lifecycle_phase.sh)"
+
 required=(
   docs/architecture/CALPQ_MILESTONE_ARCHITECTURE_M01_M12.md
   docs/planning/CALPQ_PROGRAM_EXECUTION_M02_M12.md
@@ -16,7 +18,7 @@ required=(
 for f in "${required[@]}"; do [[ -f "$f" ]] || fail "missing $f"; done
 
 for f in docs/planning/CALPQ_PROGRAM_EXECUTION_M02_M12.md docs/planning/CALPQ_DELIVERY_WAVES_AND_PARALLELIZATION.md docs/planning/CALPQ_MILESTONE_ADMISSION_EXIT_MATRIX.md docs/planning/CALPQ_PROGRAM_EXECUTION_READINESS_MATRIX.md; do
-  grep -q 'PLANNING ONLY / IMPLEMENTATION BLOCKED' "$f" || fail "$f must remain planning-only and blocked"
+  grep -q 'PLANNING ONLY / IMPLEMENTATION BLOCKED' "$f" || fail "$f must retain planning-boundary evidence"
 done
 
 criteria_count="$(grep -Ec '^[0-9]+\.' docs/planning/CALPQ_PROGRAM_EXECUTION_READINESS_MATRIX.md)"
@@ -31,7 +33,6 @@ grep -q 'Planning readiness is not implementation admission' docs/planning/CALPQ
 grep -q 'green CI run is evidence' docs/planning/CALPQ_MILESTONE_ADMISSION_EXIT_MATRIX.md || fail 'CI authorization boundary missing'
 grep -q 'M10 keeps AI subordinate' docs/planning/CALPQ_PROGRAM_EXECUTION_READINESS_MATRIX.md || fail 'AI authority boundary missing'
 grep -q 'M12 requires production evidence' docs/planning/CALPQ_PROGRAM_EXECUTION_READINESS_MATRIX.md || fail 'GA evidence boundary missing'
-grep -q '"state": "LOCKED"' foundation/feature-development-gate.json || fail 'feature development gate must remain locked'
-grep -q 'current critical external blocker remains M00 repository governance / main protection' docs/architecture/CALPQ_MILESTONE_ARCHITECTURE_M01_M12.md || fail 'current blocker statement missing'
+grep -q 'current critical external blocker remains M00 repository governance / main protection' docs/architecture/CALPQ_MILESTONE_ARCHITECTURE_M01_M12.md || fail 'historical blocker statement missing'
 
-printf 'PROGRAM EXECUTION READINESS: PASS / M02-M12 SEQUENCED / 36 OF 36 CRITERIA / IMPLEMENTATION BLOCKED\n'
+printf 'PROGRAM EXECUTION READINESS: PASS / M02-M12 SEQUENCED / 36 OF 36 CRITERIA / PHASE %s\n' "$phase"

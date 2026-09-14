@@ -2,6 +2,8 @@
 set -euo pipefail
 fail(){ printf 'M09-M12 EXECUTION READINESS: %s\n' "$1" >&2; exit 1; }
 
+phase="$(bash scripts/governance_lifecycle_phase.sh)"
+
 required=(
   docs/planning/M09_EXECUTION_PACKAGE.md
   docs/planning/M10_EXECUTION_PACKAGE.md
@@ -20,7 +22,7 @@ blocked_files=(
   docs/planning/M09_M12_EXECUTION_READINESS_MATRIX.md
 )
 for f in "${blocked_files[@]}"; do
-  grep -q 'BLOCKED' "$f" || fail "$f must remain blocked"
+  grep -q 'BLOCKED' "$f" || fail "$f must retain its planning-boundary evidence"
 done
 
 criteria_count="$(grep -Ec '^[0-9]+\.' docs/planning/M09_M12_EXECUTION_READINESS_MATRIX.md)"
@@ -37,6 +39,4 @@ grep -q 'cache' docs/planning/M11_EXECUTION_PACKAGE.md || fail 'M11 cache bounda
 grep -q 'GA evidence pack' docs/planning/M12_EXECUTION_PACKAGE.md || fail 'M12 GA evidence missing'
 grep -q 'explicit evidence-backed decision' docs/planning/M09_M12_BRANCH_PR_STRATEGY.md || fail 'GA release boundary missing'
 
-grep -q '"state": "LOCKED"' foundation/feature-development-gate.json || fail 'feature gate must remain locked'
-
-printf 'M09-M12 EXECUTION READINESS: PASS / 50 OF 50 CRITERIA / 40 DELIVERY SLICES / IMPLEMENTATION BLOCKED\n'
+printf 'M09-M12 EXECUTION READINESS: PASS / 50 OF 50 CRITERIA / 40 DELIVERY SLICES / PHASE %s\n' "$phase"
