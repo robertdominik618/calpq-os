@@ -8,6 +8,7 @@ mkdir -p "$fixture/bin" "$fixture/state"
 
 export FAKE_GH_STATE="$fixture/state"
 export FAKE_GH_REPOSITORY="robertdominik618/calpq-os"
+export FAKE_GH_HANDOFF_SHA="$(cd "$repo_root" && git rev-parse HEAD)"
 
 cat > "$fixture/bin/gh" <<'EOF'
 #!/usr/bin/env bash
@@ -36,6 +37,9 @@ done
 case "$endpoint" in
   "repos/$repo")
     printf '%s\n' "$(cat "$state/admin.txt")"
+    ;;
+  "repos/$repo/commits/"*)
+    printf '%s\n' "${FAKE_GH_HANDOFF_SHA:?}"
     ;;
   "repos/$repo/rulesets")
     if [[ "$method" == "POST" ]]; then
@@ -112,5 +116,16 @@ if run_handoff --apply >/dev/null 2>&1; then
 fi
 [[ ! -s "$fixture/state/posts.log" ]] || { printf 'TEST FAIL: malformed existing ruleset triggered automatic replacement\n' >&2; exit 1; }
 printf 'TEST PASS: malformed existing ruleset requires explicit human review and is not overwritten\n'
+
+reset_absent
+canonical_sha="$FAKE_GH_HANDOFF_SHA"
+export FAKE_GH_HANDOFF_SHA="0000000000000000000000000000000000000000"
+if run_handoff --apply >/dev/null 2>&1; then
+  printf 'TEST FAIL: stale local checkout was allowed to mutate repository governance\n' >&2
+  exit 1
+fi
+[[ ! -s "$fixture/state/posts.log" ]] || { printf 'TEST FAIL: stale checkout attempted repository mutation\n' >&2; exit 1; }
+export FAKE_GH_HANDOFF_SHA="$canonical_sha"
+printf 'TEST PASS: stale checkout is rejected before mutation\n'
 
 printf 'GITHUB MAIN RULESET HANDOFF SELF-TESTS: PASS\n'
