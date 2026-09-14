@@ -1,0 +1,36 @@
+name: Governance Next Action
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: read
+
+jobs:
+  governance-next-action:
+    name: Resolve CALPQ next governance action
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Resolve next governance action
+        shell: bash
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          bash scripts/post_ruleset_orchestrator.sh | tee governance-next-action.txt
+      - name: Publish governance summary
+        if: always()
+        shell: bash
+        run: |
+          if [[ -f governance-next-action.txt ]]; then
+            {
+              echo '## CALPQ governance next action'
+              echo '```text'
+              cat governance-next-action.txt
+              echo '```'
+            } >> "$GITHUB_STEP_SUMMARY"
+          fi

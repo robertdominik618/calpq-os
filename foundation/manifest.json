@@ -37,6 +37,7 @@
     "docs/foundation/REGULATORY_SOURCE_GOVERNANCE.md",
     "docs/foundation/REPOSITORY_GOVERNANCE.md",
     "docs/foundation/GITHUB_MAIN_RULESET.md",
+    "docs/foundation/POST_RULESET_ORCHESTRATION.md",
     "docs/foundation/M00_RELEASE_GATE.md",
     "docs/foundation/M00_RELEASE_DECISION_PREFLIGHT.md",
     "docs/foundation/FEATURE_DEVELOPMENT_GATE.md",
@@ -73,6 +74,7 @@
     "scripts/m00_readiness_audit.sh",
     "scripts/repository_governance_check.sh",
     "scripts/apply_github_main_ruleset.sh",
+    "scripts/post_ruleset_orchestrator.sh",
     "scripts/m00_release_authorization_check.sh",
     "scripts/m00_release_transition.sh",
     "scripts/feature_development_gate_check.sh",
@@ -85,6 +87,7 @@
     "tests/m00_readiness_test.sh",
     "tests/repository_governance_test.sh",
     "tests/github_main_ruleset_handoff_test.sh",
+    "tests/post_ruleset_orchestrator_test.sh",
     "tests/m00_release_authorization_test.sh",
     "tests/m00_release_transition_test.sh",
     "tests/feature_development_gate_test.sh",
@@ -92,7 +95,8 @@
     "tests/m01_preimplementation_integrity_test.sh",
     "tests/m02_preimplementation_integrity_test.sh",
     ".github/workflows/foundation-guard.yml",
-    ".github/workflows/m00-readiness.yml"
+    ".github/workflows/m00-readiness.yml",
+    ".github/workflows/governance-next-action.yml"
   ],
   "principles": [
     "architecture_before_implementation",
