@@ -22,6 +22,12 @@ jobs:
       - name: Run Foundation Guard self-tests
         shell: bash
         run: bash tests/foundation_guard_test.sh
+      - name: Resolve governance lifecycle
+        shell: bash
+        run: bash scripts/governance_lifecycle_phase.sh
+      - name: Run governance lifecycle self-tests
+        shell: bash
+        run: bash tests/governance_lifecycle_phase_test.sh
       - name: Check M00 release-state consistency
         shell: bash
         run: bash scripts/m00_release_gate.sh

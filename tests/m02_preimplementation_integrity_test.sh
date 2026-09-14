@@ -3,6 +3,8 @@ set -euo pipefail
 
 fail(){ printf 'M02 PREIMPLEMENTATION INTEGRITY: %s\n' "$1" >&2; exit 1; }
 
+phase="$(bash scripts/governance_lifecycle_phase.sh)"
+
 required=(
   docs/planning/M02_FIRST_VERTICAL_DELIVERY_PLAN.md
   docs/planning/M02_FIRST_VERTICAL_BACKLOG.md
@@ -48,12 +50,21 @@ grep -q 'CredentialArtifact never implies AuthorizationGrant' docs/planning/M02_
 grep -q 'OCR/AI extraction never becomes VERIFIED by confidence alone' docs/planning/M02_BATCH_B_APPLICATION_EVIDENCE_EXECUTION.md || fail 'Batch B extraction boundary missing'
 grep -q 'SATISFIED is an eligibility result, not an AuthorizationGrant' docs/planning/M02_BATCH_C_DECISION_RUNTIME_EXECUTION.md || fail 'Batch C authorization boundary missing'
 
-jq -e '.state == "BLOCKED_PENDING_PREREQUISITES" and (.blocking_reviews | length) == 0' docs/planning/fv00-admission-decision.json >/dev/null \
-  || fail 'FV-00 must be cleanly blocked immediately before formal admission'
-grep -q '^`BLOCKED_PENDING_PREREQUISITES`$' docs/planning/FV00_VERTICAL_ADMISSION_RECORD.md \
-  || fail 'FV-00 Markdown record must still be blocked immediately before formal admission'
+case "$phase" in
+  PRE_M00|POST_M00_PRE_FEATURE|POST_FEATURE_PRE_FV00)
+    jq -e '.state == "BLOCKED_PENDING_PREREQUISITES" and (.blocking_reviews | length) == 0' docs/planning/fv00-admission-decision.json >/dev/null \
+      || fail 'FV-00 must be cleanly blocked immediately before formal admission'
+    grep -q '^`BLOCKED_PENDING_PREREQUISITES`$' docs/planning/FV00_VERTICAL_ADMISSION_RECORD.md \
+      || fail 'FV-00 Markdown record must still be blocked immediately before formal admission'
+    implementation="$(find packages apps workers -type f \( -name '*.ts' -o -name '*.tsx' -o -name '*.js' -o -name '*.jsx' -o -name '*.swift' -o -name '*.kt' -o -name '*.java' -o -name '*.py' -o -name '*.go' -o -name '*.rs' -o -name '*.cs' -o -name '*.dart' \) -print -quit)"
+    [[ -z "$implementation" ]] || fail "product implementation source exists before FV-00 admission: $implementation"
+    ;;
+  POST_FV00_IMPLEMENTATION)
+    jq -e '.state == "ADMITTED_FOR_IMPLEMENTATION" and .admitted_by_transition == "CALPQ-FV00-ADMIT-0001" and .authorized_execution_entry == "M02_BATCH_A_FV01"' docs/planning/fv00-admission-decision.json >/dev/null \
+      || fail 'FV-00 admitted state is incomplete'
+    grep -q '^`ADMITTED_FOR_IMPLEMENTATION`$' docs/planning/FV00_VERTICAL_ADMISSION_RECORD.md \
+      || fail 'FV-00 Markdown record must reflect admission'
+    ;;
+esac
 
-implementation="$(find packages apps workers -type f \( -name '*.ts' -o -name '*.tsx' -o -name '*.js' -o -name '*.jsx' -o -name '*.swift' -o -name '*.kt' -o -name '*.java' -o -name '*.py' -o -name '*.go' -o -name '*.rs' -o -name '*.cs' -o -name '*.dart' \) -print -quit)"
-[[ -z "$implementation" ]] || fail "product implementation source exists before FV-00 admission: $implementation"
-
-printf 'M02 PREIMPLEMENTATION INTEGRITY: PASS / 45 TRACEABLE SCENARIOS / 60 BATCH CRITERIA / ENTRY M02_BATCH_A_FV01 READY\n'
+printf 'M02 PREIMPLEMENTATION INTEGRITY: PASS / 45 TRACEABLE SCENARIOS / 60 BATCH CRITERIA / PHASE %s\n' "$phase"

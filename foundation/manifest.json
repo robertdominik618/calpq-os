@@ -70,6 +70,7 @@
     "workers/background/package.json",
     "workers/background/README.md",
     "scripts/foundation_guard.sh",
+    "scripts/governance_lifecycle_phase.sh",
     "scripts/m00_release_gate.sh",
     "scripts/m00_readiness_audit.sh",
     "scripts/repository_governance_check.sh",
@@ -81,7 +82,9 @@
     "scripts/feature_development_gate_transition.sh",
     "scripts/fv00_admission_check.sh",
     "scripts/fv00_admission_transition.sh",
+    "tests/helpers/governance_fixture.sh",
     "tests/foundation_guard_test.sh",
+    "tests/governance_lifecycle_phase_test.sh",
     "tests/m00_release_gate_test.sh",
     "tests/architecture_boundaries_test.sh",
     "tests/m00_readiness_test.sh",
@@ -133,5 +136,5 @@
     "feature_development_gate": "LOCKED"
   },
   "change_intake": "CALPQ-PRIPOJ",
-  "last_updated": "2026-09-14T21:21:38Z"
+  "last_updated": "2026-09-14T21:34:00Z"
 }

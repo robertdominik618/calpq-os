@@ -3,10 +3,11 @@ set -euo pipefail
 
 fail() { printf 'M01 PREIMPLEMENTATION INTEGRITY: %s\n' "$1" >&2; exit 1; }
 
-# This check is deliberately state-neutral. The older M01 planning guards continue
-# to prove the pre-M00 BLOCKED/FROZEN state; this check proves that the immutable
-# M01 design/contract package is still intact at the later FV-00 admission boundary.
+phase="$(bash scripts/governance_lifecycle_phase.sh)"
 
+# State-neutral contract integrity. Before formal FV-00 admission this also proves
+# that no product implementation exists. After admission the contracts remain
+# mandatory, but implementation source is explicitly permitted by governance.
 required=(
   docs/prep/M01_CORE_KERNEL_CONTRACT_PACK.md
   docs/contracts/CORE_PRIMITIVES.md
@@ -84,9 +85,9 @@ grep -q 'verification never creates EligibilityAssessment or AuthorizationGrant 
 grep -q 'AI may recommend a route but cannot promote authority state by itself' docs/prep/M01_TRUST_REGISTRY_TEST_MATRIX.md || fail 'AI authority boundary missing'
 grep -q 'ADMITTED_FOR_IMPLEMENTATION' docs/prep/M01_VERTICAL_ADMISSION_GATE.md || fail 'vertical admission result contract missing'
 
-# Admission is still a pre-implementation boundary. Product source before the
-# formal FV-00 decision would make the admission evidence invalid.
-implementation="$(find packages apps workers -type f \( -name '*.ts' -o -name '*.tsx' -o -name '*.js' -o -name '*.jsx' -o -name '*.swift' -o -name '*.kt' -o -name '*.java' -o -name '*.py' -o -name '*.go' -o -name '*.rs' -o -name '*.cs' -o -name '*.dart' \) -print -quit)"
-[[ -z "$implementation" ]] || fail "product implementation source exists before FV-00 admission: $implementation"
+if [[ "$phase" != "POST_FV00_IMPLEMENTATION" ]]; then
+  implementation="$(find packages apps workers -type f \( -name '*.ts' -o -name '*.tsx' -o -name '*.js' -o -name '*.jsx' -o -name '*.swift' -o -name '*.kt' -o -name '*.java' -o -name '*.py' -o -name '*.go' -o -name '*.rs' -o -name '*.cs' -o -name '*.dart' \) -print -quit)"
+  [[ -z "$implementation" ]] || fail "product implementation source exists before FV-00 admission: $implementation"
+fi
 
-printf 'M01 PREIMPLEMENTATION INTEGRITY: PASS\n'
+printf 'M01 PREIMPLEMENTATION INTEGRITY: PASS / PHASE %s\n' "$phase"
