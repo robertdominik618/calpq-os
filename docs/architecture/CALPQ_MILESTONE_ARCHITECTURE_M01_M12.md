@@ -17,21 +17,24 @@ Evidence: 45/45 FV-00 traceability and 285 machine-enforced readiness test/check
 Exit: first working end-to-end vertical proves CALPQ architecture without issuing or mutating AuthorizationGrant.
 
 ## M03 — Professional Passport Product Surface
-Status: `PROPOSED`
+Status: `REPOSITORY-BACKED PLANNING / IMPLEMENTATION NOT ADMITTED`
 Purpose: turn M02 domain outputs into the first coherent user product.
 Scope: action-oriented dashboard, Professional Passport, Credential Cards, evidence/status explanations, activity timeline, intent-based search baseline, mobile/web read flows, accessibility and localization foundations.
+Planning evidence: `docs/planning/M03_PRODUCT_SURFACE_BASELINE.md` and shared M03-M05 readiness guard.
 Exit: a user can understand what they hold, what is verified, what is missing and why, without confusing a document with legal authorization.
 
 ## M04 — Credential Catalog, Qualification Paths & Gap Intelligence
-Status: `PROPOSED`
+Status: `REPOSITORY-BACKED PLANNING / IMPLEMENTATION NOT ADMITTED`
 Purpose: build the reusable knowledge structure behind eligibility and navigation.
 Scope: Activity/Profession/Requirement Catalog, Credential Catalog, qualification paths, RequirementSet versioning, equivalence/recognition workflows, Gap Navigator, explainability and source linking.
+Planning evidence: `docs/planning/M04_CATALOG_PATHS_GAP_BASELINE.md` and shared M03-M05 readiness guard.
 Exit: CALPQ can answer what is required for a target activity/profession and compute a governed path from current evidence to target eligibility.
 
 ## M05 — Document Intake, Archive & Verification Fabric
-Status: `PROPOSED`
+Status: `REPOSITORY-BACKED PLANNING / IMPLEMENTATION NOT ADMITTED`
 Purpose: expand M02 intake/verification into a production-grade universal evidence fabric.
 Scope: camera/scan/PDF/email/share sheet/URL/provider intake, immutable originals, extraction proposals, review queues, trust registry, issuer/verifier authority resolution, archive lifecycle, malware/untrusted-content controls and verification adapters.
+Planning evidence: `docs/planning/M05_EVIDENCE_VERIFICATION_FABRIC_BASELINE.md` and shared M03-M05 readiness guard.
 Exit: multiple real-world evidence channels enter one governed pipeline while extraction/AI remains non-authoritative.
 
 ## M06 — Lifecycle, Renewal & Continuous Compliance
@@ -85,5 +88,6 @@ M03, M04 and M05 may partially overlap after M02 stabilizes, but no milestone ma
 ## Current project position
 - M01: architecture complete;
 - M02: full pre-implementation readiness complete, product implementation not started;
-- M03-M12: proposed roadmap only, not yet individually admitted or implementation-approved;
+- M03-M05: repository-backed planning baselines complete on a dedicated planning branch, implementation not admitted;
+- M06-M12: proposed roadmap only, not yet individually planning-baselined or implementation-approved;
 - current critical external blocker remains M00 repository governance / main protection.
