@@ -2,6 +2,7 @@
 
 Status: `PLANNING COMPLETE / MACHINE-VERIFIED / IMPLEMENTATION BLOCKED`
 ID: `CALPQ-V1-EXEC-INDEX-0001`
+Planning closure: `FINAL — NO FURTHER V1 PLANNING EXPANSION AUTHORIZED`
 
 ## Purpose
 Provide one repository-backed index for CALPQ OS v1 execution from M02 through M12 without changing M00 governance or admitting product implementation.
@@ -104,8 +105,8 @@ Exit: evidence-backed explicit GA decision.
 - `tests/m09_m12_execution_readiness_test.sh`;
 - `tests/v1_execution_index_test.sh`.
 
-## Current verified CI snapshot
-On head `78b2082843288f561b9394d35b6341ebf3b8e54b`:
+## Verified CI evidence
+Baseline verified snapshot `78b2082843288f561b9394d35b6341ebf3b8e54b`:
 - CALPQ v1 Execution Index: SUCCESS;
 - Foundation Guard: SUCCESS;
 - Program Execution Readiness: SUCCESS;
@@ -114,6 +115,12 @@ On head `78b2082843288f561b9394d35b6341ebf3b8e54b`:
 - M09-M12 Execution Readiness: SUCCESS;
 - M00 internal readiness: SUCCESS;
 - M00 Readiness overall: FAILURE only because repository-governance `Verify main protection` remains unresolved.
+
+Latest M09-M12 readiness evidence anchor `0d6f810271403603e8a044570a531d6bdb617b67`:
+- M09-M12 Execution Readiness run #19: SUCCESS;
+- no M09-M12 execution-package readiness uncertainty remains at this evidence anchor.
+
+The commit that finalizes this index is independently validated by `V1 Execution Index` CI. This provenance update does not reopen planning, admit implementation, release M00, unlock feature development or assert GA readiness.
 
 ## Universal non-negotiable boundaries
 - planning readiness is not implementation admission;
