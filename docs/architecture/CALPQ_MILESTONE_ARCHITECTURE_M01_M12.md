@@ -38,21 +38,24 @@ Planning evidence: `docs/planning/M05_EVIDENCE_VERIFICATION_FABRIC_BASELINE.md` 
 Exit: multiple real-world evidence channels enter one governed pipeline while extraction/AI remains non-authoritative.
 
 ## M06 — Lifecycle, Renewal & Continuous Compliance
-Status: `PROPOSED`
+Status: `REPOSITORY-BACKED PLANNING / IMPLEMENTATION NOT ADMITTED`
 Purpose: make credentials and obligations continuously maintained instead of point-in-time records.
 Scope: Renewal Autopilot, expirations, continuing obligations, medical/exam cycles, lifecycle timeline, notification policy, dependency graph reevaluation, continuous compliance status and historical decision replay.
+Planning evidence: `docs/planning/M06_LIFECYCLE_CONTINUOUS_COMPLIANCE_BASELINE.md` and shared M06-M08 readiness guard.
 Exit: CALPQ detects upcoming and changed obligations and produces governed next actions without rewriting history.
 
 ## M07 — Regulatory Intelligence & Radar
-Status: `PROPOSED`
+Status: `REPOSITORY-BACKED PLANNING / IMPLEMENTATION NOT ADMITTED`
 Purpose: connect changing rules and authoritative sources to affected credentials, requirements and users.
 Scope: source governance, Regulatory Radar, change events, impact analysis, effective dates, rule/source version lineage, human/legal review boundaries and explainable change notifications.
+Planning evidence: `docs/planning/M07_REGULATORY_INTELLIGENCE_RADAR_BASELINE.md` and shared M06-M08 readiness guard.
 Exit: a regulatory change can be traced from source -> affected rule -> affected credential/path -> affected subject/organization -> recommended action.
 
 ## M08 — Organization, B2B Compliance & Assignment Guard
-Status: `PROPOSED`
+Status: `REPOSITORY-BACKED PLANNING / IMPLEMENTATION NOT ADMITTED`
 Purpose: extend individual competence truth into organizations and work assignment.
 Scope: organizations, memberships, roles, delegation, professional credentials, assignment requirement profiles, B2B Assignment Guard, organization compliance projections and compliance export.
+Planning evidence: `docs/planning/M08_ORGANIZATION_B2B_ASSIGNMENT_BASELINE.md` and shared M06-M08 readiness guard.
 Exit: an organization can determine whether a specific person may be assigned to a specific governed activity, including conditions and review states.
 
 ## M09 — Trust, Selective Sharing & Interoperability
@@ -88,6 +91,7 @@ M03, M04 and M05 may partially overlap after M02 stabilizes, but no milestone ma
 ## Current project position
 - M01: architecture complete;
 - M02: full pre-implementation readiness complete, product implementation not started;
-- M03-M05: repository-backed planning baselines complete on a dedicated planning branch, implementation not admitted;
-- M06-M12: proposed roadmap only, not yet individually planning-baselined or implementation-approved;
+- M03-M05: repository-backed planning baselines complete, implementation not admitted;
+- M06-M08: repository-backed planning baselines complete on a dedicated stacked planning branch, implementation not admitted;
+- M09-M12: proposed roadmap only, not yet individually planning-baselined or implementation-approved;
 - current critical external blocker remains M00 repository governance / main protection.
