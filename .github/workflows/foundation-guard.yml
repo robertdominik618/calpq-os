@@ -37,6 +37,9 @@ jobs:
       - name: Run M00 release transition self-test
         shell: bash
         run: bash tests/m00_release_transition_test.sh
+      - name: Run GitHub main ruleset handoff self-tests
+        shell: bash
+        run: bash tests/github_main_ruleset_handoff_test.sh
       - name: Run Feature Development Gate self-tests
         shell: bash
         run: bash tests/feature_development_gate_test.sh
