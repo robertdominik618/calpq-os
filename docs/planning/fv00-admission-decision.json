@@ -1,0 +1,17 @@
+{
+  "schema_version": 1,
+  "decision_id": "CALPQ-M02-FV00-ADM-DEC-0001",
+  "admission_record_id": "CALPQ-M02-FV00-ADM-0001",
+  "candidate": "Credential Evidence -> Verification -> Eligibility -> Passport Projection",
+  "issue_number": 7,
+  "state": "BLOCKED_PENDING_PREREQUISITES",
+  "admission_transition_id": "CALPQ-FV00-ADMIT-0001",
+  "blocking_reviews": [],
+  "admitted_revision": null,
+  "admitted_by_transition": null,
+  "approved_by": null,
+  "approved_at": null,
+  "authorized_execution_entry": null,
+  "scope_boundary": "Existing FV-00/M02 execution package only; no AuthorizationGrant or excluded capability expansion",
+  "last_updated": "2026-09-14"
+}

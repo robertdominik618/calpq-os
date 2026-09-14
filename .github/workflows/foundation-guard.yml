@@ -40,6 +40,9 @@ jobs:
       - name: Run Feature Development Gate self-tests
         shell: bash
         run: bash tests/feature_development_gate_test.sh
+      - name: Run FV-00 admission self-tests
+        shell: bash
+        run: bash tests/fv00_admission_test.sh
       - name: Run M01 contract-pack guard
         shell: bash
         run: bash tests/m01_contract_pack_test.sh

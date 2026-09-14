@@ -14,6 +14,7 @@ grep -q '"change_intake": "CALPQ-PRIPOJ"' foundation/manifest.json || fail "inta
 grep -q 'Architecture before implementation' docs/foundation/CONSTITUTION.md || fail "constitution principle missing"
 
 bash scripts/feature_development_gate_check.sh >/dev/null
+bash scripts/fv00_admission_check.sh >/dev/null
 feature_state="$(jq -r '.feature_development' foundation/manifest.json)"
 
 case "$feature_state" in

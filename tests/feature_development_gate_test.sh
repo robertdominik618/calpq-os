@@ -65,7 +65,7 @@ open_feature_gate >/dev/null
 jq -e '.m00_release_status == "RELEASED" and .feature_development == "AUTHORIZED" and .quality_gates.feature_development_gate == "OPEN"' "$fixture/work/foundation/manifest.json" >/dev/null
 jq -e '.state == "OPEN" and .opened_by_transition == "CALPQ-FEATURE-GATE-OPEN-0001" and .opened_revision == "2222222222222222222222222222222222222222" and .next_gate == "FV00_FORMAL_ADMISSION"' "$fixture/work/foundation/feature-development-gate.json" >/dev/null
 (cd "$fixture/work" && bash scripts/feature_development_gate_check.sh >/dev/null && bash scripts/m00_release_gate.sh >/dev/null)
-grep -q '^`BLOCKED_PENDING_M00`$' "$fixture/work/docs/planning/FV00_VERTICAL_ADMISSION_RECORD.md"
+grep -q '^`BLOCKED_PENDING_PREREQUISITES`$' "$fixture/work/docs/planning/FV00_VERTICAL_ADMISSION_RECORD.md"
 if grep -q '^Status: .*ADMITTED_FOR_IMPLEMENTATION' "$fixture/work/docs/planning/FV00_VERTICAL_ADMISSION_RECORD.md"; then
   printf 'TEST FAIL: feature gate transition implicitly admitted FV-00\n' >&2
   exit 1
