@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "gate_id": "CALPQ-FEATURE-GATE-0001",
-  "state": "LOCKED",
+  "state": "OPEN",
   "release_decision_id": "CALPQ-M00-REL-0001",
   "opening_transition_id": "CALPQ-FEATURE-GATE-OPEN-0001",
   "approval_preconditions": [
@@ -11,10 +11,10 @@
     "CALPQ main protection remains externally observable",
     "separate explicit feature-development approval is recorded"
   ],
-  "opened_revision": null,
-  "opened_by_transition": null,
-  "approved_by": null,
-  "approved_at": null,
-  "next_gate": null,
-  "last_updated": "2026-09-14"
+  "opened_revision": "2ad43d8a9d000bd0ae90c4ecef1d314180d79ca4",
+  "opened_by_transition": "CALPQ-FEATURE-GATE-OPEN-0001",
+  "approved_by": "robertdominik618",
+  "approved_at": "2026-09-14T21:45:33Z",
+  "next_gate": "FV00_FORMAL_ADMISSION",
+  "last_updated": "2026-09-14T21:45:33Z"
 }

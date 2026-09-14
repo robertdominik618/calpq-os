@@ -4,7 +4,7 @@
   "milestone": "M00 FOUNDATION",
   "foundation_unit": "CALPQ-FND-0001",
   "foundation_development": "AUTHORIZED",
-  "feature_development": "FROZEN",
+  "feature_development": "AUTHORIZED",
   "m00_release_status": "RELEASED",
   "technology_stack": {
     "status": "APPROVED",
@@ -133,8 +133,8 @@
     "m00_release_authorization": "REQUIRED",
     "m00_release_decision": "APPROVED",
     "m00_release_gate": "REQUIRED",
-    "feature_development_gate": "LOCKED"
+    "feature_development_gate": "OPEN"
   },
   "change_intake": "CALPQ-PRIPOJ",
-  "last_updated": "2026-09-14T21:34:00Z"
+  "last_updated": "2026-09-14T21:45:33Z"
 }
