@@ -8,10 +8,18 @@ required=(
   docs/planning/M11_EXECUTION_PACKAGE.md
   docs/planning/M12_EXECUTION_PACKAGE.md
   docs/planning/M09_M12_EXECUTION_READINESS_MATRIX.md
+  docs/planning/M09_M12_BRANCH_PR_STRATEGY.md
 )
 for f in "${required[@]}"; do [[ -f "$f" ]] || fail "missing $f"; done
 
-for f in docs/planning/M0{9}_EXECUTION_PACKAGE.md docs/planning/M1{0,1,2}_EXECUTION_PACKAGE.md docs/planning/M09_M12_EXECUTION_READINESS_MATRIX.md; do
+blocked_files=(
+  docs/planning/M09_EXECUTION_PACKAGE.md
+  docs/planning/M10_EXECUTION_PACKAGE.md
+  docs/planning/M11_EXECUTION_PACKAGE.md
+  docs/planning/M12_EXECUTION_PACKAGE.md
+  docs/planning/M09_M12_EXECUTION_READINESS_MATRIX.md
+)
+for f in "${blocked_files[@]}"; do
   grep -q 'BLOCKED' "$f" || fail "$f must remain blocked"
 done
 
@@ -27,6 +35,7 @@ grep -q 'Selective-disclosure' docs/planning/M09_EXECUTION_PACKAGE.md || fail 'M
 grep -q 'What-if' docs/planning/M10_EXECUTION_PACKAGE.md || fail 'M10 what-if missing'
 grep -q 'cache' docs/planning/M11_EXECUTION_PACKAGE.md || fail 'M11 cache boundary missing'
 grep -q 'GA evidence pack' docs/planning/M12_EXECUTION_PACKAGE.md || fail 'M12 GA evidence missing'
+grep -q 'explicit evidence-backed decision' docs/planning/M09_M12_BRANCH_PR_STRATEGY.md || fail 'GA release boundary missing'
 
 grep -q '"state": "LOCKED"' foundation/feature-development-gate.json || fail 'feature gate must remain locked'
 
