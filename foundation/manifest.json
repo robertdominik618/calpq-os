@@ -22,6 +22,7 @@
     "foundation/manifest.json",
     "foundation/m00-readiness.json",
     "foundation/m00-release-decision.json",
+    "foundation/m00-release-preflight.json",
     "foundation/github-main-ruleset.json",
     "docs/foundation/CONSTITUTION.md",
     "docs/foundation/BOOK.md",
@@ -36,6 +37,7 @@
     "docs/foundation/REPOSITORY_GOVERNANCE.md",
     "docs/foundation/GITHUB_MAIN_RULESET.md",
     "docs/foundation/M00_RELEASE_GATE.md",
+    "docs/foundation/M00_RELEASE_DECISION_PREFLIGHT.md",
     "docs/foundation/M00_READINESS_AUDIT.md",
     "docs/adr/ADR-0001-technology-stack-gate.md",
     "docs/adr/ADR-0002-technology-stack-selection.md",
@@ -67,12 +69,14 @@
     "scripts/m00_readiness_audit.sh",
     "scripts/repository_governance_check.sh",
     "scripts/m00_release_authorization_check.sh",
+    "scripts/m00_release_transition.sh",
     "tests/foundation_guard_test.sh",
     "tests/m00_release_gate_test.sh",
     "tests/architecture_boundaries_test.sh",
     "tests/m00_readiness_test.sh",
     "tests/repository_governance_test.sh",
     "tests/m00_release_authorization_test.sh",
+    "tests/m00_release_transition_test.sh",
     ".github/workflows/foundation-guard.yml",
     ".github/workflows/m00-readiness.yml"
   ],
@@ -110,5 +114,5 @@
     "m00_release_gate": "REQUIRED"
   },
   "change_intake": "CALPQ-PRIPOJ",
-  "last_updated": "2026-09-13"
+  "last_updated": "2026-09-14"
 }
