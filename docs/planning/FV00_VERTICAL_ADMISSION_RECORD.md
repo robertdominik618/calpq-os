@@ -16,6 +16,8 @@ The machine-readable companion decision is `docs/planning/fv00-admission-decisio
 ## Planning readiness
 The pre-admission package is complete and machine-checked. Domain/state boundary, command/event catalog, 45-scenario acceptance matrix, 45/45 traceability and M02 planning readiness guard are present. Formal admission is intentionally deferred until the project-wide M00 prerequisites and the separate feature-development gate are satisfied.
 
+The pre-M00 planning guards and the post-M00 admission integrity checks have different responsibilities. Planning guards continue to prove that the repository is correctly blocked while M00/feature development are closed. At the later admission boundary, the state-neutral `m01_preimplementation_integrity_test.sh` and `m02_preimplementation_integrity_test.sh` re-prove that the reviewed design package, traceability and batch definitions remain intact without falsely requiring M00 to still be blocked.
+
 ## Purpose
 Prove the CALPQ architecture end-to-end using the smallest useful regulated flow that exercises identity, immutable evidence, verification, eligibility, projection, Application orchestration, persistence, tenant isolation, access governance and auditability without issuing or mutating `AuthorizationGrant`.
 
@@ -49,12 +51,15 @@ All must be true before this record may change to `ADMITTED_FOR_IMPLEMENTATION`:
 - G6 PASS and `CALPQ main protection` still externally observable;
 - explicit M00 release decision recorded as `APPROVED` and M00 state `RELEASED`;
 - Feature Development Gate `OPEN` and feature development `AUTHORIZED`;
-- Foundation and active M01 guards green on the implementation base;
-- M02 planning readiness and M02 batch execution readiness green;
+- latest pre-release Foundation/M01/M02 planning guards green on the reviewed base;
+- post-release `M01 PREIMPLEMENTATION INTEGRITY` green;
+- post-release `M02 PREIMPLEMENTATION INTEGRITY` green;
+- no product implementation source created before formal FV-00 admission;
 - no unresolved legal/security/privacy/source blocker represented in the FV-00 decision record;
 - domain/state boundary accepted;
 - command/event catalog accepted;
 - 45-scenario acceptance matrix mapped to executable implementation tests;
+- 60/60 M02 batch-readiness criteria remain structurally intact;
 - no scope expansion into AuthorizationGrant or excluded capabilities;
 - governance issue #7 open at the point of admission;
 - separate explicit FV-00 approval token and approving identity.

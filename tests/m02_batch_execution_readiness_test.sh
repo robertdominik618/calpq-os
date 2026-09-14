@@ -36,7 +36,7 @@ grep -q 'CredentialArtifact never implies AuthorizationGrant' docs/planning/M02_
 grep -q 'OCR/AI extraction never becomes VERIFIED by confidence alone' docs/planning/M02_BATCH_B_APPLICATION_EVIDENCE_EXECUTION.md || fail 'Batch B extraction boundary missing'
 grep -q 'SATISFIED is an eligibility result, not an AuthorizationGrant' docs/planning/M02_BATCH_C_DECISION_RUNTIME_EXECUTION.md || fail 'Batch C grant boundary missing'
 
-grep -q '"state": "LOCKED"' foundation/feature-development-gate.json || fail 'feature-development gate must remain locked'
-grep -q '^`BLOCKED_PENDING_M00`$' docs/planning/FV00_VERTICAL_ADMISSION_RECORD.md || fail 'FV-00 must remain blocked pending M00'
+grep -q '"state": "LOCKED"' foundation/feature-development-gate.json || fail 'feature-development gate must remain locked in planning-readiness state'
+grep -q '^`BLOCKED_PENDING_PREREQUISITES`$' docs/planning/FV00_VERTICAL_ADMISSION_RECORD.md || fail 'FV-00 must remain blocked pending governance prerequisites'
 
 printf 'M02 BATCH EXECUTION READINESS: PASS / A-B-C READY / 60 OF 60 CRITERIA / IMPLEMENTATION BLOCKED\n'

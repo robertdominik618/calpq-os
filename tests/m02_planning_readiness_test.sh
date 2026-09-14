@@ -48,7 +48,7 @@ scenario_count="$(grep -Ec '^[0-9]+\.' docs/planning/M02_FIRST_VERTICAL_ACCEPTAN
 [[ "$scenario_count" -eq 45 ]] || fail "acceptance matrix must contain 45 scenarios"
 
 tmp="$(mktemp)"; trap 'rm -f "$tmp"' EXIT
-grep -hEo '"[0-9]+":' docs/planning/traceability/FV00_TRC_*.json | tr -d '":' | sort -n > "$tmp"
+grep -hEo '"[0-9]+":' docs/planning/traceability/FV00_TRC_*.json | tr -d '\":' | sort -n > "$tmp"
 for n in $(seq 1 45); do
   count="$(grep -xc "$n" "$tmp" || true)"
   [[ "$count" -eq 1 ]] || fail "scenario $n traceability count is $count, expected 1"
@@ -58,8 +58,8 @@ extra="$(awk '$1 < 1 || $1 > 45 {print; exit}' "$tmp")"
 
 for n in $(seq -w 0 15); do grep -q "FV-${n}" docs/planning/M02_FIRST_VERTICAL_BACKLOG.md || fail "missing FV-${n} backlog item"; done
 
-grep -q '^`BLOCKED_PENDING_M00`$' docs/planning/FV00_VERTICAL_ADMISSION_RECORD.md || fail "FV-00 must remain blocked pending M00"
-grep -q '"state": "LOCKED"' foundation/feature-development-gate.json || fail "feature gate must remain locked"
+grep -q '^`BLOCKED_PENDING_PREREQUISITES`$' docs/planning/FV00_VERTICAL_ADMISSION_RECORD.md || fail "FV-00 must remain blocked pending governance prerequisites"
+grep -q '"state": "LOCKED"' foundation/feature-development-gate.json || fail "feature gate must remain locked in the planning-readiness state"
 
 blocked_files=(FV01_IMPLEMENTATION_CONTRACT.md FV01_TEST_CONTRACT.md FV02_IMPLEMENTATION_CONTRACT.md FV02_TEST_CONTRACT.md FV03_IMPLEMENTATION_CONTRACT.md FV03_TEST_INDEX.md FV04_IMPLEMENTATION_CONTRACT.md FV04_TEST_CONTRACT.md FV05_IMPLEMENTATION_CONTRACT.md FV05_TEST_CONTRACT.md FV06_IMPLEMENTATION_CONTRACT.md FV06_TEST_INDEX.md FV07_IMPLEMENTATION_CONTRACT.md FV07_TEST_INDEX.md FV08_IMPLEMENTATION_CONTRACT.md FV08_TEST_INDEX.md FV09_IMPLEMENTATION_CONTRACT.md FV09_TEST_INDEX.md FV10_IMPLEMENTATION_CONTRACT.md FV10_TEST_INDEX.md FV11_IMPLEMENTATION_CONTRACT.md FV11_TEST_INDEX.md FV12_IMPLEMENTATION_CONTRACT.md FV12_TEST_INDEX.md FV13_IMPLEMENTATION_CONTRACT.md FV13_TEST_INDEX.md FV14_IMPLEMENTATION_CONTRACT.md FV14_CHECKLIST.md FV15_IMPLEMENTATION_CONTRACT.md FV15_TEST_INDEX.md)
 for f in "${blocked_files[@]}"; do grep -q 'BLOCKED' "docs/planning/$f" || fail "$f must remain blocked"; done

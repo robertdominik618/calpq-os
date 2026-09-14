@@ -22,10 +22,8 @@ bash scripts/m00_release_gate.sh >/dev/null
 bash scripts/repository_governance_check.sh >/dev/null
 bash scripts/feature_development_gate_check.sh >/dev/null
 bash scripts/fv00_admission_check.sh >/dev/null
-bash tests/m01_contract_pack_test.sh >/dev/null
-bash tests/m01_credential_domain_test.sh >/dev/null
-bash tests/m02_planning_readiness_test.sh >/dev/null
-bash tests/m02_batch_execution_readiness_test.sh >/dev/null
+bash tests/m01_preimplementation_integrity_test.sh >/dev/null
+bash tests/m02_preimplementation_integrity_test.sh >/dev/null
 
 jq -e '.m00_release_status == "RELEASED" and .feature_development == "AUTHORIZED" and .quality_gates.feature_development_gate == "OPEN"' foundation/manifest.json >/dev/null \
   || fail "project-wide implementation prerequisites are not open"
