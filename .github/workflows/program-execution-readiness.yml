@@ -1,0 +1,21 @@
+name: Program Execution Readiness
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  program-execution-readiness:
+    name: M02-M12 program execution readiness
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Run program execution readiness guard
+        shell: bash
+        run: bash tests/program_execution_readiness_test.sh

@@ -1,0 +1,21 @@
+name: M02 Batch Readiness
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  batch-readiness:
+    name: M02 batch readiness
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Run batch readiness guard
+        shell: bash
+        run: bash tests/m02_batch_execution_readiness_test.sh
