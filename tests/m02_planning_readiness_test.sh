@@ -11,6 +11,8 @@ required=(
   docs/planning/FV00_DOMAIN_STATE_BOUNDARY.md
   docs/planning/FV00_COMMAND_EVENT_CATALOG.md
   docs/planning/FV00_TRACEABILITY_INDEX.md
+  docs/planning/FV01_IMPLEMENTATION_CONTRACT.md
+  docs/planning/FV01_TEST_CONTRACT.md
 )
 for f in "${required[@]}"; do [[ -f "$f" ]] || fail "missing $f"; done
 
@@ -33,4 +35,12 @@ done
 grep -q '^`BLOCKED_PENDING_M00`$' docs/planning/FV00_VERTICAL_ADMISSION_RECORD.md || fail "FV-00 must remain blocked pending M00"
 grep -q '"state": "LOCKED"' foundation/feature-development-gate.json || fail "feature gate must remain locked"
 
-printf 'M02 PLANNING READINESS: PASS / 45 OF 45 TRACEABLE / FV-00 BLOCKED_PENDING_M00\n'
+grep -q 'Status: `PLANNING ONLY / BLOCKED`' docs/planning/FV01_IMPLEMENTATION_CONTRACT.md || fail "FV-01 implementation contract must remain blocked"
+grep -q 'Status: `PLANNING ONLY / BLOCKED`' docs/planning/FV01_TEST_CONTRACT.md || fail "FV-01 test contract must remain blocked"
+fv01_test_count="$(grep -Ec '^[0-9]+\.' docs/planning/FV01_TEST_CONTRACT.md)"
+[[ "$fv01_test_count" -eq 21 ]] || fail "FV-01 test contract must contain 21 mandatory tests"
+grep -q 'UUIDv7' docs/planning/FV01_IMPLEMENTATION_CONTRACT.md || fail "FV-01 UUIDv7 contract missing"
+grep -q 'Actor and Subject' docs/planning/FV01_IMPLEMENTATION_CONTRACT.md || fail "FV-01 actor/subject separation missing"
+grep -q '@calpq/core' docs/planning/FV01_IMPLEMENTATION_CONTRACT.md || fail "FV-01 core package boundary missing"
+
+printf 'M02 PLANNING READINESS: PASS / FV-00 45 OF 45 TRACEABLE / FV-01 CONTRACT READY BUT BLOCKED\n'
