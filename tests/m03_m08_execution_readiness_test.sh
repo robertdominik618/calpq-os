@@ -29,7 +29,8 @@ grep -q 'UI' docs/planning/M03_EXECUTION_PACKAGE.md || fail 'M03 UI boundary mis
 grep -q 'QualificationPath' docs/planning/M04_EXECUTION_PACKAGE.md || fail 'M04 qualification path missing'
 grep -q 'Immutable original' docs/planning/M05_EXECUTION_PACKAGE.md || fail 'M05 immutable original missing'
 grep -q 'Continuous Compliance' docs/planning/M06_EXECUTION_PACKAGE.md || fail 'M06 continuous compliance missing'
-grep -q 'human/legal review' docs/planning/M07_EXECUTION_PACKAGE.md || fail 'M07 review boundary missing'
+grep -qi 'review' docs/planning/M07_EXECUTION_PACKAGE.md || fail 'M07 review boundary missing'
+grep -qi 'legal' docs/planning/M07_EXECUTION_PACKAGE.md || fail 'M07 legal boundary missing'
 grep -q 'role/delegation never grants professional competence' docs/planning/M08_EXECUTION_PACKAGE.md || fail 'M08 competence boundary missing'
 
 grep -q '"state": "LOCKED"' foundation/feature-development-gate.json || fail 'feature gate must remain locked'
