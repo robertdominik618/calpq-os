@@ -1,8 +1,15 @@
 #!/usr/bin/env bash
 set -euo pipefail
 repo_root="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+source "$repo_root/tests/helpers/governance_fixture.sh"
 fixture="$(mktemp -d)"; trap 'rm -rf "$fixture"' EXIT
-copy_fixture() { rm -rf "$fixture/work"; mkdir -p "$fixture/work"; cp -R "$repo_root/." "$fixture/work/"; rm -rf "$fixture/work/.git" "$fixture/work/node_modules"; }
+copy_fixture() {
+  rm -rf "$fixture/work"
+  mkdir -p "$fixture/work"
+  cp -R "$repo_root/." "$fixture/work/"
+  rm -rf "$fixture/work/.git" "$fixture/work/node_modules"
+  calpq_reset_governance_fixture "$fixture/work"
+}
 run_gate() { (cd "$fixture/work" && bash scripts/m00_release_gate.sh); }
 reject() { local name="$1"; if run_gate >/dev/null 2>&1; then echo "TEST FAIL: $name" >&2; exit 1; fi; echo "TEST PASS: rejected $name"; }
 

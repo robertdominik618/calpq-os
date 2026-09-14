@@ -8,17 +8,28 @@ assert_contains() {
   grep -Fq "$needle" <<< "$haystack" || fail "expected output missing: $needle"
 }
 
+repo_root="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+source "$repo_root/tests/helpers/governance_fixture.sh"
 tmpdir="$(mktemp -d)"
 trap 'rm -rf "$tmpdir"' EXIT
 
-cp foundation/manifest.json "$tmpdir/manifest.json"
-cp foundation/m00-release-decision.json "$tmpdir/m00-release-decision.json"
-cp foundation/feature-development-gate.json "$tmpdir/feature-development-gate.json"
-cp docs/planning/fv00-admission-decision.json "$tmpdir/fv00-admission-decision.json"
-cp "$tmpdir/manifest.json" "$tmpdir/manifest.base.json"
-cp "$tmpdir/m00-release-decision.json" "$tmpdir/m00-release-decision.base.json"
-cp "$tmpdir/feature-development-gate.json" "$tmpdir/feature-development-gate.base.json"
-cp "$tmpdir/fv00-admission-decision.json" "$tmpdir/fv00-admission-decision.base.json"
+mkdir -p "$tmpdir/base/foundation" "$tmpdir/base/docs/planning"
+cp foundation/manifest.json "$tmpdir/base/foundation/manifest.json"
+cp foundation/m00-release-decision.json "$tmpdir/base/foundation/m00-release-decision.json"
+cp foundation/m00-release-preflight.json "$tmpdir/base/foundation/m00-release-preflight.json"
+cp foundation/feature-development-gate.json "$tmpdir/base/foundation/feature-development-gate.json"
+cp docs/planning/fv00-admission-decision.json "$tmpdir/base/docs/planning/fv00-admission-decision.json"
+cp docs/planning/FV00_VERTICAL_ADMISSION_RECORD.md "$tmpdir/base/docs/planning/FV00_VERTICAL_ADMISSION_RECORD.md"
+calpq_reset_governance_fixture "$tmpdir/base"
+
+cp "$tmpdir/base/foundation/manifest.json" "$tmpdir/manifest.base.json"
+cp "$tmpdir/base/foundation/m00-release-decision.json" "$tmpdir/m00-release-decision.base.json"
+cp "$tmpdir/base/foundation/feature-development-gate.json" "$tmpdir/feature-development-gate.base.json"
+cp "$tmpdir/base/docs/planning/fv00-admission-decision.json" "$tmpdir/fv00-admission-decision.base.json"
+cp "$tmpdir/manifest.base.json" "$tmpdir/manifest.json"
+cp "$tmpdir/m00-release-decision.base.json" "$tmpdir/m00-release-decision.json"
+cp "$tmpdir/feature-development-gate.base.json" "$tmpdir/feature-development-gate.json"
+cp "$tmpdir/fv00-admission-decision.base.json" "$tmpdir/fv00-admission-decision.json"
 
 cat > "$tmpdir/branch-pass.json" <<'JSON'
 {"name":"main","protected":true}
@@ -51,18 +62,10 @@ cat > "$tmpdir/ruleset-detail.json" <<'JSON'
   ]
 }
 JSON
-cat > "$tmpdir/issue2-open.json" <<'JSON'
-{"number":2,"state":"open"}
-JSON
-cat > "$tmpdir/issue2-closed.json" <<'JSON'
-{"number":2,"state":"closed"}
-JSON
-cat > "$tmpdir/issue7-open.json" <<'JSON'
-{"number":7,"state":"open"}
-JSON
-cat > "$tmpdir/issue7-closed.json" <<'JSON'
-{"number":7,"state":"closed"}
-JSON
+printf '%s\n' '{"number":2,"state":"open"}' > "$tmpdir/issue2-open.json"
+printf '%s\n' '{"number":2,"state":"closed"}' > "$tmpdir/issue2-closed.json"
+printf '%s\n' '{"number":7,"state":"open"}' > "$tmpdir/issue7-open.json"
+printf '%s\n' '{"number":7,"state":"closed"}' > "$tmpdir/issue7-closed.json"
 
 export CALPQ_MANIFEST_FILE="$tmpdir/manifest.json"
 export CALPQ_M00_DECISION_FILE="$tmpdir/m00-release-decision.json"
@@ -103,11 +106,8 @@ set_admitted() {
 }
 
 state_digest() {
-  sha256sum \
-    "$tmpdir/manifest.json" \
-    "$tmpdir/m00-release-decision.json" \
-    "$tmpdir/feature-development-gate.json" \
-    "$tmpdir/fv00-admission-decision.json" | sha256sum | awk '{print $1}'
+  sha256sum "$tmpdir/manifest.json" "$tmpdir/m00-release-decision.json" "$tmpdir/feature-development-gate.json" "$tmpdir/fv00-admission-decision.json" \
+    | sha256sum | awk '{print $1}'
 }
 
 run_read_only() {
@@ -123,7 +123,6 @@ run_read_only() {
   ORCH_STATUS="$status"
 }
 
-# 1. Current canonical pre-release state + missing protection -> external governance action.
 reset_state
 export CALPQ_BRANCH_METADATA_FILE="$tmpdir/branch-fail.json"
 export CALPQ_M00_BLOCKER_FILE="$tmpdir/issue2-open.json"
@@ -132,52 +131,44 @@ run_read_only
 assert_contains "$ORCH_OUTPUT" "CALPQ_NEXT_ACTION=REPOSITORY_GOVERNANCE"
 assert_contains "$ORCH_OUTPUT" "CALPQ_MUTATION=NONE"
 
-# 2. Protection passes but blocker issue remains open -> close blocker only.
 export CALPQ_BRANCH_METADATA_FILE="$tmpdir/branch-pass.json"
 run_read_only
 [[ "$ORCH_STATUS" -eq 0 ]] || fail "open blocker state should be resolvable"
 assert_contains "$ORCH_OUTPUT" "CALPQ_NEXT_ACTION=CLOSE_M00_BLOCKER"
 
-# 3. Protection passes and blocker is closed -> explicit M00 release decision is next.
 export CALPQ_M00_BLOCKER_FILE="$tmpdir/issue2-closed.json"
 run_read_only
 [[ "$ORCH_STATUS" -eq 0 ]] || fail "M00 release-ready state should be resolvable"
 assert_contains "$ORCH_OUTPUT" "CALPQ_NEXT_ACTION=M00_RELEASE"
 
-# 4. M00 is released but feature gate is still locked -> feature gate approval only.
 set_post_m00
 run_read_only
 [[ "$ORCH_STATUS" -eq 0 ]] || fail "post-M00 state should be resolvable"
 assert_contains "$ORCH_OUTPUT" "CALPQ_NEXT_ACTION=FEATURE_DEVELOPMENT_GATE"
 
-# 5. Feature gate is open but FV-00 is not admitted -> formal FV-00 admission only.
 set_pre_fv00
 export CALPQ_FV00_ISSUE_FILE="$tmpdir/issue7-open.json"
 run_read_only
 [[ "$ORCH_STATUS" -eq 0 ]] || fail "pre-FV00 state should be resolvable"
 assert_contains "$ORCH_OUTPUT" "CALPQ_NEXT_ACTION=FV00_FORMAL_ADMISSION"
 
-# 6. Formal admission authorizes exactly M02_BATCH_A_FV01.
 set_admitted
 run_read_only
 [[ "$ORCH_STATUS" -eq 0 ]] || fail "admitted state should be resolvable"
 assert_contains "$ORCH_OUTPUT" "CALPQ_NEXT_ACTION=M02_BATCH_A_FV01"
 
-# 7. Impossible cross-gate state must fail closed.
 reset_state
 jq '.feature_development = "AUTHORIZED"' "$tmpdir/manifest.json" > "$tmpdir/x" && mv "$tmpdir/x" "$tmpdir/manifest.json"
 run_read_only
 [[ "$ORCH_STATUS" -ne 0 ]] || fail "invalid cross-gate state was accepted"
 assert_contains "$ORCH_OUTPUT" "invalid cross-gate state"
 
-# 8. Governance regression after M00 release must fail closed.
 set_post_m00
 export CALPQ_BRANCH_METADATA_FILE="$tmpdir/branch-fail.json"
 run_read_only
 [[ "$ORCH_STATUS" -ne 0 ]] || fail "post-release governance regression was accepted"
 assert_contains "$ORCH_OUTPUT" "CALPQ_NEXT_ACTION=REPOSITORY_GOVERNANCE_REGRESSION"
 
-# 9. FV-00 issue must still be open immediately before formal admission.
 set_pre_fv00
 export CALPQ_BRANCH_METADATA_FILE="$tmpdir/branch-pass.json"
 export CALPQ_FV00_ISSUE_FILE="$tmpdir/issue7-closed.json"

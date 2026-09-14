@@ -2,6 +2,7 @@
 set -euo pipefail
 
 repo_root="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+source "$repo_root/tests/helpers/governance_fixture.sh"
 fixture="$(mktemp -d)"
 trap 'rm -rf "$fixture"' EXIT
 
@@ -10,6 +11,7 @@ prepare() {
   mkdir -p "$fixture/work"
   cp -R "$repo_root/." "$fixture/work/"
   rm -rf "$fixture/work/.git" "$fixture/work/node_modules"
+  calpq_reset_governance_fixture "$fixture/work"
   printf '%s\n' '{"name":"main","protected":true}' > "$fixture/branch.json"
   printf '%s\n' '[{"id":101,"name":"CALPQ main protection","target":"branch","enforcement":"active"}]' > "$fixture/rulesets.json"
   cat > "$fixture/ruleset.json" <<'JSON'
