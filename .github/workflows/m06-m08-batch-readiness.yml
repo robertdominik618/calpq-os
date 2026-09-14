@@ -1,0 +1,21 @@
+name: M06-M08 Batch Readiness
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  readiness:
+    name: M06-M08 delivery batch readiness
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Run M06-M08 delivery batch readiness
+        shell: bash
+        run: bash tests/m06_m08_batch_readiness_test.sh
