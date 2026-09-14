@@ -5,7 +5,7 @@
   "foundation_unit": "CALPQ-FND-0001",
   "foundation_development": "AUTHORIZED",
   "feature_development": "FROZEN",
-  "m00_release_status": "BLOCKED",
+  "m00_release_status": "RELEASED",
   "technology_stack": {
     "status": "APPROVED",
     "decision": "ADR-0002",
@@ -125,13 +125,13 @@
     "legal_boundary": "REQUIRED",
     "technology_selection": "APPROVED",
     "technology_bootstrap": "AUTHORIZED",
-    "repository_governance": "REQUIRED",
+    "repository_governance": "PASS",
     "m00_readiness_audit": "REQUIRED",
     "m00_release_authorization": "REQUIRED",
-    "m00_release_decision": "PENDING",
+    "m00_release_decision": "APPROVED",
     "m00_release_gate": "REQUIRED",
     "feature_development_gate": "LOCKED"
   },
   "change_intake": "CALPQ-PRIPOJ",
-  "last_updated": "2026-09-14"
+  "last_updated": "2026-09-14T21:21:38Z"
 }
