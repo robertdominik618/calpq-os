@@ -15,6 +15,7 @@
     "test:fv05": "node --test test/fv05-credential-artifact.test.ts",
     "test:m04s01": "node --test test/m04-s01-activity-profession-catalog.test.ts",
     "test:m04s02": "node --test test/m04-s02-credential-requirement-catalog.test.ts",
+    "test:m04s03": "node --test test/m04-s03-requirement-set-versioning.test.ts",
     "typecheck": "npx --yes --package=typescript@7.0.2 -- tsc -p tsconfig.json"
   }
 }

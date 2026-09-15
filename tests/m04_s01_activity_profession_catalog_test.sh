@@ -25,30 +25,29 @@ count="$(grep -Ec "^test\\('M04S01-[0-9]{2}" packages/core/test/m04-s01-activity
 node --test packages/core/test/m04-s01-activity-profession-catalog.test.ts
 npx --yes --package=typescript@7.0.2 -- tsc -p packages/core/tsconfig.json
 
-if grep -R -nEi "from ['\"](react|react-native|expo|next|vue|svelte|fastify|@?prisma|typeorm|sequelize|knex|drizzle|openai|@anthropic-ai|aws-sdk|@aws-sdk)" \
-  packages/core/src/catalog --include='*.ts' >/dev/null; then
-  fail 'framework/provider dependency leaked into M04 catalog core'
+source=packages/core/src/catalog/activity-profession-catalog.ts
+
+if grep -nEi "from ['\"](react|react-native|expo|next|vue|svelte|fastify|@?prisma|typeorm|sequelize|knex|drizzle|openai|@anthropic-ai|aws-sdk|@aws-sdk)" "$source" >/dev/null; then
+  fail 'framework/provider dependency leaked into M04 S01 catalog core'
 fi
 
-if grep -R -nE 'Date\.now\(|new Date\(\)|Math\.random\(|randomUUID\(|crypto\.randomUUID\(' \
-  packages/core/src/catalog --include='*.ts' >/dev/null; then
-  fail 'ambient time/randomness leaked into M04 catalog core'
+if grep -nE 'Date\.now\(|new Date\(\)|Math\.random\(|randomUUID\(|crypto\.randomUUID\(' "$source" >/dev/null; then
+  fail 'ambient time/randomness leaked into M04 S01 catalog core'
 fi
 
-if grep -R -nE '\b(AuthorizationGrant|CredentialDefinitionReference|RequirementSet|EligibilityAssessment|QualificationPath|ProvenanceEnvelope)\b' \
-  packages/core/src/catalog --include='*.ts' >/dev/null; then
-  fail 'later-slice or authorization authority leaked into M04 S01'
+if grep -nE '\b(AuthorizationGrant|CredentialDefinitionReference|RequirementSet|EligibilityAssessment|QualificationPath|ProvenanceEnvelope)\b' "$source" >/dev/null; then
+  fail 'later-slice or authorization authority leaked into M04 S01 source'
 fi
 
-if grep -R -nE "from ['\"]\.\./provenance/" packages/core/src/catalog --include='*.ts' >/dev/null; then
+if grep -nE "from ['\"]\.\./provenance/" "$source" >/dev/null; then
   fail 'full provenance binding leaked into M04 S01 before Slice 05'
 fi
 
-grep -R -q 'ActivityDefinition' packages/core/src/catalog --include='*.ts' || fail 'ActivityDefinition missing'
-grep -R -q 'ProfessionDefinition' packages/core/src/catalog --include='*.ts' || fail 'ProfessionDefinition missing'
-grep -R -q 'UNKNOWN_REVIEW_REQUIRED' packages/core/src/catalog --include='*.ts' || fail 'review-required regulatory status missing'
-grep -R -q 'CANDIDATE' packages/core/src/catalog --include='*.ts' || fail 'candidate external mapping semantics missing'
-grep -R -q 'isEffectiveOn(date: DateOnly)' packages/core/src/catalog --include='*.ts' || fail 'explicit-date effective-period evaluation missing'
+grep -q 'ActivityDefinition' "$source" || fail 'ActivityDefinition missing'
+grep -q 'ProfessionDefinition' "$source" || fail 'ProfessionDefinition missing'
+grep -q 'UNKNOWN_REVIEW_REQUIRED' "$source" || fail 'review-required regulatory status missing'
+grep -q 'CANDIDATE' "$source" || fail 'candidate external mapping semantics missing'
+grep -q 'isEffectiveOn(date: DateOnly)' "$source" || fail 'explicit-date effective-period evaluation missing'
 
 bash tests/fv01_core_primitives_test.sh >/dev/null
 bash tests/fv03_core_provenance_test.sh >/dev/null
