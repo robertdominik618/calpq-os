@@ -1,0 +1,84 @@
+name: M04 Admission
+
+on:
+  push:
+    paths:
+      - 'docs/planning/M04_ADMISSION_RECORD.md'
+      - 'docs/planning/m04-admission-decision.json'
+      - 'docs/planning/M04_EXECUTION_PACKAGE.md'
+      - 'docs/planning/M04_CATALOG_PATHS_GAP_BASELINE.md'
+      - 'docs/planning/M02_EXIT_EVIDENCE.md'
+      - 'docs/planning/M03_EXIT_EVIDENCE.md'
+      - 'docs/contracts/ACTIVITY_PROFESSION_CREDENTIAL_CATALOG.md'
+      - 'docs/contracts/QUALIFICATION_PATH_MODEL.md'
+      - 'docs/contracts/EQUIVALENCE_RECOGNITION_MODEL.md'
+      - 'docs/contracts/GAP_NAVIGATOR_MODEL.md'
+      - 'packages/core/src/eligibility/**'
+      - 'packages/core/src/provenance/**'
+      - 'packages/core/src/result/**'
+      - 'packages/core/src/ids.ts'
+      - 'packages/core/src/jurisdiction.ts'
+      - 'packages/core/src/version.ts'
+      - 'packages/core/src/time.ts'
+      - 'docs/planning/M05_EXECUTION_PACKAGE.md'
+      - 'docs/planning/M06_EXECUTION_PACKAGE.md'
+      - 'docs/planning/M07_EXECUTION_PACKAGE.md'
+      - 'docs/planning/M08_EXECUTION_PACKAGE.md'
+      - 'tests/m04_admission_test.sh'
+      - 'tests/m03_admission_test.sh'
+      - 'tests/m03_m08_execution_readiness_test.sh'
+      - '.github/workflows/m04-admission.yml'
+      - '.github/workflows/m03-admission.yml'
+      - 'scripts/governance_lifecycle_phase.sh'
+  pull_request:
+    paths:
+      - 'docs/planning/M04_ADMISSION_RECORD.md'
+      - 'docs/planning/m04-admission-decision.json'
+      - 'docs/planning/M04_EXECUTION_PACKAGE.md'
+      - 'docs/planning/M04_CATALOG_PATHS_GAP_BASELINE.md'
+      - 'docs/planning/M02_EXIT_EVIDENCE.md'
+      - 'docs/planning/M03_EXIT_EVIDENCE.md'
+      - 'docs/contracts/ACTIVITY_PROFESSION_CREDENTIAL_CATALOG.md'
+      - 'docs/contracts/QUALIFICATION_PATH_MODEL.md'
+      - 'docs/contracts/EQUIVALENCE_RECOGNITION_MODEL.md'
+      - 'docs/contracts/GAP_NAVIGATOR_MODEL.md'
+      - 'packages/core/src/eligibility/**'
+      - 'packages/core/src/provenance/**'
+      - 'packages/core/src/result/**'
+      - 'packages/core/src/ids.ts'
+      - 'packages/core/src/jurisdiction.ts'
+      - 'packages/core/src/version.ts'
+      - 'packages/core/src/time.ts'
+      - 'docs/planning/M05_EXECUTION_PACKAGE.md'
+      - 'docs/planning/M06_EXECUTION_PACKAGE.md'
+      - 'docs/planning/M07_EXECUTION_PACKAGE.md'
+      - 'docs/planning/M08_EXECUTION_PACKAGE.md'
+      - 'tests/m04_admission_test.sh'
+      - 'tests/m03_admission_test.sh'
+      - 'tests/m03_m08_execution_readiness_test.sh'
+      - '.github/workflows/m04-admission.yml'
+      - '.github/workflows/m03-admission.yml'
+      - 'scripts/governance_lifecycle_phase.sh'
+
+permissions:
+  contents: read
+
+jobs:
+  m04-admission:
+    name: Verify M04 admission
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+      - name: Verify M04 admission transition
+        shell: bash
+        run: bash tests/m04_admission_test.sh
+      - name: Verify prior M03 admission remains coherent
+        shell: bash
+        run: bash tests/m03_admission_test.sh
+      - name: Verify M03-M08 readiness remains coherent
+        shell: bash
+        run: bash tests/m03_m08_execution_readiness_test.sh

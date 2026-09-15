@@ -2,5 +2,25 @@
   "name": "@calpq/application",
   "version": "0.0.0",
   "private": true,
-  "type": "module"
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts",
+    "./test-support": "./test-support/index.ts"
+  },
+  "scripts": {
+    "test:fv06": "node --test test/fv06-application-context.test.ts",
+    "test:fv07": "node --test test/fv07-persistence.test.ts",
+    "test:fv09": "node --test test/fv09-document-intake.test.ts",
+    "test:m03s01": "node --test test/m03-s01-dashboard.test.ts",
+    "test:m03s02": "node --test test/m03-s02-passport-summary.test.ts",
+    "test:m03s03": "node --test test/m03-s03-credential-card.test.ts",
+    "test:m03s04": "node --test test/m03-s04-explanation.test.ts",
+    "test:m03s05": "node --test test/m03-s05-timeline.test.ts",
+    "test:m03s06": "node --test test/m03-s06-guidance.test.ts",
+    "test:m03s07": "node --test test/m03-s07-search.test.ts",
+    "test:m03s08": "node --test test/m03-s08-responsive.test.ts",
+    "test:m03s09": "node --test test/m03-s09-accessibility-localization.test.ts",
+    "test:m03s10": "node --test test/m03-s10-integration-ux-boundary.test.ts",
+    "typecheck": "npx --yes --package=typescript@7.0.2 -- tsc -p tsconfig.json"
+  }
 }

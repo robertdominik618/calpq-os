@@ -1,6 +1,6 @@
 # FV-11 Test Index
 
-Status: `PLANNING ONLY / BLOCKED`
+Status: `24 OF 24 EXECUTABLE / VERIFIED`
 
 Mandatory count: 24.
 
@@ -28,3 +28,11 @@ Mandatory count: 24.
 22. historical-immutable
 23. eligibility-not-grant
 24. architecture-boundary
+
+## Verified evidence
+
+`packages/core/test/fv11-eligibility.test.ts` maps one-to-one to FV11-01..FV11-24. `packages/core/test/fv11-types.compile.ts` proves nominal separation for CredentialDefinitionId, RequirementSetId and EligibilityAssessmentId and compile-time immutability of assessments, atomic results and RequirementSet members.
+
+`tests/fv11_eligibility_test.sh` enforces the admitted lifecycle, exactly 24 mandatory tests, TypeScript compilation, zero Core runtime dependencies, forbidden framework/provider/persistence imports, no ambient wall-clock/randomness, no AuthorizationGrant leakage, FV-10 regression evidence and the global architecture boundary.
+
+Final verified evidence head: `689de613e91d4454debcb3d5bdc9e53e492a7358`. Dedicated workflow `FV-11 Eligibility Assessment #6` SUCCESS. Foundation Guard #907 and M02 Batch Readiness #195 SUCCESS. No mandatory test was waived or deferred.

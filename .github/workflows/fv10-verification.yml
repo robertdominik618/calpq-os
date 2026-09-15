@@ -1,0 +1,37 @@
+name: FV-10 Verification Orchestration
+
+on:
+  push:
+    paths:
+      - 'packages/application/src/verification/**'
+      - 'packages/application/test/fv10-*'
+      - 'tests/fv10_verification_test.sh'
+      - '.github/workflows/fv10-verification.yml'
+      - 'scripts/governance_lifecycle_phase.sh'
+  pull_request:
+    paths:
+      - 'packages/application/src/verification/**'
+      - 'packages/application/test/fv10-*'
+      - 'tests/fv10_verification_test.sh'
+      - '.github/workflows/fv10-verification.yml'
+      - 'scripts/governance_lifecycle_phase.sh'
+
+permissions:
+  contents: read
+
+jobs:
+  fv10-verification:
+    name: FV-10 verification orchestration
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Set up Node.js 24 LTS
+        uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version-file: .node-version
+      - name: Run FV-10 verification evidence
+        shell: bash
+        run: bash tests/fv10_verification_test.sh

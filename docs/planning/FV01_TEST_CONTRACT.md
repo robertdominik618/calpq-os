@@ -1,6 +1,6 @@
 # CALPQ FV-01 Test Contract
 
-Status: `PLANNING ONLY / BLOCKED`
+Status: `21 OF 21 EXECUTABLE / VERIFIED`
 ID: `CALPQ-M02-FV01-TEST-0001`
 
 ## Purpose
@@ -46,3 +46,13 @@ FV-01 cannot be closed with a mandatory test waived. If a listed primitive is de
 
 ## Required evidence
 The FV-01 completion change must include implementation and tests together, plus a green dependency/boundary check and all active project guards.
+
+## Verified executable evidence
+- `packages/core/test/fv01-primitives.test.ts` contains exactly 21 runtime tests mapped one-to-one to FV01-01..FV01-21.
+- `packages/core/test/fv01-types.compile.ts` proves nominal compile-time separation for `SubjectId`/`CredentialId` and `ActorReference`/`SubjectReference`.
+- `tests/fv01_core_primitives_test.sh` enforces the admitted lifecycle, exactly 21 mandatory tests, TypeScript compilation, zero runtime dependencies, forbidden-import checks, no global wall-clock/randomness and no later-phase aggregate leakage.
+- `.github/workflows/fv01-core.yml` executes the evidence under pinned Node 24 and pinned GitHub Actions.
+- `FV-01 Core Primitives #3` is SUCCESS on `bfc0ecbe6ad15936d3e0445f4da1ad9ee610f654`.
+- Foundation Guard #811 and every active project readiness workflow are SUCCESS on the same head.
+
+Mandatory test result: **21/21 PASS, 0 waived, 0 deferred, 0 scope exceptions.**

@@ -22,6 +22,12 @@ jobs:
       - name: Run Foundation Guard self-tests
         shell: bash
         run: bash tests/foundation_guard_test.sh
+      - name: Resolve governance lifecycle
+        shell: bash
+        run: bash scripts/governance_lifecycle_phase.sh
+      - name: Run governance lifecycle self-tests
+        shell: bash
+        run: bash tests/governance_lifecycle_phase_test.sh
       - name: Check M00 release-state consistency
         shell: bash
         run: bash scripts/m00_release_gate.sh
@@ -34,6 +40,27 @@ jobs:
       - name: Run M00 release eligibility self-test
         shell: bash
         run: bash tests/m00_release_authorization_test.sh
+      - name: Run M00 release transition self-test
+        shell: bash
+        run: bash tests/m00_release_transition_test.sh
+      - name: Run GitHub main ruleset handoff self-tests
+        shell: bash
+        run: bash tests/github_main_ruleset_handoff_test.sh
+      - name: Run post-ruleset orchestrator self-tests
+        shell: bash
+        run: bash tests/post_ruleset_orchestrator_test.sh
+      - name: Run Feature Development Gate self-tests
+        shell: bash
+        run: bash tests/feature_development_gate_test.sh
+      - name: Run M01 pre-implementation integrity
+        shell: bash
+        run: bash tests/m01_preimplementation_integrity_test.sh
+      - name: Run M02 pre-implementation integrity
+        shell: bash
+        run: bash tests/m02_preimplementation_integrity_test.sh
+      - name: Run FV-00 admission self-tests
+        shell: bash
+        run: bash tests/fv00_admission_test.sh
       - name: Run M01 contract-pack guard
         shell: bash
         run: bash tests/m01_contract_pack_test.sh

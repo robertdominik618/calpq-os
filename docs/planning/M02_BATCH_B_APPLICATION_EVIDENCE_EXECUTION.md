@@ -1,6 +1,6 @@
 # CALPQ M02 Batch B — Application, Persistence & Evidence Pipeline
 
-Status: `PLANNING ONLY / IMPLEMENTATION BLOCKED`
+Status: `IMPLEMENTED / EXIT EVIDENCE GREEN / READY FOR REVIEW`
 ID: `CALPQ-M02-BATCH-B-0001`
 Scope: FV-06 through FV-10.
 
@@ -42,11 +42,22 @@ Primary ownership is `packages/application`, persistence/provider-neutral contra
 ## Required evidence
 Executable FV-06..FV-10 tests, transaction failure tests, stale-revision tests, duplicate-delivery tests, migration checksum tests, original immutability tests, extraction lineage tests and verification authority-boundary tests.
 
+## Verified result
+- FV-06: COMPLETED / VERIFIED.
+- FV-07: COMPLETED / VERIFIED.
+- FV-08: COMPLETED / VERIFIED.
+- FV-09: COMPLETED / VERIFIED.
+- FV-10: 20/20 executable / VERIFIED.
+- reviewed Batch A base: `e9fa11d75add3222b3572a38e65c0fc33465297f`.
+- FV-10 evidence head: `ef7e175e1f72dd24ecf0840768598e6f9c57aed5`.
+- dedicated FV-06..FV-10 workflows and all active Foundation/M00/M02/Program readiness checks are green on the evidence head.
+- hard implementation blockers: 0.
+
 ## Definition of Done
-Batch B is complete when Application can execute the first vertical through authoritative persistence, ingest immutable evidence, preserve derived lineage, perform provider-neutral verification and recover from duplicate/retry conditions without corrupting Core truth.
+Batch B is complete when Application can execute the first vertical through authoritative persistence, ingest immutable evidence, preserve derived lineage, perform provider-neutral verification and recover from duplicate/retry conditions without corrupting Core truth. This condition is satisfied by the durable exit evidence in `docs/planning/M02_BATCH_B_EXIT_EVIDENCE.md`.
 
 ## Stop conditions
 Return to architecture review if Application begins deciding eligibility, a repository leaks tenant scope, authoritative writes can partially commit, migrations silently reinterpret historical meaning, extraction overwrites originals, or verifier/provider output bypasses authority resolution.
 
 ## Governance boundary
-This package is executable only after Batch A exit and all active project admission gates. Planning readiness is not implementation admission.
+Batch B implementation is complete and ready for review. Per `M02_BATCH_BRANCH_PR_STRATEGY.md`, Batch C must be based on the reviewed Batch B result. Merge of PR #57 remains a separate governed action and is not implied by implementation completion.

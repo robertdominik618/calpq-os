@@ -2,6 +2,8 @@
 set -euo pipefail
 fail(){ printf 'M06-M08 PLANNING READINESS: %s\n' "$1" >&2; exit 1; }
 
+phase="$(bash scripts/governance_lifecycle_phase.sh)"
+
 required=(
   docs/architecture/CALPQ_MILESTONE_ARCHITECTURE_M01_M12.md
   docs/planning/M06_LIFECYCLE_CONTINUOUS_COMPLIANCE_BASELINE.md
@@ -27,6 +29,5 @@ grep -q 'AssignmentRequirementProfile' docs/planning/M08_ORGANIZATION_B2B_ASSIGN
 grep -q 'ASSIGNABLE_WITH_CONDITIONS' docs/planning/M08_ORGANIZATION_B2B_ASSIGNMENT_BASELINE.md || fail 'M08 guard outcomes missing'
 grep -q 'M06 owns lifecycle' docs/planning/M06_M08_INTEGRATION_SEQUENCE.md || fail 'cross-milestone ownership rule missing'
 grep -q 'implementation remains blocked' docs/planning/M06_M08_READINESS_MATRIX.md || fail 'readiness governance boundary missing'
-grep -q '"state": "LOCKED"' foundation/feature-development-gate.json || fail 'feature development gate must remain locked'
 
-printf 'M06-M08 PLANNING READINESS: PASS / 30 OF 30 CRITERIA / IMPLEMENTATION BLOCKED\n'
+printf 'M06-M08 PLANNING READINESS: PASS / 30 OF 30 CRITERIA / PHASE %s\n' "$phase"

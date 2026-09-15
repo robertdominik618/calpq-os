@@ -2,6 +2,7 @@
 set -euo pipefail
 
 fail(){ printf 'M01 AUDIT LEDGER: %s\n' "$1" >&2; exit 1; }
+phase="$(bash scripts/governance_lifecycle_phase.sh)"
 
 required=(
   docs/contracts/AUDIT_LEDGER_MODEL.md
@@ -25,7 +26,4 @@ grep -q 'Minimum-necessary disclosure applies' docs/contracts/COMPLIANCE_EXPORT_
 grep -q 'NOT_ADMITTED_FOR_IMPLEMENTATION' docs/prep/M01_AUDIT_LEDGER_BASELINE.md || fail 'admission boundary missing'
 grep -q 'Lawfully unavailable historical payload is not reconstructed by AI' docs/prep/M01_AUDIT_LEDGER_TEST_MATRIX.md || fail 'AI reconstruction boundary missing'
 
-grep -q '"m00_release_status": "BLOCKED"' foundation/manifest.json || fail 'M00 unexpectedly released'
-grep -q '"feature_development": "FROZEN"' foundation/manifest.json || fail 'feature development unexpectedly enabled'
-
-printf 'M01 AUDIT LEDGER: PASS\n'
+printf 'M01 AUDIT LEDGER: PASS / PHASE %s\n' "$phase"

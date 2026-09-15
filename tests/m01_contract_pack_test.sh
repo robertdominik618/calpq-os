@@ -3,6 +3,8 @@ set -euo pipefail
 
 fail() { printf 'M01 CONTRACT PACK: %s\n' "$1" >&2; exit 1; }
 
+phase="$(bash scripts/governance_lifecycle_phase.sh)"
+
 required=(
   docs/prep/M01_CORE_KERNEL_CONTRACT_PACK.md
   docs/contracts/CORE_PRIMITIVES.md
@@ -30,11 +32,10 @@ grep -q 'No silent last-write-wins' docs/contracts/IDEMPOTENCY_AND_CONCURRENCY.m
 grep -q 'Single mutation authority' docs/contracts/STATE_TRANSITION_INVARIANTS.md || fail 'aggregate mutation invariant missing'
 grep -q 'ADMITTED_FOR_IMPLEMENTATION' docs/prep/M01_VERTICAL_ADMISSION_GATE.md || fail 'vertical admission result missing'
 
-implementation="$(find packages apps workers -type f \( -name '*.ts' -o -name '*.tsx' -o -name '*.js' -o -name '*.jsx' \) -print -quit)"
-[[ -z "$implementation" ]] || fail "implementation source detected before M00 release: $implementation"
-
-grep -q '"m00_release_status": "BLOCKED"' foundation/manifest.json || fail 'M00 unexpectedly released'
-grep -q '"feature_development": "FROZEN"' foundation/manifest.json || fail 'feature development unexpectedly enabled'
+if [[ "$phase" != "POST_FV00_IMPLEMENTATION" ]]; then
+  implementation="$(find packages apps workers -type f \( -name '*.ts' -o -name '*.tsx' -o -name '*.js' -o -name '*.jsx' \) -print -quit)"
+  [[ -z "$implementation" ]] || fail "implementation source detected before FV-00 admission: $implementation"
+fi
 
 for file in docs/contracts/PERSISTENCE_AUTHORITY_BOUNDARY.md docs/contracts/UNIT_OF_WORK_TRANSACTION_MODEL.md docs/contracts/OUTBOX_INBOX_DELIVERY_MODEL.md docs/contracts/SCHEMA_MIGRATION_EVOLUTION_MODEL.md docs/contracts/DATA_INTEGRITY_RECONCILIATION_MODEL.md docs/prep/M01_PERSISTENCE_TRANSACTION_BASELINE.md docs/prep/M01_PERSISTENCE_TRANSACTION_TEST_MATRIX.md; do
   [[ -f "$file" ]] || fail "missing persistence artifact: $file"
@@ -51,4 +52,4 @@ bash tests/m01_api_wire_test.sh
 bash tests/m01_access_policy_test.sh
 bash tests/m01_audit_ledger_test.sh
 
-printf 'M01 CONTRACT PACK: PASS\n'
+printf 'M01 CONTRACT PACK: PASS / PHASE %s\n' "$phase"

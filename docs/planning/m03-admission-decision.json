@@ -1,0 +1,19 @@
+{
+  "schema_version": 1,
+  "decision_id": "CALPQ-M03-ADM-DEC-0001",
+  "admission_record_id": "CALPQ-M03-ADM-0001",
+  "milestone": "M03",
+  "candidate": "Professional Passport Product Surface",
+  "issue_number": 32,
+  "state": "ADMITTED_FOR_IMPLEMENTATION",
+  "admission_transition_id": "CALPQ-M03-ADMIT-0001",
+  "blocking_reviews": [],
+  "admitted_revision": "387dbfa0246d36e576ff15a6e5bb1016e051093c",
+  "m02_reviewed_merge": "387dbfa0246d36e576ff15a6e5bb1016e051093c",
+  "approved_by": "robertdominik618",
+  "approved_at": "2026-09-15T10:57:00Z",
+  "approval_text": "Schváleno další krok povolen",
+  "authorized_execution_entry": "M03_SLICE_01_DASHBOARD_READ_MODELS",
+  "scope_boundary": "Existing M03 execution package only; presentation/read-model composition remains non-authoritative; M04-M08 and excluded capability admissions remain blocked; no AuthorizationGrant authority",
+  "last_updated": "2026-09-15T10:57:00Z"
+}

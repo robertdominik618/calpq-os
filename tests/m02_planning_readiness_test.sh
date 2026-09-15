@@ -2,6 +2,8 @@
 set -euo pipefail
 fail(){ printf 'M02 PLANNING READINESS: %s\n' "$1" >&2; exit 1; }
 
+phase="$(bash scripts/governance_lifecycle_phase.sh)"
+
 required=(
   docs/planning/M02_FIRST_VERTICAL_DELIVERY_PLAN.md
   docs/planning/M02_FIRST_VERTICAL_BACKLOG.md
@@ -48,7 +50,7 @@ scenario_count="$(grep -Ec '^[0-9]+\.' docs/planning/M02_FIRST_VERTICAL_ACCEPTAN
 [[ "$scenario_count" -eq 45 ]] || fail "acceptance matrix must contain 45 scenarios"
 
 tmp="$(mktemp)"; trap 'rm -f "$tmp"' EXIT
-grep -hEo '"[0-9]+":' docs/planning/traceability/FV00_TRC_*.json | tr -d '":' | sort -n > "$tmp"
+grep -hEo '"[0-9]+":' docs/planning/traceability/FV00_TRC_*.json | tr -d '\":' | sort -n > "$tmp"
 for n in $(seq 1 45); do
   count="$(grep -xc "$n" "$tmp" || true)"
   [[ "$count" -eq 1 ]] || fail "scenario $n traceability count is $count, expected 1"
@@ -58,11 +60,18 @@ extra="$(awk '$1 < 1 || $1 > 45 {print; exit}' "$tmp")"
 
 for n in $(seq -w 0 15); do grep -q "FV-${n}" docs/planning/M02_FIRST_VERTICAL_BACKLOG.md || fail "missing FV-${n} backlog item"; done
 
-grep -q '^`BLOCKED_PENDING_M00`$' docs/planning/FV00_VERTICAL_ADMISSION_RECORD.md || fail "FV-00 must remain blocked pending M00"
-grep -q '"state": "LOCKED"' foundation/feature-development-gate.json || fail "feature gate must remain locked"
-
 blocked_files=(FV01_IMPLEMENTATION_CONTRACT.md FV01_TEST_CONTRACT.md FV02_IMPLEMENTATION_CONTRACT.md FV02_TEST_CONTRACT.md FV03_IMPLEMENTATION_CONTRACT.md FV03_TEST_INDEX.md FV04_IMPLEMENTATION_CONTRACT.md FV04_TEST_CONTRACT.md FV05_IMPLEMENTATION_CONTRACT.md FV05_TEST_CONTRACT.md FV06_IMPLEMENTATION_CONTRACT.md FV06_TEST_INDEX.md FV07_IMPLEMENTATION_CONTRACT.md FV07_TEST_INDEX.md FV08_IMPLEMENTATION_CONTRACT.md FV08_TEST_INDEX.md FV09_IMPLEMENTATION_CONTRACT.md FV09_TEST_INDEX.md FV10_IMPLEMENTATION_CONTRACT.md FV10_TEST_INDEX.md FV11_IMPLEMENTATION_CONTRACT.md FV11_TEST_INDEX.md FV12_IMPLEMENTATION_CONTRACT.md FV12_TEST_INDEX.md FV13_IMPLEMENTATION_CONTRACT.md FV13_TEST_INDEX.md FV14_IMPLEMENTATION_CONTRACT.md FV14_CHECKLIST.md FV15_IMPLEMENTATION_CONTRACT.md FV15_TEST_INDEX.md)
-for f in "${blocked_files[@]}"; do grep -q 'BLOCKED' "docs/planning/$f" || fail "$f must remain blocked"; done
+case "$phase" in
+  PRE_M00|POST_M00_PRE_FEATURE|POST_FEATURE_PRE_FV00)
+    jq -e '.state == "BLOCKED_PENDING_PREREQUISITES"' docs/planning/fv00-admission-decision.json >/dev/null || fail 'FV-00 must remain blocked before formal admission'
+    grep -q '^`BLOCKED_PENDING_PREREQUISITES`$' docs/planning/FV00_VERTICAL_ADMISSION_RECORD.md || fail 'FV-00 Markdown record must remain blocked before formal admission'
+    for f in "${blocked_files[@]}"; do grep -q 'BLOCKED' "docs/planning/$f" || fail "$f must remain blocked before formal admission"; done
+    ;;
+  POST_FV00_IMPLEMENTATION)
+    jq -e '.state == "ADMITTED_FOR_IMPLEMENTATION" and .authorized_execution_entry == "M02_BATCH_A_FV01"' docs/planning/fv00-admission-decision.json >/dev/null || fail 'FV-00 admitted state/entry is invalid'
+    grep -q '^`ADMITTED_FOR_IMPLEMENTATION`$' docs/planning/FV00_VERTICAL_ADMISSION_RECORD.md || fail 'FV-00 Markdown record must reflect formal admission'
+    ;;
+esac
 
 count_tests(){ local file="$1" expected="$2"; local got; got="$(grep -Ec '^[0-9]+\.' "docs/planning/$file")"; [[ "$got" -eq "$expected" ]] || fail "$file expected $expected checks, got $got"; }
 count_tests FV01_TEST_CONTRACT.md 21
@@ -97,4 +106,4 @@ grep -q 'TenantContext' docs/planning/FV13_IMPLEMENTATION_CONTRACT.md || fail "F
 grep -q 'OpenAPI 3.1' docs/planning/FV14_IMPLEMENTATION_CONTRACT.md || fail "FV-14 contract missing"
 grep -q 'Operational Resilience' docs/planning/FV15_IMPLEMENTATION_CONTRACT.md || fail "FV-15 contract missing"
 
-printf 'M02 PLANNING READINESS: PASS / FV-00 TRACEABLE / FV-01..FV-15 READY BUT BLOCKED / 285 CHECK POINTS\n'
+printf 'M02 PLANNING READINESS: PASS / FV-00 TRACEABLE / 285 CHECK POINTS / PHASE %s\n' "$phase"
