@@ -16,3 +16,11 @@ export { Jurisdiction, JurisdictionCode, JurisdictionScope } from './jurisdictio
 export { VerificationState, VerificationStateCode } from './verification-state.ts';
 export type { Clock } from './ports/clock.ts';
 export type { IdGenerator, SemanticIdType } from './ports/id-generator.ts';
+export { ContentHash } from './provenance/content-hash.ts';
+export { SourceReference, SourceType } from './provenance/source-reference.ts';
+export { EvidenceClass, EvidenceKind, EvidenceReference } from './provenance/evidence-reference.ts';
+export { ProvenanceEnvelope } from './provenance/provenance-envelope.ts';
+export type { ProvenanceIdentity } from './provenance/provenance-envelope.ts';
+export { ReasonCode } from './result/reason-code.ts';
+export { DomainEvaluationResult, DomainOutcome } from './result/domain-evaluation-result.ts';
+export { CoreError, CoreErrorFamily } from './result/core-error.ts';
