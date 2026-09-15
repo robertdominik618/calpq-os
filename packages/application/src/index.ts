@@ -67,6 +67,15 @@ export {
   ProfessionalPassportItem,
   ProfessionalPassportProjection,
 } from './passport/professional-passport.ts';
+export { summarizePassportAuthorityClasses } from './passport/passport-read-metrics.ts';
+export type { PassportReadMetrics } from './passport/passport-read-metrics.ts';
+export {
+  CredentialGroupReadModel,
+  CredentialProjectionSummaryReadModel,
+  PassportSummarySourceKind,
+  ProfessionalPassportSummaryReadModel,
+} from './passport/professional-passport-summary.ts';
+export type { EligibilityOutcomeCounts } from './passport/professional-passport-summary.ts';
 export {
   DashboardDestination,
   DashboardReadModel,
