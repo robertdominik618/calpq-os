@@ -1,6 +1,6 @@
 # CALPQ M03 Slice 02 Test Index — Professional Passport Summary & Credential Grouping
 
-Status: `22 OF 22 EXECUTABLE / VERIFICATION PENDING`
+Status: `22 OF 22 EXECUTABLE / VERIFIED`
 ID: `CALPQ-M03-S02-TEST-0001`
 
 1. explicit-subject-required
@@ -26,11 +26,12 @@ ID: `CALPQ-M03-S02-TEST-0001`
 21. non-authoritative-no-current-latest-valid-inference
 22. architecture-boundary
 
-Compile-time evidence additionally proves:
+Compile-time evidence proves:
 - `ProfessionalPassportSummaryReadModel` and nested group/assessment collections are immutable;
 - outcome counters are readonly;
 - `authorizationAuthority` is exactly `false`;
 - summary input requires `SubjectReference` and `ProfessionalPassportProjection` values;
 - Passport summary source kind is controlled.
 
-Predecessor evidence is mandatory: the branch must descend from reviewed Slice 01 merge `0f25c2637e774dede94749019cfe3f3231610c40`, Slice 01 regression must pass, and FV-12 Professional Passport remains green.
+Verified evidence head: `b077f18aaeb42286eeda62f5821b5a1894c792ea`.
+Dedicated workflow `M03 Slice 02 Passport Summary #2` SUCCESS with 22 pass / 0 fail. Reviewed Slice 01 ancestry, Slice 01 regression, FV-12 predecessor regression, M03 admission integrity and architecture boundaries also pass. No mandatory test was waived or deferred.
