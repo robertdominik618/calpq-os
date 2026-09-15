@@ -1,0 +1,18 @@
+{
+  "schemaVersion": 1,
+  "database": "postgresql-18",
+  "migrations": [
+    {
+      "id": "0001_fv08_delivery_baseline",
+      "file": "0001_fv08_delivery_baseline.sql",
+      "phase": "BASELINE",
+      "checksumSha256": "04279ce639e6a8cd92ca896a005b606efc36212ed35f9748e9da885b4a8564d0"
+    },
+    {
+      "id": "0002_fv08_delivery_review_expand",
+      "file": "0002_fv08_delivery_review_expand.sql",
+      "phase": "EXPAND",
+      "checksumSha256": "ed59e74f56aa97b575c896b99001e5d6cdc5f406f5beb2fc71b0404a1a95baba"
+    }
+  ]
+}
