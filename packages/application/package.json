@@ -20,6 +20,7 @@
     "test:m03s07": "node --test test/m03-s07-search.test.ts",
     "test:m03s08": "node --test test/m03-s08-responsive.test.ts",
     "test:m03s09": "node --test test/m03-s09-accessibility-localization.test.ts",
+    "test:m03s10": "node --test test/m03-s10-integration-ux-boundary.test.ts",
     "typecheck": "npx --yes --package=typescript@7.0.2 -- tsc -p tsconfig.json"
   }
 }
