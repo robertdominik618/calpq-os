@@ -1,8 +1,9 @@
 import type { DomainOutcome, SubjectReference, UtcInstant } from '../../../core/src/index.ts';
+import { ProfessionalPassportProjection } from '../passport/professional-passport.ts';
 import {
-  PassportAuthorityClass,
-  ProfessionalPassportProjection,
-} from '../passport/professional-passport.ts';
+  summarizePassportAuthorityClasses,
+  type PassportReadMetrics,
+} from '../passport/passport-read-metrics.ts';
 
 export const DashboardSourceKind = {
   PROFESSIONAL_PASSPORT_PROJECTION: 'PROFESSIONAL_PASSPORT_PROJECTION',
@@ -47,25 +48,20 @@ export class DashboardReadModel {
   readonly navigation: readonly DashboardNavigationItem[];
   readonly authorizationAuthority = false as const;
 
-  private constructor(input: {
-    readonly passport: ProfessionalPassportProjection;
-    readonly verifiedEvidenceCount: number;
-    readonly evidenceOnlyCount: number;
-    readonly derivedInformationCount: number;
-  }) {
-    this.subject = input.passport.subject;
-    this.assessmentId = input.passport.assessmentId;
-    this.credentialDefinitionId = input.passport.credentialDefinitionId;
-    this.credentialDefinitionVersion = input.passport.credentialDefinitionVersion;
-    this.requirementSetId = input.passport.requirementSetId;
-    this.requirementSetVersion = input.passport.requirementSetVersion;
-    this.eligibilityOutcome = input.passport.eligibilityOutcome;
-    this.authoritativeEvaluatedAt = input.passport.authoritativeEvaluatedAt;
-    this.projectionGeneratedAt = input.passport.generatedAt;
-    this.evidenceCount = input.passport.items.length;
-    this.verifiedEvidenceCount = input.verifiedEvidenceCount;
-    this.evidenceOnlyCount = input.evidenceOnlyCount;
-    this.derivedInformationCount = input.derivedInformationCount;
+  private constructor(passport: ProfessionalPassportProjection, metrics: PassportReadMetrics) {
+    this.subject = passport.subject;
+    this.assessmentId = passport.assessmentId;
+    this.credentialDefinitionId = passport.credentialDefinitionId;
+    this.credentialDefinitionVersion = passport.credentialDefinitionVersion;
+    this.requirementSetId = passport.requirementSetId;
+    this.requirementSetVersion = passport.requirementSetVersion;
+    this.eligibilityOutcome = passport.eligibilityOutcome;
+    this.authoritativeEvaluatedAt = passport.authoritativeEvaluatedAt;
+    this.projectionGeneratedAt = passport.generatedAt;
+    this.evidenceCount = metrics.evidenceCount;
+    this.verifiedEvidenceCount = metrics.verifiedEvidenceCount;
+    this.evidenceOnlyCount = metrics.evidenceOnlyCount;
+    this.derivedInformationCount = metrics.derivedInformationCount;
     this.navigation = DASHBOARD_NAVIGATION;
     Object.freeze(this);
   }
@@ -77,31 +73,7 @@ export class DashboardReadModel {
     if (passport.authorizationAuthority !== false) {
       throw new TypeError('Dashboard source must remain non-authoritative');
     }
-
-    let verifiedEvidenceCount = 0;
-    let evidenceOnlyCount = 0;
-    let derivedInformationCount = 0;
-
-    for (const item of passport.items) {
-      switch (item.authorityClass) {
-        case PassportAuthorityClass.VERIFIED_EVIDENCE:
-          verifiedEvidenceCount += 1;
-          break;
-        case PassportAuthorityClass.DERIVED_INFORMATION:
-          derivedInformationCount += 1;
-          break;
-        case PassportAuthorityClass.EVIDENCE:
-          evidenceOnlyCount += 1;
-          break;
-      }
-    }
-
-    return new DashboardReadModel({
-      passport,
-      verifiedEvidenceCount,
-      evidenceOnlyCount,
-      derivedInformationCount,
-    });
+    return new DashboardReadModel(passport, summarizePassportAuthorityClasses(passport));
   }
 
   toJSON() {
