@@ -16,6 +16,7 @@
     "test/fv04-types.compile.ts",
     "test/fv05-types.compile.ts",
     "test/fv11-types.compile.ts",
-    "test/m04-s01-types.compile.ts"
+    "test/m04-s01-types.compile.ts",
+    "test/m04-s02-types.compile.ts"
   ]
 }
