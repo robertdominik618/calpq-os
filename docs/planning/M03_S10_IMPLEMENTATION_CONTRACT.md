@@ -1,23 +1,24 @@
 # CALPQ M03 Slice 10 Implementation Contract — Integration Evidence & UX Boundary Tests
 
-Status: `IMPLEMENTING / EXECUTABLE EVIDENCE ADDED`
+Status: `COMPLETED / VERIFIED`
 ID: `CALPQ-M03-S10-0001`
 Tracking issue: #79
+Pull request: #80
 
 ## Reviewed predecessor
 - M03 Slice 09 PR #78;
 - reviewed / merged / post-merge-verified base: `1d87412aa54a18bda4c8015824085102a5a73055`;
-- post-merge evidence on that base: 33/33 observed workflow runs SUCCESS.
+- S09 post-merge evidence: 33/33 observed workflow runs SUCCESS.
 
 ## Authorized scope
 Delivery slice 10 from `M03_EXECUTION_PACKAGE.md` is exactly:
 
 > M03 integration evidence and UX boundary tests.
 
-This slice closes M03 by proving the already-implemented S01–S09 product surface as one coherent, non-authoritative presentation journey. It deliberately adds no new eligibility rule, verification rule, lifecycle rule, authorization mechanism, catalog intelligence, provider adapter or UI framework.
+This slice closes M03 implementation evidence by proving the already-implemented S01–S09 product surface as one coherent, non-authoritative presentation journey. It adds no new eligibility rule, verification rule, lifecycle rule, authorization mechanism, catalog intelligence, provider adapter or UI framework.
 
 ## Representative governed journey
-The mandatory integration scenario composes real governed M02 objects and the actual existing M03 read models in this order:
+The mandatory integration suite composes real governed M02 objects and the actual M03 read models in this order:
 
 1. authoritative `EligibilityAssessment`;
 2. `ProfessionalPassportProjection`;
@@ -31,41 +32,41 @@ The mandatory integration scenario composes real governed M02 objects and the ac
 10. `ResponsiveReadFlowReadModel`;
 11. `AccessibilityLocalizationReadModel` in `cs-CZ` and `en-GB`.
 
-## UX boundary invariants
-The integration evidence MUST prove all of the following:
-- document/artifact presence, evidence verification, eligibility, lifecycle and later authorization/grant state remain distinct concepts;
-- verified evidence cannot silently upgrade eligibility to satisfied;
-- unavailable document/lifecycle sources stay explicitly unavailable and do not imply legal invalidity, expiry or revocation;
-- next actions are shown only from explicit governed action references; otherwise unavailability is explicit;
+## Verified UX boundary invariants
+- document/artifact presence, evidence verification, eligibility, lifecycle and later authorization/grant state remain distinct;
+- verified evidence does not silently upgrade eligibility to satisfied;
+- unavailable document/lifecycle sources do not imply legal invalidity, expiry or revocation;
+- next actions are presented only from explicit governed action references; otherwise unavailability is explicit;
 - explanation output preserves authoritative reason/source/evidence/provenance bindings;
 - activity history uses only governed event times and never promotes projection-generation time into history;
-- search operates only over approved read/query models and has zero fact/decision/ranking authority;
-- responsive changes may alter layout/pane/navigation only, never governed semantic content;
-- accessibility metadata preserves keyboard/screen-reader access and never encodes meaning by color only;
+- search uses only approved read/query models and has zero search/ranking/decision/authorization authority;
+- responsive changes alter layout/pane/navigation only, never governed semantic content;
+- accessibility preserves keyboard/screen-reader access and never encodes meaning by color only;
 - localization changes human-readable presentation only; machine status/reason semantics remain invariant;
-- canonical UTC/effective-date truth is never changed by presentation locale or ambient timezone;
+- canonical UTC/effective-date truth is unchanged by locale or ambient timezone;
 - cross-subject composition fails closed;
 - no M04/M06/M10 authority leaks into M03.
 
-## Evidence strategy
-- exactly 42 dedicated runtime integration/UX-boundary scenarios;
-- strict TypeScript authority and immutability proof;
-- reviewed S09 merge ancestry guard;
-- architecture scans across all M03 presentation source directories;
-- S09→S01 predecessor runtime suites executed exactly once directly, not through recursive predecessor shell runners;
-- FV-12, FV-09, FV-11, Core typecheck, M03 admission and architecture-boundary regressions;
-- dedicated GitHub workflow `M03 Slice 10 Integration Evidence UX Boundaries`.
+## Evidence result
+Verified implementation/remediation head: `95c4fca8b192380e493b51515c8e902d268e48db`.
+
+- dedicated S10 workflow #6 — SUCCESS;
+- exactly 42/42 mandatory runtime scenarios — PASS;
+- strict TypeScript 7.0.2 authority/immutability proof — PASS;
+- reviewed S09 merge ancestry guard — PASS;
+- architecture scans across the complete M03 presentation surface — PASS;
+- S09→S01 predecessor runtime suites executed exactly once directly — PASS;
+- FV-12, FV-09, FV-11, Core typecheck, M03 admission and architecture-boundary regressions — PASS;
+- all 26/26 observed PR-triggered workflows on remediation head — SUCCESS;
+- hard blockers: 0;
+- no mandatory evidence waived or deferred.
+
+## Transparent remediation record
+Initial implementation head `1dd716f007f210116f5310e5d7b6dd5678de0e37` failed the dedicated S10 workflow because the end-to-end fixture contained atomic machine outcome `SATISFIED` but its accessibility localization fixture omitted the corresponding controlled label. The fail-closed accessibility contract correctly rejected this.
+
+Remediation commit `95c4fca8b192380e493b51515c8e902d268e48db` added only the missing `SATISFIED` semantic/localization label in the S10 integration fixture (`Splněno` / `Satisfied`). No production/domain logic, runtime scenario, architecture guard or authority boundary was removed or weakened.
 
 ## Authority boundary
-S10 creates no new production authority surface. The existing presentation stack must continue to expose exact-false authority markers, including `authorizationAuthority`, `decisionAuthority`, `actionRecommendationAuthority`, `searchAuthority`, `rankingAuthority`, `layoutAuthority`, `accessibilityAuthority` and `localizationAuthority` where applicable.
+S10 creates no production authority surface. Existing presentation authority markers remain exact false, including `authorizationAuthority`, `decisionAuthority`, `actionRecommendationAuthority`, `searchAuthority`, `rankingAuthority`, `layoutAuthority`, `accessibilityAuthority` and `localizationAuthority` where applicable.
 
-## Completion condition
-This contract becomes `COMPLETED / VERIFIED` only after:
-1. the dedicated S10 runner is green;
-2. all mandatory 42 scenarios pass;
-3. strict TypeScript proof passes;
-4. all observed PR-triggered workflows on the implementation/remediation head are green;
-5. final evidence-packaging head is independently green;
-6. `M03_S10_EXIT_EVIDENCE.md` and aggregate `M03_EXIT_EVIDENCE.md` are recorded.
-
-No mandatory evidence may be waived or silently deferred.
+Durable detailed evidence is in `M03_S10_EXIT_EVIDENCE.md`; aggregate M03 evidence is in `M03_EXIT_EVIDENCE.md`.

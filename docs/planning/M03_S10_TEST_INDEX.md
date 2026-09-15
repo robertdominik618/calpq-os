@@ -1,10 +1,12 @@
 # CALPQ M03 Slice 10 Test Index — Integration Evidence & UX Boundaries
 
-Status: `42 OF 42 EXECUTABLE / PENDING CI`
+Status: `42 OF 42 EXECUTABLE / VERIFIED`
 ID: `CALPQ-M03-S10-TEST-0001`
 Tracking issue: #79
+Pull request: #80
 
 Reviewed predecessor merge: `1d87412aa54a18bda4c8015824085102a5a73055`.
+Verified implementation/remediation head: `95c4fca8b192380e493b51515c8e902d268e48db`.
 
 ## Mandatory runtime scenarios
 1. `M03S10-01` authoritative M02 assessment drives the journey.
@@ -51,17 +53,19 @@ Reviewed predecessor merge: `1d87412aa54a18bda4c8015824085102a5a73055`.
 42. `M03S10-42` missing localization fails closed and cross-M03 architecture boundaries hold.
 
 ## Compile-time proof
-`packages/application/test/m03-s10-types.compile.ts` proves exact-false authority markers and exact-true accessibility flags while rejecting mutation of responsive/accessibility collections, keyboard order, localized labels and machine semantic collections.
+`packages/application/test/m03-s10-types.compile.ts` verifies exact-false authority markers, exact accessibility booleans and immutability of governed responsive/accessibility outputs.
 
-## Dedicated runner
-`tests/m03_s10_integration_ux_boundary_test.sh` requires:
+## Dedicated runner result
+`tests/m03_s10_integration_ux_boundary_test.sh` verified:
 - formal M03 admission;
 - ancestry from reviewed S09 merge `1d87412aa54a18bda4c8015824085102a5a73055`;
-- exactly 42 runtime tests;
+- exactly 42 runtime scenarios;
 - strict TypeScript 7.0.2 application typecheck;
-- exact S10 execution-package wording;
-- no UI/provider/DOM/ambient-locale/time/randomness/domain-authority leakage across the full M03 presentation source surface;
+- exact S10 execution-package scope;
+- no UI/provider/DOM/ambient-locale/time/randomness/domain-authority leakage across the complete M03 presentation surface;
 - predecessor runtime suites S09→S01 exactly once;
-- relevant FV/Core/admission/architecture regressions.
+- FV/Core/admission/architecture regressions.
 
-No mandatory scenario is waived or deferred.
+Dedicated workflow #6 on `95c4fca8b192380e493b51515c8e902d268e48db`: SUCCESS.
+All 26/26 observed PR-triggered workflows on that head: SUCCESS.
+No mandatory scenario was waived or deferred.
