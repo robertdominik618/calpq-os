@@ -60,3 +60,10 @@ export type {
   VerificationProviderPort,
 } from './verification/verification-ports.ts';
 export { orchestrateVerification } from './verification/verification-orchestrator.ts';
+export {
+  PassportAuthorityClass,
+  PassportEvidenceVerificationLink,
+  PassportItemOrigin,
+  ProfessionalPassportItem,
+  ProfessionalPassportProjection,
+} from './passport/professional-passport.ts';
