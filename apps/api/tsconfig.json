@@ -9,6 +9,6 @@
   },
   "include": [
     "src/**/*.ts",
-    "test/**/*.ts"
+    "test/fv14-types.compile.ts"
   ]
 }
