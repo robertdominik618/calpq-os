@@ -1,50 +1,40 @@
 # CALPQ M03 Slice 08 Implementation Contract — Mobile/Web Responsive Read Flows
 
-Status: `IMPLEMENTING / EXECUTABLE EVIDENCE ADDED`
+Status: `COMPLETED / VERIFIED`
 ID: `CALPQ-M03-S08-0001`
 
 Admission: `CALPQ-M03-ADMIT-0001`.
-Predecessor merge: M03 Slice 07 commit `8ad7ad8cffc51b0f18cb29408436cec52438ada7`.
+Reviewed predecessor: M03 Slice 07 merge commit `8ad7ad8cffc51b0f18cb29408436cec52438ada7`.
 Tracking issue: #74.
+Pull request: #76.
 Implementation branch: `impl/m03-s08-responsive-read-flows`.
+Verified implementation head: `1423c26cf8044b2214a05091d81cb4df08442f94`.
 
 ## Scope
-Slice 08 implements the eighth delivery slice from `M03_EXECUTION_PACKAGE.md`: mobile/web responsive read flows.
-
-The implementation introduces a framework-neutral `ResponsiveReadFlowReadModel` that composes approved M03 presentation sources without moving business or legal truth into responsive layout logic.
+Slice 08 implements mobile/web responsive read flows as a framework-neutral presentation contract. Responsive behavior changes layout and navigation only; governed semantic content remains unchanged.
 
 ## Responsive profile
-`ResponsivePresentationProfile` requires explicit controlled values:
+`ResponsivePresentationProfile` accepts only explicit controlled values:
 - surface: `MOBILE` or `WEB`;
 - size class: `COMPACT`, `MEDIUM`, or `EXPANDED`.
 
-No browser viewport, user-agent, device API or ambient environment is read by the application contract. The adapter/UI layer must supply the profile explicitly.
+The application layer never reads browser viewport, user agent, DOM, native-device state or ambient environment. An outer adapter supplies the profile explicitly.
 
-Layout mappings are deterministic:
-- compact -> single-pane stack;
-- medium -> single-pane with persistent section navigation;
-- expanded -> two-pane master/detail.
+Deterministic mappings:
+- COMPACT -> single-pane stack;
+- MEDIUM -> single-pane with persistent section navigation;
+- EXPANDED -> two-pane master/detail.
 
-Navigation is presentation-specific while semantic content remains unchanged.
+Navigation differs by profile while semantic content does not.
 
 ## Approved sources
-The responsive flow consumes only already-governed M03 read models:
-- `DashboardReadModel`;
-- `ProfessionalPassportSummaryReadModel`;
-- `CredentialCardReadModel`;
-- `CredentialExplanationReadModel`;
-- `ActivityTimelineReadModel`;
-- `MissingConditionNextActionReadModel`;
-- optional `IntentSearchReadModel`.
+Only governed M03 read models are accepted: Dashboard, Professional Passport Summary, Credential Card, Explanation, Activity Timeline, Missing Condition/Next Action and optional Intent Search Result.
 
-Composition fails closed for wrong types, authority leakage, cross-subject data, cross-assessment detail surfaces, credential-definition/requirement-set version mismatch, outcome mismatch, provenance mismatch, or a Passport summary that does not contain the selected detail assessment exactly once.
+Composition fails closed for wrong types, authority leakage, cross-subject input, cross-assessment detail state, CredentialDefinition/RequirementSet mismatch, outcome mismatch, provenance mismatch, or an ambiguous/missing detail assessment in Passport Summary.
 
-## Semantic parity
-Responsive behavior may change only layout metadata: profile, navigation mode and pane placement.
+## Semantic parity and material-content preservation
+Each section contains a deeply frozen snapshot taken directly from its governed source `toJSON()` contract. The ordered material section set is invariant across mobile/web and all size classes. Compact layouts route between sections but do not drop material state.
 
-Each section carries a deeply frozen snapshot produced directly from the corresponding governed source `toJSON()` contract. Section content and ordering are invariant across mobile/web and size classes. Material sections use `ALWAYS_AVAILABLE`; compact presentation may route between sections but may not remove material state merely because less screen space is available.
-
-## Section order
 Stable non-causal read order:
 1. Dashboard;
 2. Passport Summary;
@@ -54,20 +44,27 @@ Stable non-causal read order:
 6. Guidance;
 7. optional Search Result.
 
-Expanded layouts place Dashboard/Passport/Search in the master pane and credential detail surfaces in the detail pane. This placement does not imply domain hierarchy or causality.
+Expanded layout assigns overview/search surfaces to master and credential-detail surfaces to detail. Pane assignment implies no domain hierarchy or causality.
 
 ## Authority boundaries
-The responsive layer has:
 - `layoutAuthority = false`;
 - `decisionAuthority = false`;
 - `authorizationAuthority = false`.
 
-It does not recompute eligibility, promote verification, infer lifecycle state, issue or imply AuthorizationGrant, own Credential Catalog / QualificationPath semantics, alter search ranking, or manufacture new actions/reasons.
+No eligibility recomputation, verification promotion, lifecycle inference, AuthorizationGrant implication, M04/M06 authority, search re-ranking authority, generated action/reason logic or other domain truth is introduced.
 
-## Framework boundary
-No React, Next, Vue, Svelte, Angular, React Native, Expo, Flutter, SwiftUI, DOM API, native-device API or provider-specific UI runtime is admitted into the read-model contract.
+## Framework/runtime boundaries
+No React, Next, Vue, Svelte, Angular, React Native, Expo, Flutter, SwiftUI, DOM/browser API, user-agent inference, provider-specific UI runtime, ambient wall-clock or randomness is admitted into this contract.
 
-## Verification target
-Dedicated evidence must prove exactly 32 runtime scenarios plus strict TypeScript proof, Slice 07 merge ancestry, compact/medium/expanded profile mapping, mobile/web semantic parity, no material-content loss, same-subject/assessment integrity, deeply immutable content snapshots, deterministic serialization and regressions through M03 Slice 01 plus relevant FV contracts.
+## Verified evidence
+On `1423c26cf8044b2214a05091d81cb4df08442f94`:
+- dedicated S08 workflow #6 — SUCCESS;
+- 32/32 mandatory runtime scenarios — PASS;
+- strict TypeScript proof — PASS;
+- semantic parity and material-section preservation — PASS;
+- direct S07→S01/FV-12/FV-11 runtime regressions — PASS;
+- all 24/24 observed PR-triggered workflows — SUCCESS.
 
-No mandatory test is waived or deferred.
+The S08 regression runner was de-duplicated to execute predecessor runtime tests once instead of recursively multiplying predecessor shell gates. Independent predecessor workflows still run their full gates, so test coverage was preserved while eliminating redundant execution.
+
+No mandatory test was waived or deferred. Hard blockers: 0.

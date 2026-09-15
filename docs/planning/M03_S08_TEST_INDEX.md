@@ -1,6 +1,6 @@
 # CALPQ M03 Slice 08 Test Index — Mobile/Web Responsive Read Flows
 
-Status: `32 EXECUTABLE SCENARIOS DEFINED`
+Status: `32 OF 32 EXECUTABLE / VERIFIED`
 ID: `CALPQ-M03-S08-TEST-0001`
 
 1. profile-input-required
@@ -36,8 +36,13 @@ ID: `CALPQ-M03-S08-TEST-0001`
 31. serialization-is-deterministic-and-authority-is-zero
 32. architecture-boundary-excludes-framework-device-ambient-and-domain-authority
 
-Strict compile-time evidence additionally proves immutable root/profile values and exact false authority flags.
+Strict compile-time evidence proves immutable root/profile values and exact false authority flags.
 
-Predecessor ancestry is mandatory: branch history must include M03 Slice 07 merge `8ad7ad8cffc51b0f18cb29408436cec52438ada7`.
+Reviewed predecessor ancestry is verified: branch history contains M03 Slice 07 merge `8ad7ad8cffc51b0f18cb29408436cec52438ada7`.
 
-No mandatory test is waived or deferred.
+Verified implementation head: `1423c26cf8044b2214a05091d81cb4df08442f94`.
+Dedicated workflow M03 Slice 08 Responsive Read Flows #6 — SUCCESS. All 24/24 observed PR-triggered workflows on the implementation head completed successfully.
+
+Regression orchestration executes predecessor runtime files once directly while independent S01–S07 workflows retain complete predecessor gate coverage.
+
+No mandatory test was waived or deferred. Hard blockers: 0.
