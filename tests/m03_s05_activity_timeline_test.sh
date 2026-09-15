@@ -51,7 +51,7 @@ bash tests/m03_s03_credential_card_test.sh >/dev/null
 bash tests/m03_s02_passport_summary_test.sh >/dev/null
 bash tests/m03_s01_dashboard_read_models_test.sh >/dev/null
 bash tests/fv12_professional_passport_test.sh >/dev/null
-bash tests/fv11_eligibility_assessment_test.sh >/dev/null
+bash tests/fv11_eligibility_test.sh >/dev/null
 bash tests/fv09_document_intake_test.sh >/dev/null
 bash tests/m03_admission_test.sh >/dev/null
 bash tests/architecture_boundaries_test.sh >/dev/null
