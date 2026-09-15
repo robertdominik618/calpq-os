@@ -96,6 +96,17 @@ export type {
   CredentialCardRecordVerificationCounts,
 } from './credential-card/credential-card-read-model.ts';
 export {
+  EvidenceSourceExplanationReadModel,
+  ExplanationEvidenceReadModel,
+  ExplanationProvenanceReadModel,
+  ExplanationReasonReadModel,
+  ExplanationSourceReadModel,
+  ExplanationViewSourceKind,
+  WhyAffordance,
+  WhyAffordanceKind,
+  WhyTargetKind,
+} from './explanation/evidence-source-explanation.ts';
+export {
   DashboardDestination,
   DashboardReadModel,
   DashboardSourceKind,

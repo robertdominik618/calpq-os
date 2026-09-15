@@ -18,6 +18,7 @@
     "test/fv15-types.compile.ts",
     "test/m03-s01-types.compile.ts",
     "test/m03-s02-types.compile.ts",
-    "test/m03-s03-types.compile.ts"
+    "test/m03-s03-types.compile.ts",
+    "test/m03-s04-types.compile.ts"
   ]
 }
