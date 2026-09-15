@@ -1,9 +1,11 @@
 # CALPQ M04 Slice 01 — Test Index
 
-Status: `IMPLEMENTED / CI PENDING / 32 MANDATORY RUNTIME SCENARIOS`
+Status: `VERIFIED / 32 MANDATORY RUNTIME SCENARIOS PASS`
 ID: `CALPQ-M04-S01-TEST-0001`
 Tracking issue: #82
+PR: #83
 Reviewed admission base: `d1251424127904a8a1ac0b8ad28cee91558408a5`
+Verified implementation head: `5c8bbb95471fb05b35703e541766be65e91df0bc`
 
 ## Runtime scenarios
 1. `M04S01-01` Activity CALPQ ID is stable UUIDv7; external token is rejected as identity.
@@ -52,3 +54,8 @@ Reviewed admission base: `d1251424127904a8a1ac0b8ad28cee91558408a5`
 - no provider/UI/AI/ambient-time dependency;
 - no S02-S05 or AuthorizationGrant authority;
 - Core/FV/M04 governance regressions.
+
+## Verified result
+Dedicated M04 S01 workflow #3 on implementation head `5c8bbb95471fb05b35703e541766be65e91df0bc` = SUCCESS.
+Runtime result = 32 tests / 32 pass / 0 fail / 0 skipped / 0 todo.
+All 21 observed PR-triggered workflows on the implementation head = SUCCESS.

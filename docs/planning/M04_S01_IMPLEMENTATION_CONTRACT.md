@@ -1,12 +1,15 @@
 # CALPQ M04 Slice 01 — Activity & Profession Catalog Model — Implementation Contract
 
-Status: `IMPLEMENTED / CI PENDING`
+Status: `IMPLEMENTED / VERIFIED / READY FOR REVIEW`
 ID: `CALPQ-M04-S01-IMPL-0001`
 Tracking issue: #82
+PR: #83
+Reviewed admission base: `d1251424127904a8a1ac0b8ad28cee91558408a5`
+Verified implementation head: `5c8bbb95471fb05b35703e541766be65e91df0bc`
 
 ## Governance basis
 M04 is formally admitted under `CALPQ-M04-ADMIT-0001`.
-Slice 01 starts from reviewed / merged / post-merge-verified M04 admission commit `d1251424127904a8a1ac0b8ad28cee91558408a5`.
+Slice 01 descends directly from reviewed / merged / post-merge-verified M04 admission commit `d1251424127904a8a1ac0b8ad28cee91558408a5`.
 
 ## Objective
 Implement the first canonical M04 knowledge nodes without pulling later catalog/path/provenance authority forward.
@@ -50,10 +53,17 @@ Slice 01 does not implement:
 - AI authority;
 - ambient time/randomness.
 
+## Verified evidence
+On implementation head `5c8bbb95471fb05b35703e541766be65e91df0bc`:
+- exactly 32 mandatory runtime scenarios PASS;
+- runtime fail/skipped/todo = 0/0/0;
+- strict TypeScript compile-time proof PASS;
+- exact M04 admission ancestry guard PASS;
+- framework/provider/AI/ambient-time guard PASS;
+- later-slice / AuthorizationGrant authority guard PASS;
+- FV-01, FV-03, FV-11, M04 admission, M03-M08 readiness and architecture regressions PASS;
+- 21/21 observed PR-triggered workflows SUCCESS;
+- hard blockers = 0.
+
 ## Definition of Done
-- 32 mandatory runtime scenarios pass;
-- strict TypeScript immutability/type-separation proof passes;
-- architecture and later-slice authority guards pass;
-- relevant Core/M02/M04-admission regressions pass;
-- dedicated workflow green;
-- durable exit evidence packaged before review.
+Satisfied for implementation/review readiness. Merge remains a separate governed action and requires fresh explicit approval.
