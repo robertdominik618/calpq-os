@@ -1,12 +1,14 @@
 # CALPQ M03 Slice 05 Implementation Contract — Activity Timeline & Decision Provenance Presentation
 
-Status: `IMPLEMENTING / EXECUTABLE EVIDENCE ADDED`
+Status: `COMPLETED / VERIFIED`
 ID: `CALPQ-M03-S05-0001`
 
 Admission: `CALPQ-M03-ADMIT-0001`.
 Reviewed predecessor: M03 Slice 04 merge commit `378705302a0a4e507018e437bc329b42979e60cb`.
 Tracking issue: #67.
+Pull request: #69.
 Implementation branch: `impl/m03-s05-activity-timeline-decision-provenance`.
+Verified remediation head: `5f63f9f501d4d21bc11a8b7124923d5b1893de77`.
 
 ## Scope
 Slice 05 implements the fifth delivery slice from `M03_EXECUTION_PACKAGE.md`: activity timeline and decision provenance presentation.
@@ -43,15 +45,7 @@ A timestamped verification event preserves only governed Passport item facts: ev
 No verification promotion or recomputation occurs.
 
 ## Decision provenance presentation
-`DecisionProvenancePresentation` is bound to the authoritative `EligibilityAssessment` and reviewed Slice 04 `CredentialExplanationReadModel`. It preserves:
-- assessment identity;
-- decision/provenance identity;
-- authoritative outcome and evaluated-at instant;
-- evaluator attribution;
-- rule-set identity/version;
-- governed source explanations;
-- governed evidence explanations;
-- atomic requirement reason presentations.
+`DecisionProvenancePresentation` is bound to the authoritative `EligibilityAssessment` and reviewed Slice 04 `CredentialExplanationReadModel`. It preserves assessment identity; decision/provenance identity; authoritative outcome and evaluated-at instant; evaluator attribution; rule-set identity/version; governed source explanations; governed evidence explanations; and atomic requirement reason presentations.
 
 Composition fails closed when assessment identity, provenance identity, evaluated-at instant, rule-set/version or source/evidence bindings diverge.
 
@@ -71,7 +65,17 @@ The presentation has `decisionAuthority = false`; it references an authoritative
 - no ambient time or randomness;
 - immutable nested output and deterministic serialization.
 
-## Verification target
-Dedicated executable evidence must prove exactly 30 runtime scenarios plus strict TypeScript proof, reviewed Slice 04 ancestry, M03 S04/S03/S02/S01 regressions, FV-12/FV-11/FV-09 regressions and architecture boundaries.
+## Verification evidence
+On verified remediation head `5f63f9f501d4d21bc11a8b7124923d5b1893de77`:
+- dedicated M03 Slice 05 workflow #6 — SUCCESS;
+- exactly 30 mandatory S05 runtime scenarios — PASS;
+- strict TypeScript compile-time proof — PASS;
+- reviewed Slice 04 ancestry guard — PASS;
+- M03 S04/S03/S02/S01, FV-12, FV-11, FV-09, M03 Admission and architecture-boundary regressions — PASS;
+- all 21 observed PR-triggered workflows — SUCCESS.
 
-No mandatory test is waived or deferred.
+An earlier dedicated workflow #4 failed after all 30 S05 runtime scenarios had passed because the S05 evidence script referenced a non-existent FV-11 shell filename. The runner-only path was corrected in `5f63f9f501d4d21bc11a8b7124923d5b1893de77`; no product-domain logic was weakened or bypassed.
+
+No mandatory test was waived or deferred. Hard blockers: 0.
+
+The evidence-packaging commit that records this result remains subject to final CI before PR #69 is marked ready for review.

@@ -1,6 +1,6 @@
 # CALPQ M03 Slice 05 Test Index — Activity Timeline & Decision Provenance
 
-Status: `30 EXECUTABLE SCENARIOS DEFINED`
+Status: `30 OF 30 EXECUTABLE / VERIFIED`
 ID: `CALPQ-M03-S05-TEST-0001`
 
 1. explanation-input-required
@@ -36,6 +36,15 @@ ID: `CALPQ-M03-S05-TEST-0001`
 
 Compile-time evidence additionally proves root/event/provenance immutability, exact false authority flags, controlled ordering semantics and governed input types.
 
-Reviewed predecessor evidence is mandatory: branch ancestry must include M03 Slice 04 reviewed merge `378705302a0a4e507018e437bc329b42979e60cb`.
+Reviewed predecessor evidence is mandatory and verified: branch ancestry includes M03 Slice 04 reviewed merge `378705302a0a4e507018e437bc329b42979e60cb`.
 
-No mandatory test is waived or deferred.
+Initial dedicated workflow #4: all 30 runtime scenarios passed, then the overall job failed only because the regression runner referenced a non-existent `tests/fv11_eligibility_assessment_test.sh` path. Remediation commit `5f63f9f501d4d21bc11a8b7124923d5b1893de77` corrected the runner to the governed `tests/fv11_eligibility_test.sh` path.
+
+Verified remediation evidence:
+- dedicated M03 Slice 05 workflow #6 — SUCCESS;
+- 30/30 runtime scenarios — PASS;
+- strict TypeScript proof — PASS;
+- embedded regressions and architecture boundaries — PASS;
+- all 21 observed PR-triggered workflows on remediation head — SUCCESS.
+
+No mandatory test was waived or deferred. Hard blockers: 0.
