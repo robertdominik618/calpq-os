@@ -91,3 +91,22 @@ export type {
   ApplicationTransportPagination,
   ApplicationTransportSuccess,
 } from './transport/transport-contract.ts';
+export {
+  AsyncFailureKind,
+  InMemoryDeliveryDeduplicator,
+  ReconciliationState,
+  RecoveryStatus,
+  RetryDisposition,
+  authoritativeValue,
+  classifyRetry,
+  dependencyOutageDecision,
+  invokeAsyncUseCase,
+  reconcileRuntime,
+  validateRecovery,
+} from './runtime/operational-resilience.ts';
+export type {
+  AsyncDeliveryIdentity,
+  ReconciliationResult,
+  RecoveryValidation,
+  RetryDecision,
+} from './runtime/operational-resilience.ts';
