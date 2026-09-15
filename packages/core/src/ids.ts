@@ -44,6 +44,18 @@ export class CredentialId extends UuidV7Value {
   static from(value: string): CredentialId { return new CredentialId(value); }
 }
 
+export class ActivityDefinitionId extends UuidV7Value {
+  declare private readonly __activityDefinitionIdBrand: void;
+  private constructor(value: string) { super(value); }
+  static from(value: string): ActivityDefinitionId { return new ActivityDefinitionId(value); }
+}
+
+export class ProfessionDefinitionId extends UuidV7Value {
+  declare private readonly __professionDefinitionIdBrand: void;
+  private constructor(value: string) { super(value); }
+  static from(value: string): ProfessionDefinitionId { return new ProfessionDefinitionId(value); }
+}
+
 export class CredentialDefinitionId extends UuidV7Value {
   declare private readonly __credentialDefinitionIdBrand: void;
   private constructor(value: string) { super(value); }

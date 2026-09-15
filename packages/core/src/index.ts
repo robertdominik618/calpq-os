@@ -1,5 +1,6 @@
 export {
   ActorId,
+  ActivityDefinitionId,
   AggregateId,
   CommandId,
   CorrelationId,
@@ -10,6 +11,7 @@ export {
   EligibilityAssessmentId,
   EventId,
   EvidenceId,
+  ProfessionDefinitionId,
   RequirementSetId,
   RuleSetId,
   SourceId,
@@ -52,6 +54,18 @@ export { EvidenceSnapshot, EvidenceSnapshotEntry } from './credential/evidence-s
 export { ExternalArtifactReference } from './credential/external-artifact-reference.ts';
 export { CredentialArtifact } from './credential/credential-artifact.ts';
 export type { CredentialArtifactProvenanceReference } from './credential/credential-artifact.ts';
+export {
+  ActivityDefinition,
+  CatalogEffectivePeriod,
+  ExternalClassificationMappingRelation,
+  ExternalClassificationReference,
+  ProfessionDefinition,
+  RegulatoryStatus,
+} from './catalog/activity-profession-catalog.ts';
+export type {
+  ExternalClassificationMappingRelation as ExternalClassificationMappingRelationCode,
+  RegulatoryStatus as RegulatoryStatusCode,
+} from './catalog/activity-profession-catalog.ts';
 export {
   AtomicRequirementResult,
   CredentialDefinitionReference,
