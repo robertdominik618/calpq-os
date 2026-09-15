@@ -1,10 +1,12 @@
 # CALPQ M04 Slice 02 — Test Index
 
-Status: `IMPLEMENTED / VERIFICATION PENDING`
+Status: `VERIFIED / 32 MANDATORY RUNTIME SCENARIOS PASS`
 ID: `CALPQ-M04-S02-TEST-0001`
 Tracking issue: #85
+PR: #86
+Verified implementation head: `b0db0587deadf98a2a8f06bb03661bea9d530528`
 
-Mandatory runtime scenarios: **32**.
+Mandatory runtime scenarios: **32/32 PASS**.
 
 1. CredentialDefinition CALPQ UUIDv7 identity.
 2. RequirementDefinition CALPQ UUIDv7 identity.
@@ -39,4 +41,7 @@ Mandatory runtime scenarios: **32**.
 31. Core export surface exposes S02 types without S03+/AuthorizationGrant leakage.
 32. Existing eligibility contract remains definition-agnostic.
 
-Compile-time proof additionally covers semantic ID non-interchangeability and readonly root/nested state.
+Compile-time proof covers semantic ID non-interchangeability and readonly root/nested state.
+Dedicated workflow `M04 Slice 02 Credential Requirement Catalog` #2 = SUCCESS.
+Complete observed implementation-head PR matrix = 22/22 SUCCESS.
+No mandatory test was waived or deferred.
