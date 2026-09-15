@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "decision_id": "CALPQ-M04-ADM-DEC-0001",
+  "admission_record_id": "CALPQ-M04-ADM-0001",
+  "milestone": "M04",
+  "candidate": "Catalog, Qualification Paths & Gap Intelligence",
+  "issue_number": 33,
+  "state": "ADMITTED_FOR_IMPLEMENTATION",
+  "admission_transition_id": "CALPQ-M04-ADMIT-0001",
+  "blocking_reviews": [],
+  "admitted_revision": "fa33edd4804b3534d2642dd044e5c2ee4f5bc5dd",
+  "m03_reviewed_merge": "fa33edd4804b3534d2642dd044e5c2ee4f5bc5dd",
+  "approved_by": "robertdominik618",
+  "approved_at": null,
+  "approval_time_precision": "NOT_INDEPENDENTLY_CAPTURED",
+  "approval_text": "tak pokračujeme",
+  "authorized_execution_entry": "M04_SLICE_01_ACTIVITY_PROFESSION_CATALOG_MODEL",
+  "admission_effective_condition": "ADMISSION_PR_MERGED_AND_POST_MERGE_VERIFIED",
+  "scope_boundary": "Existing M04 execution package only; M04 may own governed catalog/path/equivalence/gap knowledge but may not ingest raw provider payloads, verify/promote evidence, issue/infer AuthorizationGrant, use free-form AI as authoritative requirement/path truth, rewrite history, or admit M05-M08",
+  "last_updated_date": "2026-09-15"
+}
