@@ -128,6 +128,19 @@ export type {
   ActivityTimelineReadModelInput,
 } from './timeline/activity-timeline-read-model.ts';
 export {
+  GovernedNextActionPresentation,
+  GovernedNextActionReference,
+  MissingConditionNextActionReadModel,
+  MissingConditionPresentation,
+  MissingConditionState,
+  NextActionAvailability,
+  NextActionPresentationReason,
+  NextActionSourceKind,
+} from './guidance/missing-condition-next-action-read-model.ts';
+export type {
+  MissingConditionNextActionReadModelInput,
+} from './guidance/missing-condition-next-action-read-model.ts';
+export {
   DashboardDestination,
   DashboardReadModel,
   DashboardSourceKind,
