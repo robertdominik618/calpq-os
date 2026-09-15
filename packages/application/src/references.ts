@@ -24,26 +24,31 @@ abstract class ApplicationReference {
 }
 
 export class ApplicationOperationReference extends ApplicationReference {
+  declare private readonly __operationReferenceBrand: void;
   private constructor(value: string) { super(value, 'Operation reference'); }
   static from(value: string): ApplicationOperationReference { return new ApplicationOperationReference(value); }
 }
 
 export class TenantScopeReference extends ApplicationReference {
+  declare private readonly __tenantScopeBrand: void;
   private constructor(value: string) { super(value, 'Tenant scope reference'); }
   static from(value: string): TenantScopeReference { return new TenantScopeReference(value); }
 }
 
 export class OrganizationScopeReference extends ApplicationReference {
+  declare private readonly __organizationScopeBrand: void;
   private constructor(value: string) { super(value, 'Organization scope reference'); }
   static from(value: string): OrganizationScopeReference { return new OrganizationScopeReference(value); }
 }
 
 export class AccessDecisionReference extends ApplicationReference {
+  declare private readonly __accessDecisionBrand: void;
   private constructor(value: string) { super(value, 'Access decision reference'); }
   static from(value: string): AccessDecisionReference { return new AccessDecisionReference(value); }
 }
 
 export class PurposeReference extends ApplicationReference {
+  declare private readonly __purposeBrand: void;
   private constructor(value: string) { super(value, 'Purpose reference'); }
   static from(value: string): PurposeReference { return new PurposeReference(value); }
 }

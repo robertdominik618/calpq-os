@@ -9,3 +9,4 @@ export { ApplicationExecutionContext } from './application-execution-context.ts'
 export type { ApplicationExecutionContextInput } from './application-execution-context.ts';
 export { ApplicationEntrypoint, invokeUseCase } from './use-case-handler.ts';
 export type { UseCaseHandler, UseCaseInvocation } from './use-case-handler.ts';
+export type { ClockPort, IdGeneratorPort } from './ports.ts';
