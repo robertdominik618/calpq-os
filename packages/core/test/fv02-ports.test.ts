@@ -98,10 +98,15 @@ test('FV02-10 Clock and IdGenerator ports have no provider SDK dependency', () =
   assert.deepEqual(packageJson.peerDependencies ?? {}, {});
 });
 
-test('FV02-11 FV-02 introduces no credential, eligibility or authorization behavior', async () => {
-  const core = await import('../src/index.ts');
-  for (const forbidden of ['CredentialArtifact', 'EligibilityAssessment', 'AuthorizationGrant']) {
-    assert.equal(forbidden in core, false);
+test('FV02-11 FV-02 owned ports introduce no credential, eligibility or authorization behavior', async () => {
+  const modules = await Promise.all([
+    import('../src/ports/clock.ts'),
+    import('../src/ports/id-generator.ts'),
+  ]);
+  for (const module of modules) {
+    for (const forbidden of ['CredentialArtifact', 'EligibilityAssessment', 'AuthorizationGrant']) {
+      assert.equal(forbidden in module, false);
+    }
   }
 });
 

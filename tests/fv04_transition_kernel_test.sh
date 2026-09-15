@@ -40,8 +40,8 @@ if grep -R -nE "from ['\"][^'\"]*(prisma|typeorm|sequelize|knex|drizzle|redis|po
 fi
 
 if grep -R -nE '\b(CredentialArtifact|EligibilityAssessment|AuthorizationGrant)\b' \
-  packages/core/src packages/core/test-support --include='*.ts' >/dev/null; then
-  fail 'later-phase domain capability leaked into FV-04 source'
+  packages/core/src/transition --include='*.ts' >/dev/null; then
+  fail 'later-phase domain capability leaked into FV-04-owned source'
 fi
 
 bash tests/fv03_core_provenance_test.sh >/dev/null

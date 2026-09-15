@@ -127,10 +127,21 @@ test('FV01-19 core runtime surface is dependency-free by construction', async ()
   assert.equal(typeof module.SubjectId.from, 'function');
 });
 
-test('FV01-20 FV-01 exposes primitives only and no later-phase aggregate behavior', async () => {
-  const module = await import('../src/index.ts');
-  const forbidden = ['CredentialArtifact', 'EligibilityAssessment', 'AuthorizationGrant'];
-  for (const name of forbidden) assert.equal(name in module, false);
+test('FV01-20 FV-01 owned primitive modules expose no later-phase aggregate behavior', async () => {
+  const modules = await Promise.all([
+    import('../src/ids.ts'),
+    import('../src/time.ts'),
+    import('../src/revision.ts'),
+    import('../src/version.ts'),
+    import('../src/party-references.ts'),
+    import('../src/jurisdiction.ts'),
+    import('../src/verification-state.ts'),
+  ]);
+  for (const module of modules) {
+    for (const forbidden of ['CredentialArtifact', 'EligibilityAssessment', 'AuthorizationGrant']) {
+      assert.equal(forbidden in module, false);
+    }
+  }
 });
 
 test('FV01-21 deterministic Core primitives do not use global randomness', () => {

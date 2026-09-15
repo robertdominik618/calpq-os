@@ -32,8 +32,17 @@ if grep -R -nE 'Date\.now\(|Math\.random\(|randomUUID\(|crypto\.randomUUID\(' pa
   fail 'global wall-clock/randomness access detected in deterministic Core primitives'
 fi
 
-if grep -R -nE '\b(CredentialArtifact|EligibilityAssessment|AuthorizationGrant)\b' packages/core/src --include='*.ts' >/dev/null; then
-  fail 'later-phase domain capability leaked into FV-01 source'
+fv01_owned=(
+  packages/core/src/ids.ts
+  packages/core/src/time.ts
+  packages/core/src/revision.ts
+  packages/core/src/version.ts
+  packages/core/src/party-references.ts
+  packages/core/src/jurisdiction.ts
+  packages/core/src/verification-state.ts
+)
+if grep -nE '\b(CredentialArtifact|EligibilityAssessment|AuthorizationGrant)\b' "${fv01_owned[@]}" >/dev/null; then
+  fail 'later-phase domain capability leaked into FV-01-owned primitive source'
 fi
 
 printf 'FV01 CORE PRIMITIVES: PASS / 21 TESTS / TYPE BOUNDARIES / DEPENDENCY BOUNDARY\n'

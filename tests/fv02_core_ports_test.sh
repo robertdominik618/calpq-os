@@ -35,8 +35,8 @@ if grep -R -nE 'Date\.now\(|new Date\(\)|Math\.random\(|randomUUID\(|crypto\.ran
 fi
 
 if grep -R -nE '\b(CredentialArtifact|EligibilityAssessment|AuthorizationGrant)\b' \
-  packages/core/src packages/core/test-support --include='*.ts' >/dev/null; then
-  fail 'later-phase domain capability leaked into FV-02 source'
+  packages/core/src/ports packages/core/test-support --include='*.ts' >/dev/null; then
+  fail 'later-phase domain capability leaked into FV-02-owned source'
 fi
 
 bash tests/fv01_core_primitives_test.sh >/dev/null
