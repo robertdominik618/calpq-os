@@ -163,7 +163,7 @@ test('FV06-15 port-boundary', () => {
   assert.deepEqual(packageJson.optionalDependencies ?? {}, {});
   assert.deepEqual(packageJson.peerDependencies ?? {}, {});
   const sources = readFileSync('packages/application/src/ports.ts', 'utf8');
-  assert.doesNotMatch(sources, /fastify|react|expo|prisma|typeorm|openai|anthropic|aws-sdk|firebase/i);
+  assert.doesNotMatch(sources, /from\s+['"](?:react|react-native|expo|fastify|@?prisma|typeorm|sequelize|knex|drizzle|aws-sdk|@aws-sdk|openai|@anthropic-ai|tesseract|firebase)(?:['"/])/i);
 });
 
 test('FV06-16 architecture-boundary', () => {
