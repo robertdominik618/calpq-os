@@ -26,6 +26,13 @@ function sameTenant(left: TenantScopeReference, right: TenantScopeReference): bo
   return left.toString() === right.toString();
 }
 
+export class TenantAccessDeniedError extends Error {
+  constructor() {
+    super('Access denied');
+    this.name = 'TenantAccessDeniedError';
+  }
+}
+
 export class TenantContext {
   readonly tenant: TenantScopeReference;
   readonly organization: OrganizationScopeReference;
@@ -64,10 +71,10 @@ export class TenantContext {
   }
 
   static fromExecutionContext(context: ApplicationExecutionContext): TenantContext {
-    if (!(context instanceof ApplicationExecutionContext)) throw new TypeError('TenantContext requires ApplicationExecutionContext');
-    if (context.tenantScope === null) throw new TenantAccessDeniedError();
-    if (context.organizationScope === null) throw new TenantAccessDeniedError();
-    if (context.purpose === null) throw new TenantAccessDeniedError();
+    if (!(context instanceof ApplicationExecutionContext)) throw new TenantAccessDeniedError();
+    if (context.tenantScope === null || context.organizationScope === null || context.purpose === null) {
+      throw new TenantAccessDeniedError();
+    }
     return TenantContext.create({
       tenant: context.tenantScope,
       organization: context.organizationScope,
@@ -143,6 +150,7 @@ export class TenantResourceAddress {
 export class TenantAsyncEnvelope<T> {
   readonly tenant: TenantScopeReference;
   readonly organization: OrganizationScopeReference;
+  readonly actor: ActorReference;
   readonly purpose: PurposeReference;
   readonly correlationId: CorrelationId;
   readonly payload: T;
@@ -151,6 +159,7 @@ export class TenantAsyncEnvelope<T> {
   private constructor(context: TenantContext, payload: T, attempt: number) {
     this.tenant = context.tenant;
     this.organization = context.organization;
+    this.actor = context.actor;
     this.purpose = context.purpose;
     this.correlationId = context.correlationId;
     this.payload = payload;
@@ -164,25 +173,15 @@ export class TenantAsyncEnvelope<T> {
   }
 
   nextRetry(): TenantAsyncEnvelope<T> {
-    const context = TenantContext.create({
+    return new TenantAsyncEnvelope(TenantContext.create({
       tenant: this.tenant,
       organization: this.organization,
-      actor: SYSTEM_RETRY_ACTOR,
+      actor: this.actor,
       purpose: this.purpose,
       correlationId: this.correlationId,
-    });
-    return new TenantAsyncEnvelope(context, this.payload, this.attempt + 1);
+    }), this.payload, this.attempt + 1);
   }
 }
-
-const SYSTEM_RETRY_ACTOR = ActorReference.create(
-  // A stable internal system-process identity used only to preserve deterministic retry envelopes.
-  // It is not tenant identity and cannot replace the originating audit trail.
-  // UUIDv7 is intentionally explicit rather than generated ambiently.
-  // eslint-disable-next-line @typescript-eslint/no-use-before-define
-  (() => { throw new Error('SYSTEM_RETRY_ACTOR must be initialized by configureRetryActor'); })() as never,
-  ActorKind.SYSTEM_PROCESS,
-);
 
 export const AccessDisposition = {
   ALLOW: 'ALLOW',
@@ -241,13 +240,6 @@ export class TenantAccessDecision {
   }
 }
 
-export class TenantAccessDeniedError extends Error {
-  constructor() {
-    super('Access denied');
-    this.name = 'TenantAccessDeniedError';
-  }
-}
-
 export async function executeSensitiveRead(input: {
   readonly context: TenantContext;
   readonly boundary: TenantBoundary;
@@ -256,8 +248,7 @@ export async function executeSensitiveRead(input: {
   readonly requestedFields: readonly string[];
   readonly loader: () => Promise<Readonly<Record<string, unknown>>>;
 }): Promise<Readonly<Record<string, unknown>>> {
-  if (!(input.context instanceof TenantContext)) throw new TenantAccessDeniedError();
-  if (!(input.boundary instanceof TenantBoundary)) throw new TenantAccessDeniedError();
+  if (!(input.context instanceof TenantContext) || !(input.boundary instanceof TenantBoundary)) throw new TenantAccessDeniedError();
   input.boundary.assertKnown(input.context);
   if (!(input.resourceTenant instanceof TenantScopeReference) || !sameTenant(input.context.tenant, input.resourceTenant)) {
     throw new TenantAccessDeniedError();
