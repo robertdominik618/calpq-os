@@ -169,6 +169,23 @@ export {
 } from './responsive/responsive-read-flow.ts';
 export type { ResponsiveReadFlowInput } from './responsive/responsive-read-flow.ts';
 export {
+  AccessibilityKeyboardTraversal,
+  AccessibilityLandmarkRole,
+  AccessibilityLocalizationReadModel,
+  AccessibilityStatusMeaningMode,
+  AccessibleLocalizedReadSection,
+  AccessibleMachineSemanticPresentation,
+  CanonicalDateTimePresentation,
+  DateTimeDisplayFormatKey,
+  LocalizationCatalog,
+  LocalizationCatalogEntry,
+  MachineSemanticLabelReference,
+  PresentationLocale,
+} from './accessibility/accessibility-localization-read-model.ts';
+export type {
+  AccessibilityLocalizationReadModelInput,
+} from './accessibility/accessibility-localization-read-model.ts';
+export {
   DashboardDestination,
   DashboardReadModel,
   DashboardSourceKind,
