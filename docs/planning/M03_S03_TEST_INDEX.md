@@ -1,6 +1,6 @@
 # CALPQ M03 Slice 03 Test Index — Credential Card Separated State Presentation
 
-Status: `24 OF 24 EXECUTABLE / VERIFICATION PENDING`
+Status: `24 OF 24 EXECUTABLE / VERIFIED`
 ID: `CALPQ-M03-S03-TEST-0001`
 
 1. passport-input-required
@@ -36,4 +36,7 @@ Compile-time evidence additionally proves:
 - compose requires `ProfessionalPassportProjection`;
 - document binding requires `CredentialArtifact`.
 
-Predecessor evidence is mandatory: branch ancestry must include reviewed Slice 02 merge `953dac4785d613c9ab0c7247e8064f7de2b657de`; Slice 02 and Slice 01 regressions plus FV-12 Professional Passport must pass.
+Reviewed predecessor evidence is mandatory and verified: branch ancestry includes Slice 02 merge `953dac4785d613c9ab0c7247e8064f7de2b657de`; Slice 02 and Slice 01 regressions plus FV-12 Professional Passport pass.
+
+Verified pre-exit head: `391b7fd6c102df22ee48e690de8439bb45903ca0`.
+Dedicated workflow `M03 Slice 03 Credential Card #4` SUCCESS with exact result 24 pass / 0 fail / 0 skipped / 0 todo plus strict TypeScript proof. No mandatory test was waived or deferred.
