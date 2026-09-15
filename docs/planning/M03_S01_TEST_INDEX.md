@@ -1,6 +1,6 @@
 # CALPQ M03 Slice 01 Test Index — Dashboard Governed Read Models
 
-Status: `16 MANDATORY / EXECUTABLE`
+Status: `16 OF 16 EXECUTABLE / VERIFIED`
 ID: `CALPQ-M03-S01-TEST-0001`
 
 1. passport-projection-input-required
@@ -20,6 +20,7 @@ ID: `CALPQ-M03-S01-TEST-0001`
 15. non-authoritative-no-generic-valid-state
 16. architecture-boundary
 
-Additional compile-time evidence proves controlled destination typing, immutable DashboardReadModel properties/navigation and ProfessionalPassportProjection-only input.
+Compile-time evidence proves controlled destination typing, immutable DashboardReadModel properties/navigation and ProfessionalPassportProjection-only input.
 
-No mandatory test may be waived or deferred for Slice 01 completion.
+Verified evidence head: `1bbaf6d309f32976ebdc68eaaa8f4f4b9d055983`.
+Dedicated workflow `M03 Slice 01 Dashboard Read Models #2` SUCCESS. FV-12 predecessor regression, M03 admission integrity and architecture boundaries also pass. No mandatory test was waived or deferred.
