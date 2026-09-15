@@ -17,6 +17,7 @@
     "test:m03s04": "node --test test/m03-s04-explanation.test.ts",
     "test:m03s05": "node --test test/m03-s05-timeline.test.ts",
     "test:m03s06": "node --test test/m03-s06-guidance.test.ts",
+    "test:m03s07": "node --test test/m03-s07-search.test.ts",
     "typecheck": "npx --yes --package=typescript@7.0.2 -- tsc -p tsconfig.json"
   }
 }
