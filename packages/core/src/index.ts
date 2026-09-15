@@ -4,10 +4,13 @@ export {
   CommandId,
   CorrelationId,
   CredentialArtifactId,
+  CredentialDefinitionId,
   CredentialId,
   DecisionId,
+  EligibilityAssessmentId,
   EventId,
   EvidenceId,
+  RequirementSetId,
   RuleSetId,
   SourceId,
   SubjectId,
@@ -49,3 +52,14 @@ export { EvidenceSnapshot, EvidenceSnapshotEntry } from './credential/evidence-s
 export { ExternalArtifactReference } from './credential/external-artifact-reference.ts';
 export { CredentialArtifact } from './credential/credential-artifact.ts';
 export type { CredentialArtifactProvenanceReference } from './credential/credential-artifact.ts';
+export {
+  AtomicRequirementResult,
+  CredentialDefinitionReference,
+  EligibilityAssessment,
+  RequirementGroup,
+  RequirementGroupMode,
+  RequirementGroupResult,
+  RequirementId,
+  RequirementSet,
+  aggregateRequirementGroup,
+} from './eligibility/eligibility-assessment.ts';

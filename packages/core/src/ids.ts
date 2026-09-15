@@ -44,6 +44,24 @@ export class CredentialId extends UuidV7Value {
   static from(value: string): CredentialId { return new CredentialId(value); }
 }
 
+export class CredentialDefinitionId extends UuidV7Value {
+  declare private readonly __credentialDefinitionIdBrand: void;
+  private constructor(value: string) { super(value); }
+  static from(value: string): CredentialDefinitionId { return new CredentialDefinitionId(value); }
+}
+
+export class RequirementSetId extends UuidV7Value {
+  declare private readonly __requirementSetIdBrand: void;
+  private constructor(value: string) { super(value); }
+  static from(value: string): RequirementSetId { return new RequirementSetId(value); }
+}
+
+export class EligibilityAssessmentId extends UuidV7Value {
+  declare private readonly __eligibilityAssessmentIdBrand: void;
+  private constructor(value: string) { super(value); }
+  static from(value: string): EligibilityAssessmentId { return new EligibilityAssessmentId(value); }
+}
+
 export class CredentialArtifactId extends UuidV7Value {
   declare private readonly __credentialArtifactIdBrand: void;
   private constructor(value: string) { super(value); }
