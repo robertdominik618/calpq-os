@@ -8,6 +8,7 @@
     "lib": ["ES2024"]
   },
   "include": [
-    "src/**/*.ts"
+    "src/**/*.ts",
+    "test/fv01-types.compile.ts"
   ]
 }
