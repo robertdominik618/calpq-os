@@ -3,6 +3,7 @@ export {
   AggregateId,
   CommandId,
   CorrelationId,
+  CredentialArtifactId,
   CredentialId,
   DecisionId,
   EventId,
@@ -43,3 +44,8 @@ export type {
   TransitionDecisionShape,
   TransitionResult,
 } from './transition/transition-kernel.ts';
+export { ArtifactFormat, CredentialArtifactKind } from './credential/artifact-types.ts';
+export { EvidenceSnapshot, EvidenceSnapshotEntry } from './credential/evidence-snapshot.ts';
+export { ExternalArtifactReference } from './credential/external-artifact-reference.ts';
+export { CredentialArtifact } from './credential/credential-artifact.ts';
+export type { CredentialArtifactProvenanceReference } from './credential/credential-artifact.ts';

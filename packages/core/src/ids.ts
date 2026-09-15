@@ -44,6 +44,12 @@ export class CredentialId extends UuidV7Value {
   static from(value: string): CredentialId { return new CredentialId(value); }
 }
 
+export class CredentialArtifactId extends UuidV7Value {
+  declare private readonly __credentialArtifactIdBrand: void;
+  private constructor(value: string) { super(value); }
+  static from(value: string): CredentialArtifactId { return new CredentialArtifactId(value); }
+}
+
 export class EvidenceId extends UuidV7Value {
   declare private readonly __evidenceIdBrand: void;
   private constructor(value: string) { super(value); }

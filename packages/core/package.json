@@ -12,6 +12,7 @@
     "test:fv02": "node --test test/fv02-ports.test.ts",
     "test:fv03": "node --test test/fv03-provenance.test.ts",
     "test:fv04": "node --test test/fv04-transition-kernel.test.ts",
+    "test:fv05": "node --test test/fv05-credential-artifact.test.ts",
     "typecheck": "npx --yes --package=typescript@7.0.2 -- tsc -p tsconfig.json"
   }
 }
