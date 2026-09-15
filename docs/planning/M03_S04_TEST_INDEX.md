@@ -1,6 +1,6 @@
 # CALPQ M03 Slice 04 Test Index — Evidence & Source Explanation Views / Why? Affordance
 
-Status: `26 EXECUTABLE SCENARIOS DEFINED`
+Status: `26 OF 26 EXECUTABLE / VERIFIED`
 ID: `CALPQ-M03-S04-TEST-0001`
 
 1. credential-card-input-required
@@ -32,6 +32,9 @@ ID: `CALPQ-M03-S04-TEST-0001`
 
 Compile-time evidence additionally proves root and nested immutability; root `authorizationAuthority` and `decisionAuthority` are exactly `false`; `WHY` is controlled; explanation availability is controlled; and composition requires `CredentialCardReadModel`, `ProfessionalPassportProjection` and `EligibilityAssessment`.
 
-Reviewed predecessor evidence is mandatory: branch ancestry must include M03 Slice 03 reviewed merge `f92032617783e1ddfc82aefc7e1bdea28534424a`.
+Reviewed predecessor evidence is mandatory and verified: branch ancestry includes M03 Slice 03 reviewed merge `f92032617783e1ddfc82aefc7e1bdea28534424a`.
 
-No mandatory test is waived or deferred.
+Verified implementation/evidence head: `6a37a5c6e3f3f5f2f4ebbfc28417b22263420084`.
+Dedicated workflow `M03 Slice 04 Evidence Source Explanation #8` — SUCCESS. The dedicated runner enforces exactly 26 mandatory runtime scenarios, strict TypeScript proof, S03/S02/S01/FV-12 regression checks and architecture boundaries. All 20 observed PR-triggered workflows on the verified implementation/evidence head completed successfully.
+
+No mandatory test was waived or deferred. Hard blockers: 0.

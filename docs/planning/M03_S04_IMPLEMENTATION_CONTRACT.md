@@ -1,12 +1,14 @@
 # CALPQ M03 Slice 04 Implementation Contract — Evidence & Source Explanation Views / Why? Affordance
 
-Status: `IMPLEMENTING / EXECUTABLE EVIDENCE ADDED`
+Status: `COMPLETED / VERIFIED`
 ID: `CALPQ-M03-S04-0001`
 
 Admission: `CALPQ-M03-ADMIT-0001`.
 Reviewed predecessor: M03 Slice 03 merge commit `f92032617783e1ddfc82aefc7e1bdea28534424a`.
 Tracking issue: #64.
+Pull request: #66.
 Implementation branch: `impl/m03-s04-evidence-source-explanation`.
+Verified implementation/evidence head: `6a37a5c6e3f3f5f2f4ebbfc28417b22263420084`.
 
 ## Scope
 Slice 04 implements the fourth delivery slice from `M03_EXECUTION_PACKAGE.md`: evidence and source explanation views with an explicit `Why?` affordance.
@@ -67,7 +69,25 @@ Composition fails closed if Credential Card, Passport or EligibilityAssessment h
 - stable reason/source/evidence references remain machine-readable and traceable;
 - all nested outputs are immutable and deterministic.
 
-## Verification target
-Dedicated executable evidence must prove exactly 26 runtime scenarios plus strict TypeScript proof, reviewed Slice 03 ancestry, M03 S03/S02/S01 and FV-12 regressions, and architecture boundaries.
+## Verification evidence
+On `6a37a5c6e3f3f5f2f4ebbfc28417b22263420084`:
+- dedicated M03 Slice 04 Evidence Source Explanation #8 — SUCCESS;
+- exactly 26 mandatory runtime scenarios — PASS;
+- strict TypeScript compile-time proof — PASS;
+- reviewed Slice 03 ancestry guard — PASS;
+- M03 Slice 03 Credential Card #17 — SUCCESS;
+- M03 Slice 02 Passport Summary #23 — SUCCESS;
+- M03 Slice 01 Dashboard Read Models #30 — SUCCESS;
+- FV-12 Professional Passport #63 — SUCCESS;
+- Foundation Guard #1031 — SUCCESS;
+- M00 Readiness #910 — SUCCESS;
+- M02 Batch Readiness #319 — SUCCESS;
+- Program Execution Readiness #333 — SUCCESS;
+- M03-M08 Execution Readiness #290 — SUCCESS;
+- M09-M12 Execution Readiness #279 — SUCCESS;
+- CALPQ v1 Execution Index #270 — SUCCESS;
+- all other observed PR-triggered workflows on the verified implementation/evidence head — SUCCESS.
 
-No mandatory test is waived or deferred.
+No mandatory test was waived or deferred. Hard blockers: 0.
+
+The evidence-packaging commit that records this result remains subject to final CI before PR #66 is marked ready for review.
