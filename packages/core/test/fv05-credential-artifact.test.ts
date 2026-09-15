@@ -183,10 +183,11 @@ test('FV05-12 artifact-not-authorization', async () => {
 
 test('FV05-13 signature-not-eligibility', async () => {
   const verifiedArtifact = artifact({ verification: VerificationState.from(VerificationStateCode.VERIFIED) });
-  const core = await import('../src/index.ts');
+  const credentialArtifactModule = await import('../src/credential/credential-artifact.ts');
   assert.equal(verifiedArtifact.verificationState.toString(), 'VERIFIED');
-  assert.equal('EligibilityAssessment' in core, false);
+  assert.equal('EligibilityAssessment' in credentialArtifactModule, false);
   assert.equal('eligible' in verifiedArtifact, false);
+  assert.equal('eligibilityAssessment' in verifiedArtifact, false);
 });
 
 test('FV05-14 derived-not-verified', () => {

@@ -60,3 +60,53 @@ export type {
   VerificationProviderPort,
 } from './verification/verification-ports.ts';
 export { orchestrateVerification } from './verification/verification-orchestrator.ts';
+export {
+  PassportAuthorityClass,
+  PassportEvidenceVerificationLink,
+  PassportItemOrigin,
+  ProfessionalPassportItem,
+  ProfessionalPassportProjection,
+} from './passport/professional-passport.ts';
+export {
+  AccessDisposition,
+  SystemTenantContext,
+  TenantAccessDecision,
+  TenantAccessDeniedError,
+  TenantAsyncEnvelope,
+  TenantAuditEvidence,
+  TenantBoundary,
+  TenantContext,
+  TenantResourceAddress,
+  TenantResourceSurface,
+  executeSensitiveRead,
+} from './tenant/tenant-governance.ts';
+export {
+  ApplicationTransportError,
+  ApplicationTransportErrorKind,
+  ApplicationTransportResponseKind,
+} from './transport/transport-contract.ts';
+export type {
+  ApplicationTransportHandler,
+  ApplicationTransportInvocation,
+  ApplicationTransportPagination,
+  ApplicationTransportSuccess,
+} from './transport/transport-contract.ts';
+export {
+  AsyncFailureKind,
+  InMemoryDeliveryDeduplicator,
+  ReconciliationState,
+  RecoveryStatus,
+  RetryDisposition,
+  authoritativeValue,
+  classifyRetry,
+  dependencyOutageDecision,
+  invokeAsyncUseCase,
+  reconcileRuntime,
+  validateRecovery,
+} from './runtime/operational-resilience.ts';
+export type {
+  AsyncDeliveryIdentity,
+  ReconciliationResult,
+  RecoveryValidation,
+  RetryDecision,
+} from './runtime/operational-resilience.ts';

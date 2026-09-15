@@ -1,0 +1,43 @@
+name: FV-13 Tenant Governance
+
+on:
+  push:
+    paths:
+      - 'packages/application/src/tenant/**'
+      - 'packages/application/test/fv13-*'
+      - 'packages/application/tsconfig.json'
+      - 'tests/fv12_professional_passport_test.sh'
+      - 'tests/fv13_tenant_governance_test.sh'
+      - '.github/workflows/fv12-passport.yml'
+      - '.github/workflows/fv13-tenant-governance.yml'
+      - 'scripts/governance_lifecycle_phase.sh'
+  pull_request:
+    paths:
+      - 'packages/application/src/tenant/**'
+      - 'packages/application/test/fv13-*'
+      - 'packages/application/tsconfig.json'
+      - 'tests/fv12_professional_passport_test.sh'
+      - 'tests/fv13_tenant_governance_test.sh'
+      - '.github/workflows/fv12-passport.yml'
+      - '.github/workflows/fv13-tenant-governance.yml'
+      - 'scripts/governance_lifecycle_phase.sh'
+
+permissions:
+  contents: read
+
+jobs:
+  fv13-tenant-governance:
+    name: FV-13 tenant access audit integration
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Set up Node.js 24 LTS
+        uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version-file: .node-version
+      - name: Run FV-13 tenant governance evidence
+        shell: bash
+        run: bash tests/fv13_tenant_governance_test.sh

@@ -1,0 +1,41 @@
+name: FV-14 REST OpenAPI
+
+on:
+  push:
+    paths:
+      - 'apps/api/**'
+      - 'packages/application/src/transport/**'
+      - 'tests/fv13_tenant_governance_test.sh'
+      - 'tests/fv14_rest_openapi_test.sh'
+      - '.github/workflows/fv13-tenant-governance.yml'
+      - '.github/workflows/fv14-rest-openapi.yml'
+      - 'scripts/governance_lifecycle_phase.sh'
+  pull_request:
+    paths:
+      - 'apps/api/**'
+      - 'packages/application/src/transport/**'
+      - 'tests/fv13_tenant_governance_test.sh'
+      - 'tests/fv14_rest_openapi_test.sh'
+      - '.github/workflows/fv13-tenant-governance.yml'
+      - '.github/workflows/fv14-rest-openapi.yml'
+      - 'scripts/governance_lifecycle_phase.sh'
+
+permissions:
+  contents: read
+
+jobs:
+  fv14-rest-openapi:
+    name: FV-14 REST JSON and OpenAPI 3.1
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Set up Node.js 24 LTS
+        uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version-file: .node-version
+      - name: Run FV-14 transport evidence
+        shell: bash
+        run: bash tests/fv14_rest_openapi_test.sh

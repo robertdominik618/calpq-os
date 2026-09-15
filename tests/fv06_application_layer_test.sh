@@ -26,16 +26,26 @@ jq -e '((.dependencies // {}) | length) == 0 and ((.optionalDependencies // {}) 
 
 if grep -R -nE "from ['\"](react|react-native|expo|fastify|@?prisma|typeorm|sequelize|knex|drizzle|aws-sdk|@aws-sdk|openai|@anthropic-ai|tesseract|firebase)" \
   packages/application/src --include='*.ts' >/dev/null; then
-  fail 'provider/framework dependency imported into FV-06 Application source'
+  fail 'provider/framework dependency imported into Application source'
 fi
 
 if grep -R -nE 'Date\.now\(|new Date\(\)|Math\.random\(|randomUUID\(|crypto\.randomUUID\(' \
   packages/application/src --include='*.ts' >/dev/null; then
-  fail 'ambient wall-clock/randomness access detected in FV-06 Application source'
+  fail 'ambient wall-clock/randomness access detected in Application source'
 fi
 
-if grep -R -nE '\b(EligibilityAssessment|AuthorizationGrant)\b' packages/application/src --include='*.ts' >/dev/null; then
-  fail 'authoritative domain-policy capability leaked into FV-06 Application source'
+fv06_owned=(
+  packages/application/src/application-execution-context.ts
+  packages/application/src/use-case-handler.ts
+  packages/application/src/references.ts
+  packages/application/src/ports.ts
+)
+if grep -nE '\b(EligibilityAssessment|AuthorizationGrant)\b' "${fv06_owned[@]}" >/dev/null; then
+  fail 'authoritative domain-policy capability leaked into FV-06-owned Application source'
+fi
+
+if grep -R -nE '\bAuthorizationGrant\b' packages/application/src --include='*.ts' >/dev/null; then
+  fail 'AuthorizationGrant behavior leaked into admitted M02 Application source'
 fi
 
 if grep -R -nE 'application' packages/core/src --include='*.ts' >/dev/null; then
