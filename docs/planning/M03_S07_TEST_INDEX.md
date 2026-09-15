@@ -1,6 +1,6 @@
 # CALPQ M03 Slice 07 Test Index — Intent-Oriented Search
 
-Status: `36 EXECUTABLE SCENARIOS DEFINED`
+Status: `36 OF 36 EXECUTABLE / VERIFIED`
 ID: `CALPQ-M03-S07-TEST-0001`
 
 1. query-input-required
@@ -42,6 +42,9 @@ ID: `CALPQ-M03-S07-TEST-0001`
 
 Strict compile-time evidence additionally proves immutable query/results, controlled intent typing and exact false authority flags.
 
-Reviewed predecessor evidence is mandatory: branch ancestry must include M03 Slice 06 reviewed merge `54189c3a08cceb5c457a595a18288fd59e674bb9`.
+Reviewed predecessor evidence is verified: branch ancestry includes M03 Slice 06 reviewed merge `54189c3a08cceb5c457a595a18288fd59e674bb9`.
 
-No mandatory test is waived or deferred.
+Verified implementation head: `a4d742f43a4fca93baf289e68df2005b4fd14bdf`.
+Dedicated workflow `M03 Slice 07 Intent Search #6` — SUCCESS. All 23 observed PR-triggered workflow runs on the verified implementation head completed successfully.
+
+No mandatory test was waived or deferred. Hard blockers: 0.
