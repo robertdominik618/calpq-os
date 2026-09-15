@@ -155,6 +155,20 @@ export {
   IntentSearchToken,
 } from './search/intent-search-read-model.ts';
 export {
+  ResponsiveLayoutMode,
+  ResponsiveNavigationMode,
+  ResponsivePane,
+  ResponsivePresentationProfile,
+  ResponsiveReadFlowReadModel,
+  ResponsiveReadSection,
+  ResponsiveSectionAvailability,
+  ResponsiveSectionKind,
+  ResponsiveSectionOrdering,
+  ResponsiveSizeClass,
+  ResponsiveSurfaceKind,
+} from './responsive/responsive-read-flow.ts';
+export type { ResponsiveReadFlowInput } from './responsive/responsive-read-flow.ts';
+export {
   DashboardDestination,
   DashboardReadModel,
   DashboardSourceKind,
