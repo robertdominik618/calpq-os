@@ -110,6 +110,24 @@ export type {
   CredentialFacetExplanationInput,
 } from './explanation/credential-explanation-read-model.ts';
 export {
+  ActivityTimelineActorAttribution,
+  ActivityTimelineActorRole,
+  ActivityTimelineEvent,
+  ActivityTimelineEventKind,
+  ActivityTimelineOmission,
+  ActivityTimelineOmissionReason,
+  ActivityTimelineOrdering,
+  ActivityTimelineReadModel,
+  ActivityTimelineReference,
+  ActivityTimelineReferenceKind,
+  ActivityTimelineSourceKind,
+  DecisionProvenancePresentation,
+} from './timeline/activity-timeline-read-model.ts';
+export type {
+  ActivityTimelineEventInput,
+  ActivityTimelineReadModelInput,
+} from './timeline/activity-timeline-read-model.ts';
+export {
   DashboardDestination,
   DashboardReadModel,
   DashboardSourceKind,
