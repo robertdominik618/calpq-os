@@ -14,7 +14,6 @@ import {
   DomainOutcome,
   EligibilityAssessment,
   EligibilityAssessmentId,
-  EvidenceClass,
   EvidenceId,
   EvidenceKind,
   EvidenceReference,
@@ -77,14 +76,13 @@ function source(version = 'source-1', hashCharacter = 'a'): SourceReference {
     sourceType: SourceType.ISSUER_RECORD,
     canonicalLocator: `urn:calpq:passport:${version}`,
     version: VersionId.from(version),
-    effectiveFrom: undefined,
     retrievedAt: UtcInstant.from('2026-09-15T08:00:00Z'),
     verificationState: VerificationState.from(VerificationStateCode.VERIFIED),
     contentHash: ContentHash.sha256(hashCharacter.repeat(64)),
   });
 }
 
-function evidenceSnapshot(sourceVersion = 'source-1', hashCharacter = 'a'): EvidenceSnapshot {
+function evidenceBundle(sourceVersion = 'source-1', hashCharacter = 'a') {
   const src = source(sourceVersion, hashCharacter);
   const original = EvidenceReference.original({
     id: EvidenceId.from(IDS.original),
@@ -108,7 +106,11 @@ function evidenceSnapshot(sourceVersion = 'source-1', hashCharacter = 'a'): Evid
     derivationParent: original.id,
     verificationState: VerificationState.from(VerificationStateCode.UNVERIFIED),
   });
-  return EvidenceSnapshot.capture([derived, original], UtcInstant.from('2026-09-15T08:10:00Z'));
+  return Object.freeze({
+    original,
+    derived,
+    snapshot: EvidenceSnapshot.capture([derived, original], UtcInstant.from('2026-09-15T08:10:00Z')),
+  });
 }
 
 function assessment(requirementVersion = 'requirements-1', sourceVersion = 'source-1', hashCharacter = 'a'): EligibilityAssessment {
@@ -128,7 +130,7 @@ function assessment(requirementVersion = 'requirements-1', sourceVersion = 'sour
       requirementIds: [requirementId],
     })],
   });
-  const snapshot = evidenceSnapshot(sourceVersion, hashCharacter);
+  const bundle = evidenceBundle(sourceVersion, hashCharacter);
   const evaluatedAt = UtcInstant.from('2026-09-15T08:30:00Z');
   const provenance = ProvenanceEnvelope.create({
     identity: DecisionId.from(IDS.decision),
@@ -137,17 +139,7 @@ function assessment(requirementVersion = 'requirements-1', sourceVersion = 'sour
     subject,
     ruleSetId: RuleSetId.from(IDS.ruleSet),
     ruleVersion: set.version,
-    evidence: snapshot.entries.map((entry) => EvidenceReference.original({
-      id: entry.evidenceId,
-      kind: entry.evidenceClass === EvidenceClass.ORIGINAL ? EvidenceKind.DOCUMENT : EvidenceKind.DATA_EXPORT,
-      contentReference: entry.contentReference,
-      mediaType: entry.mediaType,
-      contentHash: entry.contentHash,
-      acquiredAt: entry.acquiredAt,
-      acquiredBy: entry.acquiredBy,
-      source: null,
-      verificationState: entry.verificationState,
-    })),
+    evidence: [bundle.original, bundle.derived],
   });
   return EligibilityAssessment.evaluate({
     id: EligibilityAssessmentId.from(IDS.assessment),
@@ -155,7 +147,7 @@ function assessment(requirementVersion = 'requirements-1', sourceVersion = 'sour
     credentialDefinition: credential,
     requirementSet: set,
     evaluatedAt,
-    evidenceSnapshot: snapshot,
+    evidenceSnapshot: bundle.snapshot,
     atomicResults: [AtomicRequirementResult.create({ requirementId, outcome: DomainOutcome.SATISFIED, reasonCodes: ['IDENTITY_OK'] })],
     evaluator: reviewer,
     provenance,
