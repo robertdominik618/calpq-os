@@ -11,6 +11,7 @@
     "test:fv06": "node --test test/fv06-application-context.test.ts",
     "test:fv07": "node --test test/fv07-persistence.test.ts",
     "test:fv09": "node --test test/fv09-document-intake.test.ts",
+    "test:m03s01": "node --test test/m03-s01-dashboard.test.ts",
     "typecheck": "npx --yes --package=typescript@7.0.2 -- tsc -p tsconfig.json"
   }
 }

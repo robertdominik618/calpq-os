@@ -68,6 +68,12 @@ export {
   ProfessionalPassportProjection,
 } from './passport/professional-passport.ts';
 export {
+  DashboardDestination,
+  DashboardReadModel,
+  DashboardSourceKind,
+} from './dashboard/dashboard-read-model.ts';
+export type { DashboardNavigationItem } from './dashboard/dashboard-read-model.ts';
+export {
   AccessDisposition,
   SystemTenantContext,
   TenantAccessDecision,
