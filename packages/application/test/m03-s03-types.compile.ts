@@ -50,9 +50,9 @@ card.lifecycle.state = 'ACTIVE';
 // @ts-expect-error compose only accepts ProfessionalPassportProjection
 CredentialCardReadModel.compose({ passport: {} });
 
-// @ts-expect-error document binding only accepts CredentialArtifact
 CredentialCardDocumentBinding.create({
   credentialDefinitionId: 'credential-definition-003',
+  // @ts-expect-error document binding only accepts CredentialArtifact
   artifact: {},
   bindingReference: 'read-binding:artifact-003',
 });
