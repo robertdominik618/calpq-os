@@ -47,15 +47,18 @@ grep -R -q 'ALWAYS_AVAILABLE' packages/application/src/responsive --include='*.t
 grep -R -q 'layoutAuthority = false' packages/application/src/responsive --include='*.ts' || fail 'layout authority boundary missing'
 grep -R -q 'TWO_PANE_MASTER_DETAIL' packages/application/src/responsive --include='*.ts' || fail 'expanded responsive layout missing'
 
-bash tests/m03_s07_intent_search_test.sh >/dev/null
-bash tests/m03_s06_missing_condition_next_action_test.sh >/dev/null
-bash tests/m03_s05_activity_timeline_test.sh >/dev/null
-bash tests/m03_s04_explanation_test.sh >/dev/null
-bash tests/m03_s03_credential_card_test.sh >/dev/null
-bash tests/m03_s02_passport_summary_test.sh >/dev/null
-bash tests/m03_s01_dashboard_read_models_test.sh >/dev/null
-bash tests/fv12_professional_passport_test.sh >/dev/null
-bash tests/fv11_eligibility_test.sh >/dev/null
+# Execute predecessor runtime regressions exactly once. Their dedicated GitHub
+# workflows still execute the full slice-specific shell gates independently.
+node --test packages/application/test/m03-s07-search.test.ts >/dev/null
+node --test packages/application/test/m03-s06-guidance.test.ts >/dev/null
+node --test packages/application/test/m03-s05-timeline.test.ts >/dev/null
+node --test packages/application/test/m03-s04-explanation.test.ts >/dev/null
+node --test packages/application/test/m03-s03-credential-card.test.ts >/dev/null
+node --test packages/application/test/m03-s02-passport-summary.test.ts >/dev/null
+node --test packages/application/test/m03-s01-dashboard.test.ts >/dev/null
+node --test packages/application/test/fv12-professional-passport.test.ts >/dev/null
+node --test packages/core/test/fv11-eligibility.test.ts >/dev/null
+npx --yes --package=typescript@7.0.2 -- tsc -p packages/core/tsconfig.json
 bash tests/m03_admission_test.sh >/dev/null
 bash tests/architecture_boundaries_test.sh >/dev/null
 
