@@ -198,23 +198,26 @@ export class TransitionKernel {
     const nextRevision = input.aggregate.revision.next();
     const nextAggregate = AggregateSnapshot.revise(input.aggregate, nextRevision, decision.newState);
     const occurredAt = this.#clock.now();
-    const events = decision.events.map((emission) => EventEnvelope.create({
-      eventId: this.#idGenerator.next(EventId),
-      eventType: emission.eventType,
-      aggregateId: input.aggregate.aggregateId,
-      aggregateType: input.aggregate.aggregateType,
-      aggregateRevision: nextRevision,
-      occurredAt,
-      commandId: input.command.commandId,
-      correlationId: input.command.correlationId,
-      actor: input.command.actor,
-      payload: emission.payload,
-      causationId: input.command.causationId,
-      ruleVersionRefs: emission.ruleVersionRefs ?? [],
-      contractVersionRefs: emission.contractVersionRefs ?? [],
-      provenanceRefs: emission.provenanceRefs ?? input.command.provenanceRefs,
-      evidenceRefs: emission.evidenceRefs ?? input.command.evidenceRefs,
-    }));
+    const events: EventEnvelope<TEventPayload>[] = [];
+    for (const emission of decision.events) {
+      events.push(EventEnvelope.create({
+        eventId: this.#idGenerator.next(EventId),
+        eventType: emission.eventType,
+        aggregateId: input.aggregate.aggregateId,
+        aggregateType: input.aggregate.aggregateType,
+        aggregateRevision: nextRevision,
+        occurredAt,
+        commandId: input.command.commandId,
+        correlationId: input.command.correlationId,
+        actor: input.command.actor,
+        payload: emission.payload,
+        causationId: input.command.causationId,
+        ruleVersionRefs: emission.ruleVersionRefs ?? [],
+        contractVersionRefs: emission.contractVersionRefs ?? [],
+        provenanceRefs: emission.provenanceRefs ?? input.command.provenanceRefs,
+        evidenceRefs: emission.evidenceRefs ?? input.command.evidenceRefs,
+      }));
+    }
 
     return Object.freeze({
       kind: 'ACCEPTED',
