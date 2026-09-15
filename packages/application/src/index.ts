@@ -141,6 +141,20 @@ export type {
   MissingConditionNextActionReadModelInput,
 } from './guidance/missing-condition-next-action-read-model.ts';
 export {
+  ApprovedSearchQueryModel,
+  ApprovedSearchRecord,
+  IntentSearchHit,
+  IntentSearchIntent,
+  IntentSearchMatchKind,
+  IntentSearchNoResultReason,
+  IntentSearchOrdering,
+  IntentSearchQuery,
+  IntentSearchReadModel,
+  IntentSearchRecordKind,
+  IntentSearchSourceKind,
+  IntentSearchToken,
+} from './search/intent-search-read-model.ts';
+export {
   DashboardDestination,
   DashboardReadModel,
   DashboardSourceKind,
