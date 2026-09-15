@@ -34,3 +34,29 @@ export {
   IntakeSourceChannel,
 } from './intake/document-intake.ts';
 export type { DocumentIntakeRecordInput } from './intake/document-intake.ts';
+export {
+  AssuranceLevel,
+  AuthorityStatus,
+  TechnicalCheckStatus,
+  VerificationAdapterCapability,
+  VerificationClaim,
+  VerificationMethod,
+  VerificationRecord,
+  VerificationRecordState,
+  VerificationRequest,
+  VerificationRequestId,
+  VerificationTargetKind,
+  VerificationTargetReference,
+  VerificationUseCaseReference,
+} from './verification/verification-model.ts';
+export type {
+  AuthorityResolution,
+  CheckedClaimObservation,
+  VerificationRequestInput,
+} from './verification/verification-model.ts';
+export type {
+  AuthorityResolutionInput,
+  AuthorityResolverPort,
+  VerificationProviderPort,
+} from './verification/verification-ports.ts';
+export { orchestrateVerification } from './verification/verification-orchestrator.ts';
