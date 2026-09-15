@@ -83,7 +83,12 @@ function result(observations: readonly { claim: VerificationClaim; status: typeo
 
 class AuthorityResolver implements AuthorityResolverPort {
   readonly seen: AuthorityResolutionInput[] = [];
-  constructor(private readonly status: typeof AuthorityStatus[keyof typeof AuthorityStatus] = AuthorityStatus.SUFFICIENT) {}
+  readonly status: typeof AuthorityStatus[keyof typeof AuthorityStatus];
+
+  constructor(status: typeof AuthorityStatus[keyof typeof AuthorityStatus] = AuthorityStatus.SUFFICIENT) {
+    this.status = status;
+  }
+
   async resolve(input: AuthorityResolutionInput) {
     this.seen.push(input);
     return { status: this.status, reasonCode: this.status === AuthorityStatus.SUFFICIENT ? 'AUTH_OK' : 'AUTH_NOT_OK' };
