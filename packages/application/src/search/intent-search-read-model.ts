@@ -131,6 +131,12 @@ interface SearchTokenInput {
   readonly weight: number;
 }
 
+interface SearchCandidate {
+  readonly candidate: IntentSearchToken;
+  readonly kind: IntentSearchMatchKind;
+  readonly score: number;
+}
+
 export class IntentSearchToken {
   readonly field: string;
   readonly value: string;
@@ -198,7 +204,7 @@ export class ApprovedSearchRecord {
       throw new TypeError('Approved search record requires stable recordId');
     }
     if (!Array.isArray(input.tokens) || input.tokens.length === 0 ||
-        input.tokens.some((token) => !(token instanceof IntentSearchToken))) {
+        input.tokens.some((candidate) => !(candidate instanceof IntentSearchToken))) {
       throw new TypeError('Approved search record requires governed IntentSearchToken values');
     }
     return new ApprovedSearchRecord({ ...input, recordId: input.recordId.trim() });
@@ -320,7 +326,7 @@ export class ApprovedSearchQueryModel {
           ...token('sourceId', evidence.sourceId, 70),
           ...token('evidenceVerificationState', evidence.verificationState, 70),
         ],
-        references: [explanation.assessmentId, explanation.provenanceIdentity, evidence.sourceId],
+        references: stableStrings([explanation.assessmentId, explanation.provenanceIdentity, evidence.sourceId]),
       }));
     }
     for (const item of explanation.verification.verificationItems) {
@@ -534,15 +540,16 @@ export class IntentSearchHit {
     const fields: string[] = [];
     const kinds: IntentSearchMatchKind[] = [];
     for (const term of terms) {
-      const candidates = record.tokens.flatMap((candidate) => {
+      const candidates: SearchCandidate[] = [];
+      for (const candidate of record.tokens) {
         if (candidate.normalized === term) {
-          return [{ candidate, kind: IntentSearchMatchKind.EXACT, score: candidate.weight + 100 }];
+          candidates.push({ candidate, kind: IntentSearchMatchKind.EXACT, score: candidate.weight + 100 });
+        } else if (candidate.normalized.startsWith(term)) {
+          candidates.push({ candidate, kind: IntentSearchMatchKind.PREFIX, score: candidate.weight + 50 });
         }
-        if (candidate.normalized.startsWith(term)) {
-          return [{ candidate, kind: IntentSearchMatchKind.PREFIX, score: candidate.weight + 50 }];
-        }
-        return [];
-      }).sort((left, right) => right.score - left.score || left.candidate.field.localeCompare(right.candidate.field));
+      }
+      candidates.sort((left, right) =>
+        right.score - left.score || left.candidate.field.localeCompare(right.candidate.field));
       const best = candidates[0];
       if (best === undefined) return null;
       score += best.score;
