@@ -15,6 +15,7 @@ export const PassportSummarySourceKind = {
 export type PassportSummarySourceKind = (typeof PassportSummarySourceKind)[keyof typeof PassportSummarySourceKind];
 
 export type EligibilityOutcomeCounts = Readonly<Record<DomainOutcome, number>>;
+const DOMAIN_OUTCOMES = Object.freeze(Object.values(DomainOutcome) as DomainOutcome[]);
 
 function subjectKey(subject: SubjectReference): string {
   return `${subject.kind}:${subject.id.toString()}`;
@@ -202,7 +203,7 @@ export class ProfessionalPassportSummaryReadModel {
       verifiedEvidenceCount += group.verifiedEvidenceCount;
       evidenceOnlyCount += group.evidenceOnlyCount;
       derivedInformationCount += group.derivedInformationCount;
-      for (const outcome of Object.values(DomainOutcome)) {
+      for (const outcome of DOMAIN_OUTCOMES) {
         counts[outcome] += group.outcomeCounts[outcome];
       }
     }
