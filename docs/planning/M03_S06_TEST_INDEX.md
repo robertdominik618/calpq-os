@@ -1,7 +1,8 @@
 # CALPQ M03 Slice 06 — Test Index
 
-Status: `IMPLEMENTING / 34 MANDATORY RUNTIME SCENARIOS`
+Status: `VERIFIED / 34 MANDATORY RUNTIME SCENARIOS PASS`
 ID: `CALPQ-M03-S06-TEST-0001`
+Verified implementation head: `babbba6ccf75184b45bdfbd3a75b7a625633ab95`
 
 ## Dedicated runtime scenarios
 1. authoritative `EligibilityAssessment` input required;
@@ -39,19 +40,26 @@ ID: `CALPQ-M03-S06-TEST-0001`
 33. governed actions become available and are deterministically ordered;
 34. deterministic serialization, nested immutability, zero authority and no reason-code action-inference boundary.
 
+Result on verified implementation head: **34/34 PASS**.
+
 ## Compile-time proof
-`packages/application/test/m03-s06-types.compile.ts` proves readonly root/nested contracts and literal `false` authority markers.
+`packages/application/test/m03-s06-types.compile.ts` proves readonly root/nested contracts and literal `false` authority markers. Result: **PASS**.
 
 ## Source/architecture guards
-`tests/m03_s06_missing_condition_next_action_test.sh` additionally rejects:
-- UI/framework/provider imports in `src/guidance`;
-- ambient time/randomness;
-- lifecycle/authorization authority terms;
-- reason-code text heuristics such as `startsWith`, `match`, case conversion or string search;
-- absence of explicit governed/unavailable action semantics;
-- ancestry that does not contain reviewed Slice 05 merge `41ed1dc445276cf88d5a3584a7d259d24c2f96b1`.
+`tests/m03_s06_missing_condition_next_action_test.sh` verifies:
+- no UI/framework/provider imports in `src/guidance`;
+- no ambient time/randomness;
+- no lifecycle/authorization authority leakage;
+- no reason-code text heuristics such as `startsWith`, `match`, case conversion or string search;
+- explicit governed/unavailable action semantics exist;
+- ancestry contains reviewed Slice 05 merge `41ed1dc445276cf88d5a3584a7d259d24c2f96b1`.
+
+Result: **PASS**.
 
 ## Embedded regression
-The dedicated runner executes M03 S05, S04, S03, S02, S01, FV-12, FV-11, M03 Admission and architecture-boundary regression gates.
+The dedicated runner executes M03 S05, S04, S03, S02, S01, FV-12, FV-11, M03 Admission and architecture-boundary regression gates. Result: **PASS**.
 
-No test is optional. Final CI evidence is recorded separately after a green final head.
+## PR-wide evidence
+On `babbba6ccf75184b45bdfbd3a75b7a625633ab95`, all **22/22 observed PR-triggered workflows** completed with `SUCCESS`; failures, queued and in-progress runs: 0.
+
+No test was waived or deferred.

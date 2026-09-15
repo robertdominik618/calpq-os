@@ -1,9 +1,11 @@
 # CALPQ M03 Slice 06 — Missing Condition & Governed Next Action Presentation
 
-Status: `IMPLEMENTING`
+Status: `IMPLEMENTED / VERIFIED / READY FOR REVIEW`
 ID: `CALPQ-M03-S06-IMPL-0001`
 Tracking: issue #70
+Pull request: #71
 Reviewed predecessor: M03 Slice 05 merge `41ed1dc445276cf88d5a3584a7d259d24c2f96b1`
+Verified implementation head: `babbba6ccf75184b45bdfbd3a75b7a625633ab95`
 
 ## Objective
 Present what is missing or uncertain from the authoritative eligibility assessment and present a next action only when that action is explicitly supplied as a governed reference. M03 must not become a qualification-path, lifecycle, legal-advice, or action-recommendation authority.
@@ -76,12 +78,15 @@ Prohibited in Slice 06:
 - UI-framework or provider SDK dependency;
 - ambient time/randomness.
 
-## Evidence requirements
-- exactly 34 dedicated runtime scenarios;
-- strict TypeScript compile proof;
-- reviewed Slice 05 ancestry guard;
-- source-level architecture guards for framework/provider leakage, ambient time/randomness, lifecycle/authorization authority and reason-code text inference;
-- embedded regression of M03 S05/S04/S03/S02/S01, FV-12, FV-11, M03 Admission and architecture boundaries;
-- normal PR-wide workflow matrix.
+## Verified evidence
+On `babbba6ccf75184b45bdfbd3a75b7a625633ab95`:
+- dedicated M03 Slice 06 workflow #4 — SUCCESS;
+- exactly 34/34 mandatory runtime scenarios — PASS;
+- strict TypeScript compile-time proof — PASS;
+- reviewed Slice 05 ancestry guard — PASS;
+- reason-code action-inference guard — PASS;
+- framework/provider, ambient-time/randomness and authority-boundary guards — PASS;
+- embedded M03 S05/S04/S03/S02/S01, FV-12, FV-11, M03 Admission and architecture regressions — PASS;
+- all 22 observed PR-triggered workflows — SUCCESS.
 
-No mandatory evidence may be waived or deferred.
+No mandatory evidence was waived or deferred. Hard blockers: 0.
