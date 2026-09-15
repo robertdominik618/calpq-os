@@ -1,17 +1,19 @@
 # CALPQ M03 Slice 09 Implementation Contract — Accessibility & Localization Foundations
 
-Status: `IMPLEMENTING / EXECUTABLE EVIDENCE ADDED`
+Status: `COMPLETED / VERIFIED`
 ID: `CALPQ-M03-S09-0001`
 
 Admission: `CALPQ-M03-ADMIT-0001`.
 Reviewed predecessor: M03 Slice 08 merge commit `d6ce5ab80b07c8f5802193d33f81437c04e4c21c`.
 Tracking issue: #77.
+Pull request: #78.
 Implementation branch: `impl/m03-s09-accessibility-localization`.
+Verified implementation/remediation head: `7c971d0f393c8ee9b13c71974fd98d6205519c9f`.
 
 ## Scope
 Slice 09 implements the ninth delivery slice from `M03_EXECUTION_PACKAGE.md`: accessibility and localization foundations over the governed responsive read flow established in Slice 08.
 
-The capability is presentation-only. It must improve keyboard/screen-reader semantics and localized human wording without changing any governed domain or decision meaning.
+The capability is presentation-only. It improves keyboard/screen-reader semantics and localized human wording without changing governed domain or decision meaning.
 
 ## Controlled locales
 The initial controlled presentation locales are:
@@ -51,14 +53,7 @@ Localization cannot rewrite Core UTC/effective-date truth. Source content is pre
 Outer UI adapters may later format human display text under separately governed rules, but M03 Slice 09 performs no ambient timezone or `Intl` conversion.
 
 ## Responsive semantic parity
-The S08 governed `ResponsiveReadFlowReadModel` remains the semantic source. Slice 09 preserves:
-- subject;
-- assessment ID;
-- CredentialDefinition/RequirementSet IDs and versions;
-- eligibility outcome;
-- provenance identity;
-- responsive section kind/order/pane/source reference;
-- deeply frozen governed content snapshots.
+The S08 governed `ResponsiveReadFlowReadModel` remains the semantic source. Slice 09 preserves subject, assessment identity, CredentialDefinition/RequirementSet identities and versions, eligibility outcome, provenance identity, responsive section kind/order/pane/source reference and deeply frozen governed content snapshots.
 
 Locale changes and accessibility metadata cannot remove, reorder or rewrite material governed sections.
 
@@ -85,7 +80,18 @@ All new authorities are explicitly false:
 - no color-only status meaning;
 - deterministic serialization and immutable nested output.
 
-## Verification target
-Dedicated evidence must prove exactly 34 runtime scenarios plus strict TypeScript proof, reviewed Slice 08 ancestry, keyboard/screen-reader semantics, non-color-only meaning, controlled `cs-CZ` / `en-GB` localization, machine semantic and source-content invariance, canonical UTC preservation, authority-zero boundaries and direct regressions through Slice 01 plus relevant FV contracts.
+## Verified evidence
+On remediation head `7c971d0f393c8ee9b13c71974fd98d6205519c9f`:
+- dedicated M03 Slice 09 Accessibility Localization #6 — SUCCESS;
+- exactly 34/34 mandatory runtime scenarios — PASS;
+- strict TypeScript compile-time proof — PASS;
+- reviewed Slice 08 ancestry guard — PASS;
+- keyboard/screen-reader/non-color-only semantics — PASS;
+- `cs-CZ` / `en-GB` locale parity with governed machine semantics invariant — PASS;
+- canonical UTC/source-value invariance — PASS;
+- direct S08→S01, FV-12 and FV-11 regressions — PASS;
+- all 25/25 observed PR-triggered workflows — SUCCESS.
 
-No mandatory test is waived or deferred.
+The first dedicated S09 workflow #4 already passed 34/34 runtime tests and failed only in a compile-proof assertion that incorrectly expected a non-generic factory result to narrow `PresentationLocale` to literal `cs-CZ`. Commit `7c971d0f393c8ee9b13c71974fd98d6205519c9f` corrected only that proof to assert the controlled union plus the literal locale constants. No production/domain logic, runtime test or mandatory boundary was removed or weakened.
+
+No mandatory test was waived or deferred. Hard blockers: 0.

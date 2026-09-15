@@ -1,9 +1,9 @@
 # CALPQ M03 Slice 09 Test Index — Accessibility & Localization Foundations
 
-Status: `34 EXECUTABLE SCENARIOS DEFINED`
+Status: `34 OF 34 EXECUTABLE / VERIFIED`
 ID: `CALPQ-M03-S09-TEST-0001`
 
-1. responsive-flow-input-required
+1. query-input: responsive-flow-input-required
 2. localization-catalog-input-required
 3. locale-is-controlled
 4. catalog-entry-type-required
@@ -38,8 +38,17 @@ ID: `CALPQ-M03-S09-TEST-0001`
 33. root-nested-catalog-immutability-and-deterministic-serialization
 34. authority-zero-and-architecture-boundary
 
-Strict compile-time evidence additionally proves controlled locale typing, literal false authority flags, literal accessibility booleans and readonly catalog/section/machine-semantic state.
+Strict compile-time evidence proves controlled locale typing, literal locale constants, literal false authority flags, literal accessibility booleans and readonly catalog/section/machine-semantic state.
 
-Reviewed predecessor evidence is mandatory: branch ancestry must include M03 Slice 08 reviewed merge `d6ce5ab80b07c8f5802193d33f81437c04e4c21c`.
+Reviewed predecessor evidence is mandatory: branch ancestry includes M03 Slice 08 reviewed merge `d6ce5ab80b07c8f5802193d33f81437c04e4c21c`.
+
+## Verified execution
+On `7c971d0f393c8ee9b13c71974fd98d6205519c9f`:
+- all 34 runtime scenarios PASS;
+- strict TypeScript proof PASS;
+- dedicated S09 workflow #6 SUCCESS;
+- all 25/25 observed workflow runs SUCCESS.
+
+Initial workflow #4 also passed all 34 runtime tests; its sole failure was the compile-proof narrowing assertion corrected in `7c971d0f393c8ee9b13c71974fd98d6205519c9f`. No runtime scenario or mandatory guard was waived or weakened.
 
 No mandatory test is waived or deferred.
