@@ -106,6 +106,7 @@ const CS_MESSAGES: Readonly<Record<string, string>> = Object.freeze({
   'section.guidance': 'Další kroky',
   'section.search_result': 'Výsledky hledání',
   'status.not_satisfied': 'Nesplněno',
+  'status.satisfied': 'Splněno',
   'status.available': 'Dostupné',
   'status.verified': 'Ověřeno',
   'status.source_not_available': 'Zdroj není dostupný',
@@ -121,6 +122,7 @@ const EN_MESSAGES: Readonly<Record<string, string>> = Object.freeze({
   'section.guidance': 'Next steps',
   'section.search_result': 'Search results',
   'status.not_satisfied': 'Not satisfied',
+  'status.satisfied': 'Satisfied',
   'status.available': 'Available',
   'status.verified': 'Verified',
   'status.source_not_available': 'Source not available',
@@ -143,6 +145,7 @@ function localizationCatalog(
 function semanticLabels(): readonly MachineSemanticLabelReference[] {
   return Object.freeze([
     MachineSemanticLabelReference.create({ machineCode: 'NOT_SATISFIED', labelKey: 'status.not_satisfied' }),
+    MachineSemanticLabelReference.create({ machineCode: 'SATISFIED', labelKey: 'status.satisfied' }),
     MachineSemanticLabelReference.create({ machineCode: 'AVAILABLE', labelKey: 'status.available' }),
     MachineSemanticLabelReference.create({ machineCode: 'VERIFIED', labelKey: 'status.verified' }),
     MachineSemanticLabelReference.create({ machineCode: 'SOURCE_NOT_AVAILABLE', labelKey: 'status.source_not_available' }),
