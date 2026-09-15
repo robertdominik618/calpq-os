@@ -14,6 +14,7 @@
     "test:m03s01": "node --test test/m03-s01-dashboard.test.ts",
     "test:m03s02": "node --test test/m03-s02-passport-summary.test.ts",
     "test:m03s03": "node --test test/m03-s03-credential-card.test.ts",
+    "test:m03s04": "node --test test/m03-s04-explanation.test.ts",
     "typecheck": "npx --yes --package=typescript@7.0.2 -- tsc -p tsconfig.json"
   }
 }
