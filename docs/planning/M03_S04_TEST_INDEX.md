@@ -1,6 +1,6 @@
 # CALPQ M03 Slice 04 Test Index — Evidence & Source Explanation with Why?
 
-Status: `26 OF 26 EXECUTABLE / VERIFICATION PENDING`
+Status: `26 OF 26 EXECUTABLE / VERIFIED`
 ID: `CALPQ-M03-S04-TEST-0001`
 
 1. card-input-required
@@ -30,12 +30,14 @@ ID: `CALPQ-M03-S04-TEST-0001`
 25. deterministic-serialization
 26. architecture-boundary
 
-Compile-time evidence additionally proves:
+Compile-time evidence proves:
 - explanation root and nested Why/reason/source/evidence/provenance presentation values are immutable;
 - source and Why target kinds are controlled;
 - `authorizationAuthority`, root `decisionAuthority` and Why `decisionAuthority` are exactly `false`;
 - compose requires `CredentialCardReadModel` and `EligibilityAssessment`.
 
-Reviewed predecessor evidence is mandatory: branch ancestry must include Slice 03 merge `f92032617783e1ddfc82aefc7e1bdea28534424a`; Slice 03, Slice 02, Slice 01 and FV-12 regressions must pass.
+Verified evidence head: `02d3738dbc245e5f437ff360445c2711e83cb8fa`.
+Dedicated workflow `M03 Slice 04 Explanation #2` SUCCESS with exact result 26 pass / 0 fail / 0 skipped / 0 todo plus strict TypeScript proof.
+Reviewed Slice 03 ancestry, Slice 03/02/01 regressions, FV-12 predecessor regression, M03 admission integrity and architecture boundaries also pass.
 
-No mandatory test may be waived or deferred.
+No mandatory test was waived or deferred.
