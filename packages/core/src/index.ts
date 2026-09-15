@@ -12,6 +12,7 @@ export {
   EventId,
   EvidenceId,
   ProfessionDefinitionId,
+  RequirementDefinitionId,
   RequirementSetId,
   RuleSetId,
   SourceId,
@@ -66,6 +67,7 @@ export type {
   ExternalClassificationMappingRelation as ExternalClassificationMappingRelationCode,
   RegulatoryStatus as RegulatoryStatusCode,
 } from './catalog/activity-profession-catalog.ts';
+export { CredentialDefinition, RequirementDefinition } from './catalog/credential-requirement-catalog.ts';
 export {
   AtomicRequirementResult,
   CredentialDefinitionReference,

@@ -62,6 +62,12 @@ export class CredentialDefinitionId extends UuidV7Value {
   static from(value: string): CredentialDefinitionId { return new CredentialDefinitionId(value); }
 }
 
+export class RequirementDefinitionId extends UuidV7Value {
+  declare private readonly __requirementDefinitionIdBrand: void;
+  private constructor(value: string) { super(value); }
+  static from(value: string): RequirementDefinitionId { return new RequirementDefinitionId(value); }
+}
+
 export class RequirementSetId extends UuidV7Value {
   declare private readonly __requirementSetIdBrand: void;
   private constructor(value: string) { super(value); }
