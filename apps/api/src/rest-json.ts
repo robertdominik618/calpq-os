@@ -2,12 +2,12 @@ import {
   ApplicationTransportError,
   ApplicationTransportErrorKind,
   ApplicationTransportResponseKind,
-} from '../../../../packages/application/src/transport/transport-contract.ts';
+} from '../../../packages/application/src/transport/transport-contract.ts';
 import type {
   ApplicationTransportHandler,
   ApplicationTransportInvocation,
   ApplicationTransportSuccess,
-} from '../../../../packages/application/src/transport/transport-contract.ts';
+} from '../../../packages/application/src/transport/transport-contract.ts';
 
 export const API_CONTRACT_VERSION = '2026-09-15.1';
 export const API_OPERATION_IDENTITY = 'eligibility.evaluate';
