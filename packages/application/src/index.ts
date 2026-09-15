@@ -77,6 +77,25 @@ export {
 } from './passport/professional-passport-summary.ts';
 export type { EligibilityOutcomeCounts } from './passport/professional-passport-summary.ts';
 export {
+  CredentialCardDocumentBinding,
+  CredentialCardDocumentFacet,
+  CredentialCardDocumentSourceKind,
+  CredentialCardEligibilityFacet,
+  CredentialCardEligibilitySourceKind,
+  CredentialCardFacetAvailability,
+  CredentialCardFacetKind,
+  CredentialCardLifecycleFacet,
+  CredentialCardLifecycleSourceKind,
+  CredentialCardReadModel,
+  CredentialCardUnavailableReason,
+  CredentialCardVerificationFacet,
+  CredentialCardVerificationSourceKind,
+} from './credential-card/credential-card-read-model.ts';
+export type {
+  CredentialCardEvidenceVerificationCounts,
+  CredentialCardRecordVerificationCounts,
+} from './credential-card/credential-card-read-model.ts';
+export {
   DashboardDestination,
   DashboardReadModel,
   DashboardSourceKind,
