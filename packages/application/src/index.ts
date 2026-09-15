@@ -67,3 +67,16 @@ export {
   ProfessionalPassportItem,
   ProfessionalPassportProjection,
 } from './passport/professional-passport.ts';
+export {
+  AccessDisposition,
+  SystemTenantContext,
+  TenantAccessDecision,
+  TenantAccessDeniedError,
+  TenantAsyncEnvelope,
+  TenantAuditEvidence,
+  TenantBoundary,
+  TenantContext,
+  TenantResourceAddress,
+  TenantResourceSurface,
+  executeSensitiveRead,
+} from './tenant/tenant-governance.ts';
