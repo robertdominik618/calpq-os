@@ -81,4 +81,21 @@ calpq_reset_governance_fixture() {
   mv "$tmpdir/fv00-admission-decision.json" "$workdir/docs/planning/fv00-admission-decision.json"
   mv "$tmpdir/FV00_VERTICAL_ADMISSION_RECORD.md" "$workdir/docs/planning/FV00_VERTICAL_ADMISSION_RECORD.md"
   rmdir "$tmpdir"
+
+  # Governance self-tests reset a copy of the current repository to a historical
+  # PRE_M00/FROZEN state. Once real implementation exists, that copied source must
+  # not leak into the historical fixture or the fixture would represent an
+  # impossible state (FROZEN governance plus post-admission product source).
+  # Keep only the bootstrap README/package manifests that existed during M00.
+  local root file
+  for root in "$workdir/packages" "$workdir/apps" "$workdir/workers"; do
+    [[ -d "$root" ]] || continue
+    while IFS= read -r -d '' file; do
+      case "$(basename "$file")" in
+        README.md|package.json) ;;
+        *) rm -f "$file" ;;
+      esac
+    done < <(find "$root" -type f -print0)
+    find "$root" -depth -type d -empty -delete
+  done
 }

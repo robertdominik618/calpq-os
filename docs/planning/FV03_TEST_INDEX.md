@@ -1,6 +1,6 @@
 # CALPQ FV-03 Test Index
 
-Status: `PLANNING ONLY / BLOCKED`
+Status: `20 OF 20 EXECUTABLE / VERIFIED`
 
 Mandatory count: 20.
 
@@ -26,3 +26,13 @@ Mandatory count: 20.
 20. architecture-boundary
 
 Authoritative semantics: `CORE_PROVENANCE_AND_EVIDENCE.md` and `CORE_RESULT_AND_ERROR_MODEL.md`.
+
+## Verified executable evidence
+- `packages/core/test/fv03-provenance.test.ts` maps one-to-one to FV03-01..FV03-20.
+- `packages/core/test/fv03-types.compile.ts` proves immutable provenance collection and type-level separation between legitimate domain outcomes and technical error families.
+- `tests/fv03_core_provenance_test.sh` enforces exactly 20 tests, TypeScript compilation, no dependencies/provider imports/global nondeterminism/later-phase capability leakage, FV-02 regression and architecture boundaries.
+- `.github/workflows/fv03-core.yml` executes evidence on pinned Node 24 and pinned GitHub Actions.
+- `FV-03 Core Provenance #2` — SUCCESS on `1f0c88054fcc5b230e1a997309dc8f59b70b33fd`.
+- Foundation Guard #819 and all active project readiness workflows are SUCCESS on the same implementation head.
+
+Mandatory result: **20/20 PASS, 0 waived, 0 deferred, 0 scope exceptions.**

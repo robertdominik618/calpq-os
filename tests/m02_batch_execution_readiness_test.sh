@@ -15,9 +15,22 @@ required=(
 )
 for f in "${required[@]}"; do [[ -f "$f" ]] || fail "missing $f"; done
 
-for f in docs/planning/M02_BATCH_A_CORE_KERNEL_EXECUTION.md docs/planning/M02_BATCH_B_APPLICATION_EVIDENCE_EXECUTION.md docs/planning/M02_BATCH_C_DECISION_RUNTIME_EXECUTION.md docs/planning/M02_BATCH_BRANCH_PR_STRATEGY.md docs/planning/M02_BATCH_EXECUTION_READINESS_MATRIX.md; do
+for f in docs/planning/M02_BATCH_B_APPLICATION_EVIDENCE_EXECUTION.md docs/planning/M02_BATCH_C_DECISION_RUNTIME_EXECUTION.md docs/planning/M02_BATCH_BRANCH_PR_STRATEGY.md docs/planning/M02_BATCH_EXECUTION_READINESS_MATRIX.md; do
   grep -q 'PLANNING ONLY / IMPLEMENTATION BLOCKED' "$f" || fail "$f must retain planning-boundary evidence"
 done
+
+case "$phase" in
+  PRE_M00|POST_M00_PRE_FEATURE|POST_FEATURE_PRE_FV00)
+    grep -q 'PLANNING ONLY / IMPLEMENTATION BLOCKED' docs/planning/M02_BATCH_A_CORE_KERNEL_EXECUTION.md \
+      || fail 'Batch A must remain blocked before formal admission'
+    ;;
+  POST_FV00_IMPLEMENTATION)
+    grep -q 'IMPLEMENTED / EXIT EVIDENCE GREEN / READY FOR REVIEW' docs/planning/M02_BATCH_A_CORE_KERNEL_EXECUTION.md \
+      || fail 'Batch A implementation phase must record green exit evidence'
+    [[ -f docs/planning/M02_BATCH_A_EXIT_EVIDENCE.md ]] || fail 'Batch A exit evidence missing'
+    ;;
+  *) fail "unsupported lifecycle phase: $phase" ;;
+esac
 
 criteria_count="$(grep -Ec '^[0-9]+\.' docs/planning/M02_BATCH_EXECUTION_READINESS_MATRIX.md)"
 [[ "$criteria_count" -eq 60 ]] || fail "batch readiness matrix must contain 60 criteria, got $criteria_count"
@@ -47,7 +60,6 @@ case "$phase" in
     jq -e '.state == "ADMITTED_FOR_IMPLEMENTATION" and .authorized_execution_entry == "M02_BATCH_A_FV01"' docs/planning/fv00-admission-decision.json >/dev/null \
       || fail 'admitted phase lacks M02 Batch A / FV-01 execution authorization'
     ;;
-  *) fail "unsupported lifecycle phase: $phase" ;;
 esac
 
 printf 'M02 BATCH EXECUTION READINESS: PASS / A-B-C READY / 60 OF 60 CRITERIA / PHASE %s\n' "$phase"

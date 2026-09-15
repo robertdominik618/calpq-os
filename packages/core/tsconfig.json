@@ -1,0 +1,19 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "target": "ES2024",
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "allowImportingTsExtensions": true,
+    "lib": ["ES2024"]
+  },
+  "include": [
+    "src/**/*.ts",
+    "test-support/**/*.ts",
+    "test/fv01-types.compile.ts",
+    "test/fv02-types.compile.ts",
+    "test/fv03-types.compile.ts",
+    "test/fv04-types.compile.ts",
+    "test/fv05-types.compile.ts"
+  ]
+}
