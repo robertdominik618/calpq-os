@@ -1,10 +1,12 @@
 # CALPQ M04 Slice 03 — Test Index
 
-Status: `IMPLEMENTED / CI PENDING`
+Status: `VERIFIED / 34 MANDATORY RUNTIME SCENARIOS PASS`
 ID: `CALPQ-M04-S03-TEST-0001`
 Tracking issue: #87
+PR: #88
+Verified implementation head: `a1b269f10829127019c9be2eb7f9604840dc7622`
 
-Mandatory runtime scenarios: **34**.
+Mandatory runtime scenarios: **34/34 PASS**.
 
 1. Preserve wrapped RequirementSet identity/version.
 2. Require real RequirementSet instance.
@@ -42,4 +44,7 @@ Mandatory runtime scenarios: **34**.
 34. No S04+/evidence/authorization/AI/provider/ambient-time authority; M02 eligibility source unchanged.
 
 Compile-time proof covers readonly governed root fields, requirement definitions, source identities, selection state, selected reference and ambiguity candidate versions.
-No mandatory test may be waived or deferred.
+Dedicated workflow `M04 Slice 03 Requirement Set Versioning` #2 = SUCCESS.
+Complete observed implementation-head PR matrix = 22/22 SUCCESS.
+M04 S01 #14, M04 S02 #8 and FV-11 #178 are SUCCESS.
+No mandatory test was waived or deferred.
