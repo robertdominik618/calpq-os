@@ -73,3 +73,21 @@ export class EventId extends UuidV7Value {
   private constructor(value: string) { super(value); }
   static from(value: string): EventId { return new EventId(value); }
 }
+
+export class CommandId extends UuidV7Value {
+  declare private readonly __commandIdBrand: void;
+  private constructor(value: string) { super(value); }
+  static from(value: string): CommandId { return new CommandId(value); }
+}
+
+export class AggregateId extends UuidV7Value {
+  declare private readonly __aggregateIdBrand: void;
+  private constructor(value: string) { super(value); }
+  static from(value: string): AggregateId { return new AggregateId(value); }
+}
+
+export class CorrelationId extends UuidV7Value {
+  declare private readonly __correlationIdBrand: void;
+  private constructor(value: string) { super(value); }
+  static from(value: string): CorrelationId { return new CorrelationId(value); }
+}

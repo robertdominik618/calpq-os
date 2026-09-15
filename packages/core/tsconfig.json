@@ -12,6 +12,7 @@
     "test-support/**/*.ts",
     "test/fv01-types.compile.ts",
     "test/fv02-types.compile.ts",
-    "test/fv03-types.compile.ts"
+    "test/fv03-types.compile.ts",
+    "test/fv04-types.compile.ts"
   ]
 }
