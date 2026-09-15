@@ -2,5 +2,11 @@
   "name": "@calpq/application",
   "version": "0.0.0",
   "private": true,
-  "type": "module"
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "typecheck": "npx --yes --package=typescript@7.0.2 -- tsc -p tsconfig.json"
+  }
 }
