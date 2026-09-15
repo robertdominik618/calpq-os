@@ -3,9 +3,14 @@
   "version": "0.0.0",
   "private": true,
   "type": "module",
-  "exports": "./src/index.ts",
+  "exports": {
+    ".": "./src/index.ts",
+    "./test-support": "./test-support/index.ts"
+  },
   "scripts": {
     "test:fv01": "node --test test/fv01-primitives.test.ts",
-    "typecheck:fv01": "npx --yes --package=typescript@7.0.2 -- tsc -p tsconfig.json"
+    "test:fv02": "node --test test/fv02-ports.test.ts",
+    "typecheck:fv01": "npx --yes --package=typescript@7.0.2 -- tsc -p tsconfig.json",
+    "typecheck:fv02": "npx --yes --package=typescript@7.0.2 -- tsc -p tsconfig.json"
   }
 }
