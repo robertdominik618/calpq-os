@@ -9,6 +9,8 @@
   },
   "include": [
     "src/**/*.ts",
-    "test/fv06-types.compile.ts"
+    "test-support/**/*.ts",
+    "test/fv06-types.compile.ts",
+    "test/fv07-types.compile.ts"
   ]
 }
