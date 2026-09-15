@@ -28,7 +28,7 @@ artifact.verificationState = VerificationState.from(VerificationStateCode.STALE)
 function acceptKind(value: CredentialArtifactKind): CredentialArtifactKind { return value; }
 acceptKind(CredentialArtifactKind.CERTIFICATE);
 // @ts-expect-error Arbitrary strings are not CredentialArtifactKind values.
-acceptKind('CERTIFICATE');
+acceptKind('PASSPORT');
 
 function acceptFormat(value: ArtifactFormat): ArtifactFormat { return value; }
 acceptFormat(ArtifactFormat.DOCUMENT);
