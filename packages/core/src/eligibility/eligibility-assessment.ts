@@ -82,7 +82,7 @@ export class RequirementGroup {
     let threshold: number | null = null;
     if (input.mode === RequirementGroupMode.AT_LEAST) {
       threshold = input.threshold ?? null;
-      if (!Number.isSafeInteger(threshold) || threshold < 1 || threshold > input.requirementIds.length) {
+      if (threshold === null || !Number.isSafeInteger(threshold) || threshold < 1 || threshold > input.requirementIds.length) {
         throw new RangeError('AT_LEAST threshold must be an integer within the group size');
       }
     } else if (input.threshold !== undefined && input.threshold !== null) {
