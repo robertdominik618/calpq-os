@@ -17,10 +17,14 @@ const semantic = MachineSemanticLabelReference.create({
   labelKey: 'status.verified',
 });
 
-const literalLocale: 'cs-CZ' = catalog.locale;
+const controlledLocale: PresentationLocale = catalog.locale;
+const csLiteral: 'cs-CZ' = PresentationLocale.CS_CZ;
+const enLiteral: 'en-GB' = PresentationLocale.EN_GB;
 const localizationAuthority: false = catalog.localizationAuthority;
 const semanticAuthority: false = semantic.localizationAuthority;
-void literalLocale;
+void controlledLocale;
+void csLiteral;
+void enLiteral;
 void localizationAuthority;
 void semanticAuthority;
 
