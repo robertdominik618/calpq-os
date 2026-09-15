@@ -1,13 +1,13 @@
 # CALPQ FV-00 Vertical Admission Record
 
-Status: `PLANNING COMPLETE / READY_FOR_FORMAL_ADMISSION_AFTER_M00`
+Status: `FORMALLY ADMITTED / IMPLEMENTATION MAY BEGIN UNDER M02 BATCH PLAN`
 ID: `CALPQ-M02-FV00-ADM-0001`
 
 ## Candidate
 `Credential Evidence -> Verification -> Eligibility -> Passport Projection`
 
 ## Current decision
-`BLOCKED_PENDING_PREREQUISITES`
+`ADMITTED_FOR_IMPLEMENTATION`
 
 This record does **not** issue `ADMITTED_FOR_IMPLEMENTATION` while any project-wide or vertical admission prerequisite remains unsatisfied. The wording intentionally remains valid across the sequence M00 governance -> M00 release -> Feature Development Gate -> formal FV-00 admission.
 
@@ -92,3 +92,11 @@ A generic approval to continue planning, M00 release alone, or Feature Developme
 
 ## Source hierarchy
 Foundation/M01 contracts and Core invariants outrank this planning record. If a conflict is discovered, this record must be corrected before admission.
+
+## Formal admission evidence
+- Transition: `CALPQ-FV00-ADMIT-0001`
+- Admitted revision: `b35f462c845d545c539f195af62571c0dd3874f2`
+- Approved by: `robertdominik618`
+- Approved at: `2026-09-15T04:45:50Z`
+- Authorized execution entry: `M02_BATCH_A_FV01`
+- Scope remains constrained by the existing FV-00/M02 execution package and explicit non-goals.
