@@ -15,7 +15,7 @@ required=(
 )
 for f in "${required[@]}"; do [[ -f "$f" ]] || fail "missing $f"; done
 
-for f in docs/planning/M02_BATCH_B_APPLICATION_EVIDENCE_EXECUTION.md docs/planning/M02_BATCH_C_DECISION_RUNTIME_EXECUTION.md docs/planning/M02_BATCH_BRANCH_PR_STRATEGY.md docs/planning/M02_BATCH_EXECUTION_READINESS_MATRIX.md; do
+for f in docs/planning/M02_BATCH_C_DECISION_RUNTIME_EXECUTION.md docs/planning/M02_BATCH_BRANCH_PR_STRATEGY.md docs/planning/M02_BATCH_EXECUTION_READINESS_MATRIX.md; do
   grep -q 'PLANNING ONLY / IMPLEMENTATION BLOCKED' "$f" || fail "$f must retain planning-boundary evidence"
 done
 
@@ -23,11 +23,19 @@ case "$phase" in
   PRE_M00|POST_M00_PRE_FEATURE|POST_FEATURE_PRE_FV00)
     grep -q 'PLANNING ONLY / IMPLEMENTATION BLOCKED' docs/planning/M02_BATCH_A_CORE_KERNEL_EXECUTION.md \
       || fail 'Batch A must remain blocked before formal admission'
+    grep -q 'PLANNING ONLY / IMPLEMENTATION BLOCKED' docs/planning/M02_BATCH_B_APPLICATION_EVIDENCE_EXECUTION.md \
+      || fail 'Batch B must remain blocked before formal admission'
     ;;
   POST_FV00_IMPLEMENTATION)
     grep -q 'IMPLEMENTED / EXIT EVIDENCE GREEN / READY FOR REVIEW' docs/planning/M02_BATCH_A_CORE_KERNEL_EXECUTION.md \
       || fail 'Batch A implementation phase must record green exit evidence'
     [[ -f docs/planning/M02_BATCH_A_EXIT_EVIDENCE.md ]] || fail 'Batch A exit evidence missing'
+    if grep -q 'IMPLEMENTED / EXIT EVIDENCE GREEN / READY FOR REVIEW' docs/planning/M02_BATCH_B_APPLICATION_EVIDENCE_EXECUTION.md; then
+      [[ -f docs/planning/M02_BATCH_B_EXIT_EVIDENCE.md ]] || fail 'Batch B exit evidence missing'
+    else
+      grep -q 'PLANNING ONLY / IMPLEMENTATION BLOCKED' docs/planning/M02_BATCH_B_APPLICATION_EVIDENCE_EXECUTION.md \
+        || fail 'Batch B must be either planning-blocked or implementation-complete with evidence'
+    fi
     ;;
   *) fail "unsupported lifecycle phase: $phase" ;;
 esac
