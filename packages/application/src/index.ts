@@ -80,3 +80,14 @@ export {
   TenantResourceSurface,
   executeSensitiveRead,
 } from './tenant/tenant-governance.ts';
+export {
+  ApplicationTransportError,
+  ApplicationTransportErrorKind,
+  ApplicationTransportResponseKind,
+} from './transport/transport-contract.ts';
+export type {
+  ApplicationTransportHandler,
+  ApplicationTransportInvocation,
+  ApplicationTransportPagination,
+  ApplicationTransportSuccess,
+} from './transport/transport-contract.ts';
