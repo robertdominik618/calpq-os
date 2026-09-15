@@ -24,3 +24,13 @@ export type {
 } from './persistence/unit-of-work.ts';
 export { executeAcceptedMutation } from './persistence/mutation-orchestrator.ts';
 export type { AcceptedMutationExecution } from './persistence/mutation-orchestrator.ts';
+export {
+  DocumentIntakeId,
+  DocumentIntakeRecord,
+  IntakeCorrectionRecord,
+  IntakeMediaMetadata,
+  IntakeProcessingState,
+  IntakeSecurityClassification,
+  IntakeSourceChannel,
+} from './intake/document-intake.ts';
+export type { DocumentIntakeRecordInput } from './intake/document-intake.ts';
