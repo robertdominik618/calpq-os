@@ -69,14 +69,34 @@ admitted_revision="$(jq -r '.admitted_revision' "$decision")"
 git cat-file -e "${admitted_revision}^{commit}" 2>/dev/null || fail 'reviewed M03 predecessor revision missing'
 git merge-base --is-ancestor "$admitted_revision" HEAD || fail 'reviewed M03 predecessor is not in current history'
 
-for m in 05 06 07 08; do
+if [[ -f docs/planning/m05-admission-decision.json ]] \
+  && jq -e '.state == "ADMITTED_FOR_IMPLEMENTATION"' docs/planning/m05-admission-decision.json >/dev/null; then
+  [[ -f docs/planning/M05_ADMISSION_RECORD.md ]] || fail 'M05 admission decision exists without admission record'
+  grep -q 'ADMITTED / IMPLEMENTATION AUTHORIZED AFTER MERGE + POST-MERGE GREEN' docs/planning/M05_EXECUTION_PACKAGE.md \
+    || fail 'valid M05 admission decision requires conditional M05 package status'
+  jq -e '.milestone == "M05"
+    and .admission_transition_id == "CALPQ-M05-ADMIT-0001"
+    and .authorized_execution_entry == "M05_SLICE_01_MULTI_CHANNEL_INTAKE_CONTRACTS"
+    and .m04_reviewed_merge == .admitted_revision
+    and .admission_effective_condition == "ADMISSION_PR_MERGED_AND_POST_MERGE_VERIFIED"
+    and (.blocking_reviews | length == 0)' docs/planning/m05-admission-decision.json >/dev/null \
+    || fail 'M05 separate admission decision integrity failed'
+  m05_revision="$(jq -r '.admitted_revision' docs/planning/m05-admission-decision.json)"
+  git cat-file -e "${m05_revision}^{commit}" 2>/dev/null || fail 'M05 admitted predecessor revision is not a commit'
+  git merge-base --is-ancestor "$m05_revision" HEAD || fail 'M05 admitted predecessor revision is not in current history'
+else
+  grep -q 'IMPLEMENTATION BLOCKED' docs/planning/M05_EXECUTION_PACKAGE.md \
+    || fail 'M05 must remain blocked until a valid separate admission decision exists'
+fi
+
+for m in 06 07 08; do
   grep -q 'IMPLEMENTATION BLOCKED' "docs/planning/M${m}_EXECUTION_PACKAGE.md" \
     || fail "M${m} must remain implementation-blocked"
 done
 
 if grep -R -nE 'ADMITTED / IMPLEMENTATION AUTHORIZED|ADMITTED_FOR_IMPLEMENTATION' \
-  docs/planning/M0{5,6,7,8}_EXECUTION_PACKAGE.md >/dev/null; then
-  fail 'later milestone admission leaked into M04 transition'
+  docs/planning/M0{6,7,8}_EXECUTION_PACKAGE.md >/dev/null; then
+  fail 'M06-M08 admission leaked into M05 transition'
 fi
 
 scope_boundary="$(jq -r '.scope_boundary' "$decision")"
@@ -86,4 +106,4 @@ scope_boundary="$(jq -r '.scope_boundary' "$decision")"
 [[ "$scope_boundary" == *'free-form AI'* ]] || fail 'AI authority boundary missing'
 [[ "$scope_boundary" == *'rewrite history'* ]] || fail 'historical rewrite boundary missing'
 
-printf 'M04 ADMISSION: PASS / M03 REVIEWED MERGE VERIFIED / M01+M02 CONTRACTS PRESENT / M04 SLICE 01 AUTHORIZED AFTER MERGE+POST-MERGE GREEN / M05-M08 BLOCKED\n'
+printf 'M04 ADMISSION: PASS / M04 REMAINS VALID / SEPARATE M05 MACHINE ADMISSION AWARE / M06-M08 BLOCKED\n'

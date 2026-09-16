@@ -1,0 +1,103 @@
+name: M05 Admission
+
+on:
+  push:
+    paths:
+      - 'docs/planning/M05_ADMISSION_RECORD.md'
+      - 'docs/planning/m05-admission-decision.json'
+      - 'docs/planning/M05_EXECUTION_PACKAGE.md'
+      - 'docs/planning/M04_S10_EXIT_EVIDENCE.md'
+      - 'docs/planning/M04_ADMISSION_RECORD.md'
+      - 'docs/planning/m04-admission-decision.json'
+      - 'docs/contracts/DOCUMENT_INTAKE_MODEL.md'
+      - 'docs/contracts/ORIGINAL_DOCUMENT_ARCHIVE_MODEL.md'
+      - 'docs/contracts/EXTRACTION_PROPOSAL_REVIEW_MODEL.md'
+      - 'docs/contracts/DOCUMENT_VERIFICATION_BOUNDARY.md'
+      - 'docs/contracts/DOCUMENT_INTAKE_SECURITY_PRIVACY_MODEL.md'
+      - 'docs/contracts/TRUST_REGISTRY_MODEL.md'
+      - 'docs/contracts/VERIFICATION_ORCHESTRATION_MODEL.md'
+      - 'docs/contracts/VERIFIER_RELYING_PARTY_TRUST_MODEL.md'
+      - 'docs/contracts/UNTRUSTED_CONTENT_AI_SECURITY_BOUNDARY.md'
+      - 'docs/contracts/CREDENTIAL_ARCHIVE_LINKING_MODEL.md'
+      - 'docs/contracts/HUMAN_REVIEW_CASE_MODEL.md'
+      - 'docs/contracts/CORE_PROVENANCE_AND_EVIDENCE.md'
+      - 'tests/fv09_document_intake_test.sh'
+      - 'tests/fv10_verification_test.sh'
+      - '.github/workflows/fv09-document-intake.yml'
+      - '.github/workflows/fv10-verification.yml'
+      - 'tests/m05_admission_test.sh'
+      - 'tests/m04_admission_test.sh'
+      - 'tests/m03_admission_test.sh'
+      - 'tests/m03_m08_execution_readiness_test.sh'
+      - 'docs/planning/M06_EXECUTION_PACKAGE.md'
+      - 'docs/planning/M07_EXECUTION_PACKAGE.md'
+      - 'docs/planning/M08_EXECUTION_PACKAGE.md'
+      - '.github/workflows/m05-admission.yml'
+      - '.github/workflows/m04-admission.yml'
+      - '.github/workflows/m03-admission.yml'
+      - 'scripts/governance_lifecycle_phase.sh'
+  pull_request:
+    paths:
+      - 'docs/planning/M05_ADMISSION_RECORD.md'
+      - 'docs/planning/m05-admission-decision.json'
+      - 'docs/planning/M05_EXECUTION_PACKAGE.md'
+      - 'docs/planning/M04_S10_EXIT_EVIDENCE.md'
+      - 'docs/planning/M04_ADMISSION_RECORD.md'
+      - 'docs/planning/m04-admission-decision.json'
+      - 'docs/contracts/DOCUMENT_INTAKE_MODEL.md'
+      - 'docs/contracts/ORIGINAL_DOCUMENT_ARCHIVE_MODEL.md'
+      - 'docs/contracts/EXTRACTION_PROPOSAL_REVIEW_MODEL.md'
+      - 'docs/contracts/DOCUMENT_VERIFICATION_BOUNDARY.md'
+      - 'docs/contracts/DOCUMENT_INTAKE_SECURITY_PRIVACY_MODEL.md'
+      - 'docs/contracts/TRUST_REGISTRY_MODEL.md'
+      - 'docs/contracts/VERIFICATION_ORCHESTRATION_MODEL.md'
+      - 'docs/contracts/VERIFIER_RELYING_PARTY_TRUST_MODEL.md'
+      - 'docs/contracts/UNTRUSTED_CONTENT_AI_SECURITY_BOUNDARY.md'
+      - 'docs/contracts/CREDENTIAL_ARCHIVE_LINKING_MODEL.md'
+      - 'docs/contracts/HUMAN_REVIEW_CASE_MODEL.md'
+      - 'docs/contracts/CORE_PROVENANCE_AND_EVIDENCE.md'
+      - 'tests/fv09_document_intake_test.sh'
+      - 'tests/fv10_verification_test.sh'
+      - '.github/workflows/fv09-document-intake.yml'
+      - '.github/workflows/fv10-verification.yml'
+      - 'tests/m05_admission_test.sh'
+      - 'tests/m04_admission_test.sh'
+      - 'tests/m03_admission_test.sh'
+      - 'tests/m03_m08_execution_readiness_test.sh'
+      - 'docs/planning/M06_EXECUTION_PACKAGE.md'
+      - 'docs/planning/M07_EXECUTION_PACKAGE.md'
+      - 'docs/planning/M08_EXECUTION_PACKAGE.md'
+      - '.github/workflows/m05-admission.yml'
+      - '.github/workflows/m04-admission.yml'
+      - '.github/workflows/m03-admission.yml'
+      - 'scripts/governance_lifecycle_phase.sh'
+
+permissions:
+  contents: read
+
+jobs:
+  m05-admission:
+    name: Verify M05 admission
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+      - name: Set up Node.js 24 LTS
+        uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version-file: .node-version
+      - name: Verify M05 admission transition
+        shell: bash
+        run: bash tests/m05_admission_test.sh
+      - name: Verify M04 admission remains coherent
+        shell: bash
+        run: bash tests/m04_admission_test.sh
+      - name: Verify M03 admission remains coherent
+        shell: bash
+        run: bash tests/m03_admission_test.sh
+      - name: Verify M03-M08 readiness remains coherent
+        shell: bash
+        run: bash tests/m03_m08_execution_readiness_test.sh
