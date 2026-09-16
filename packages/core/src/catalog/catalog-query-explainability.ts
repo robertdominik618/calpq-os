@@ -99,6 +99,23 @@ function subjectIdentity(evaluation: GapNavigatorEvaluation): Readonly<{ id: str
   return Object.freeze({ id: evaluation.subject.id.toString(), kind: evaluation.subject.kind });
 }
 
+function sourceSnapshotSignature(source: SourceReference): string {
+  return JSON.stringify({
+    id: source.id.toString(),
+    authority: { id: source.authority.id.toString(), kind: source.authority.kind },
+    jurisdiction: source.jurisdiction.toString(),
+    sourceType: source.sourceType,
+    canonicalLocator: source.canonicalLocator,
+    version: source.version.toString(),
+    publicationDate: source.publicationDate?.toString() ?? null,
+    effectiveFrom: source.effectiveFrom?.toString() ?? null,
+    effectiveTo: source.effectiveTo?.toString() ?? null,
+    retrievedAt: source.retrievedAt.toString(),
+    verificationState: source.verificationState.toString(),
+    contentHash: source.contentHash?.toString() ?? null,
+  });
+}
+
 function sourceMap(values: readonly SourceReference[], evaluatedAt: UtcInstant): ReadonlyMap<string, SourceReference> {
   const result = new Map<string, SourceReference>();
   for (const source of values) {
@@ -107,13 +124,25 @@ function sourceMap(values: readonly SourceReference[], evaluatedAt: UtcInstant):
       throw new RangeError('Explanation cannot use a SourceReference retrieved after its evaluation instant');
     }
     const id = source.id.toString();
-    const prior = result.get(id);
-    if (prior !== undefined && prior.version.toString() !== source.version.toString()) {
-      throw new TypeError('Explanation requires at most one exact SourceReference version per SourceId');
+    if (result.has(id)) {
+      throw new TypeError('Explanation requires exactly one SourceReference per SourceId');
     }
     result.set(id, source);
   }
   return result;
+}
+
+function assertPathProvenanceSourceSnapshots(
+  evaluation: GapNavigatorEvaluation,
+  sources: ReadonlyMap<string, SourceReference>,
+): void {
+  for (const expected of evaluation.pathProvenance.sourceReferences) {
+    const actual = sources.get(expected.id.toString());
+    if (actual === undefined) continue;
+    if (sourceSnapshotSignature(actual) !== sourceSnapshotSignature(expected)) {
+      throw new TypeError('Explanation source must match the exact path-provenance SourceReference snapshot');
+    }
+  }
 }
 
 function referencedSourceIds(evaluation: GapNavigatorEvaluation): readonly SourceId[] {
@@ -288,6 +317,7 @@ export class CatalogQueryExplanationGraph {
     }
 
     const sources = sourceMap(input.sourceReferences, input.evaluatedAt);
+    assertPathProvenanceSourceSnapshots(input.gapEvaluation, sources);
     const materialSourceIds = referencedSourceIds(input.gapEvaluation);
     const nodes = new Map<string, ExplanationGraphNode>();
     const edges = new Map<string, ExplanationGraphEdge>();
