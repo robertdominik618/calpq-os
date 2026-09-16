@@ -48,7 +48,11 @@ if grep -R -nE '\bAuthorizationGrant\b' packages/application/src --include='*.ts
   fail 'AuthorizationGrant behavior leaked into admitted M02 Application source'
 fi
 
-if grep -R -nE 'application' packages/core/src --include='*.ts' >/dev/null; then
+# Enforce the architectural dependency direction without rejecting legitimate
+# domain language such as "rule application state" inside Core. Only actual
+# static/dynamic module references to the Application package/layer are banned.
+if grep -R -nE "(from[[:space:]]+|import[[:space:]]*\()[[:space:]]*['\"][^'\"]*(packages/application|@calpq/application|[.][.]/application(/|['\"])|[.]/application(/|['\"]))" \
+  packages/core/src --include='*.ts' >/dev/null; then
   fail 'Core must not depend on Application'
 fi
 
