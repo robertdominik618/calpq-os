@@ -126,7 +126,7 @@ const IDS = {
 } as const;
 
 const cz = Jurisdiction.fromCode('CZ');
-const sk = Jurisdiction.fromCode('SK');
+const differentJurisdiction = Jurisdiction.fromCode('CZ-10');
 const eu = Jurisdiction.fromCode('EU');
 const sourceId = SourceId.from(IDS.source);
 const authority = ActorReference.create(ActorId.from(IDS.authority), ActorKind.EXTERNAL_AUTHORITY);
@@ -160,7 +160,7 @@ function source(options: {
     effectiveTo: DateOnly.from(options.effectiveTo ?? '2026-06-30'),
     retrievedAt: UtcInstant.from(options.retrievedAt ?? '2026-01-02T09:00:00Z'),
     verificationState: VerificationState.from(options.verification ?? VerificationStateCode.VERIFIED),
-    contentHash: ContentHash.sha256((options.version ?? 'source-v1') === 'source-v2' ? 'b'.repeat(64) : 'a'.repeat(64)),
+    contentHash: ContentHash.sha256((options.version ?? 'source-v2') === 'source-v2' ? 'b'.repeat(64) : 'a'.repeat(64)),
   });
 }
 
@@ -832,7 +832,7 @@ test('M04S10-39 wrong-jurisdiction-never-reuses-cz-path', () => {
     id: IDS.queryExactOld,
     effectiveOn: '2026-05-01',
     asKnownAt: '2026-05-11T00:00:00Z',
-    jurisdiction: sk,
+    jurisdiction: differentJurisdiction,
   });
   assert.equal(query.state, HistoricalVersionQueryState.NOT_FOUND);
 });
