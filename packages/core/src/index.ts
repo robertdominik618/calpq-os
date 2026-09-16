@@ -12,6 +12,7 @@ export {
   EquivalenceRuleId,
   EventId,
   EvidenceId,
+  GapEvaluationId,
   ProfessionDefinitionId,
   QualificationPathId,
   RecognitionReviewCaseId,
@@ -44,64 +45,21 @@ export type { CausationReference, ProvenanceReference } from './transition/comma
 export { EventEnvelope } from './transition/event-envelope.ts';
 export { AggregateSnapshot } from './transition/aggregate-snapshot.ts';
 export { TransitionDecision, TransitionKernel } from './transition/transition-kernel.ts';
-export type {
-  AcceptedTransition,
-  CompletedTransition,
-  ConflictTransition,
-  DuplicateTransition,
-  EventEmission,
-  NonAcceptedTransition,
-  TransitionDecisionShape,
-  TransitionResult,
-} from './transition/transition-kernel.ts';
+export type { AcceptedTransition, CompletedTransition, ConflictTransition, DuplicateTransition, EventEmission, NonAcceptedTransition, TransitionDecisionShape, TransitionResult } from './transition/transition-kernel.ts';
 export { ArtifactFormat, CredentialArtifactKind } from './credential/artifact-types.ts';
 export { EvidenceSnapshot, EvidenceSnapshotEntry } from './credential/evidence-snapshot.ts';
 export { ExternalArtifactReference } from './credential/external-artifact-reference.ts';
 export { CredentialArtifact } from './credential/credential-artifact.ts';
 export type { CredentialArtifactProvenanceReference } from './credential/credential-artifact.ts';
-export {
-  ActivityDefinition,
-  CatalogEffectivePeriod,
-  ExternalClassificationMappingRelation,
-  ExternalClassificationReference,
-  ProfessionDefinition,
-  RegulatoryStatus,
-} from './catalog/activity-profession-catalog.ts';
-export type {
-  ExternalClassificationMappingRelation as ExternalClassificationMappingRelationCode,
-  RegulatoryStatus as RegulatoryStatusCode,
-} from './catalog/activity-profession-catalog.ts';
+export { ActivityDefinition, CatalogEffectivePeriod, ExternalClassificationMappingRelation, ExternalClassificationReference, ProfessionDefinition, RegulatoryStatus } from './catalog/activity-profession-catalog.ts';
+export type { ExternalClassificationMappingRelation as ExternalClassificationMappingRelationCode, RegulatoryStatus as RegulatoryStatusCode } from './catalog/activity-profession-catalog.ts';
 export { CredentialDefinition, RequirementDefinition } from './catalog/credential-requirement-catalog.ts';
-export {
-  GovernedRequirementSetVersion,
-  RequirementSetVersionSelection,
-  RequirementSetVersionSelectionState,
-  selectRequirementSetVersion,
-} from './catalog/requirement-set-versioning.ts';
-export type {
-  RequirementSetVersionSelectionState as RequirementSetVersionSelectionStateCode,
-} from './catalog/requirement-set-versioning.ts';
-export {
-  QualificationPathDefinition,
-  QualificationPathSelection,
-  QualificationPathSelectionState,
-  QualificationPathStep,
-  QualificationPathStepType,
-  selectQualificationPath,
-} from './catalog/qualification-path.ts';
-export type {
-  QualificationPathSelectionState as QualificationPathSelectionStateCode,
-  QualificationPathStepType as QualificationPathStepTypeCode,
-} from './catalog/qualification-path.ts';
-export {
-  CatalogProvenanceBinding,
-  CatalogProvenanceTargetKind,
-} from './catalog/catalog-provenance-binding.ts';
-export type {
-  CatalogProvenanceTarget,
-  CatalogProvenanceTargetKind as CatalogProvenanceTargetKindCode,
-  CatalogSourceSnapshot,
-} from './catalog/catalog-provenance-binding.ts';
+export { GovernedRequirementSetVersion, RequirementSetVersionSelection, RequirementSetVersionSelectionState, selectRequirementSetVersion } from './catalog/requirement-set-versioning.ts';
+export type { RequirementSetVersionSelectionState as RequirementSetVersionSelectionStateCode } from './catalog/requirement-set-versioning.ts';
+export { QualificationPathDefinition, QualificationPathSelection, QualificationPathSelectionState, QualificationPathStep, QualificationPathStepType, selectQualificationPath } from './catalog/qualification-path.ts';
+export type { QualificationPathSelectionState as QualificationPathSelectionStateCode, QualificationPathStepType as QualificationPathStepTypeCode } from './catalog/qualification-path.ts';
+export { CatalogProvenanceBinding, CatalogProvenanceTargetKind } from './catalog/catalog-provenance-binding.ts';
+export type { CatalogProvenanceTarget, CatalogProvenanceTargetKind as CatalogProvenanceTargetKindCode, CatalogSourceSnapshot } from './catalog/catalog-provenance-binding.ts';
 export {
   EquivalenceEffectType,
   EquivalenceRule,
@@ -136,13 +94,20 @@ export type {
   RecognitionRouteKind as RecognitionRouteKindCode,
 } from './catalog/equivalence-recognition-review.ts';
 export {
-  AtomicRequirementResult,
-  CredentialDefinitionReference,
-  EligibilityAssessment,
-  RequirementGroup,
-  RequirementGroupMode,
-  RequirementGroupResult,
-  RequirementId,
-  RequirementSet,
-  aggregateRequirementGroup,
-} from './eligibility/eligibility-assessment.ts';
+  GapItemState,
+  GapNavigatorEvaluation,
+  GapPathComparison,
+  GapRequirementItem,
+  GapRuleReferenceKind,
+  GapStepItem,
+  compareGapEvaluations,
+} from './catalog/gap-navigator.ts';
+export type {
+  GapItemState as GapItemStateCode,
+  GapNavigatorEvaluationInput,
+  GapPathComparisonEntry,
+  GapPathMetrics,
+  GapRuleReference,
+  GapRuleReferenceKind as GapRuleReferenceKindCode,
+} from './catalog/gap-navigator.ts';
+export { AtomicRequirementResult, CredentialDefinitionReference, EligibilityAssessment, RequirementGroup, RequirementGroupMode, RequirementGroupResult, RequirementId, RequirementSet, aggregateRequirementGroup } from './eligibility/eligibility-assessment.ts';
