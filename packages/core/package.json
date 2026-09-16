@@ -17,6 +17,7 @@
     "test:m04s02": "node --test test/m04-s02-credential-requirement-catalog.test.ts",
     "test:m04s03": "node --test test/m04-s03-requirement-set-versioning.test.ts",
     "test:m04s04": "node --test test/m04-s04-qualification-path.test.ts",
+    "test:m04s05": "node --test test/m04-s05-catalog-provenance-binding.test.ts",
     "typecheck": "npx --yes --package=typescript@7.0.2 -- tsc -p tsconfig.json"
   }
 }
