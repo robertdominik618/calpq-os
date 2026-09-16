@@ -1,5 +1,6 @@
 import { ExplanationGraphId, SourceId } from '../ids.ts';
-import { GapItemState, GapNavigatorEvaluation, GapRequirementItem, GapRuleReference, GapStepItem } from './gap-navigator.ts';
+import { GapItemState, GapNavigatorEvaluation, GapRequirementItem, GapStepItem } from './gap-navigator.ts';
+import type { GapRuleReference } from './gap-navigator.ts';
 import { SourceReference } from '../provenance/source-reference.ts';
 import { UtcInstant } from '../time.ts';
 import { VerificationStateCode } from '../verification-state.ts';
