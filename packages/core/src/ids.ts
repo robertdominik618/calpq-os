@@ -80,6 +80,24 @@ export class QualificationPathId extends UuidV7Value {
   static from(value: string): QualificationPathId { return new QualificationPathId(value); }
 }
 
+export class EquivalenceRuleId extends UuidV7Value {
+  declare private readonly __equivalenceRuleIdBrand: void;
+  private constructor(value: string) { super(value); }
+  static from(value: string): EquivalenceRuleId { return new EquivalenceRuleId(value); }
+}
+
+export class RecognitionRouteId extends UuidV7Value {
+  declare private readonly __recognitionRouteIdBrand: void;
+  private constructor(value: string) { super(value); }
+  static from(value: string): RecognitionRouteId { return new RecognitionRouteId(value); }
+}
+
+export class RecognitionReviewCaseId extends UuidV7Value {
+  declare private readonly __recognitionReviewCaseIdBrand: void;
+  private constructor(value: string) { super(value); }
+  static from(value: string): RecognitionReviewCaseId { return new RecognitionReviewCaseId(value); }
+}
+
 export class EligibilityAssessmentId extends UuidV7Value {
   declare private readonly __eligibilityAssessmentIdBrand: void;
   private constructor(value: string) { super(value); }
