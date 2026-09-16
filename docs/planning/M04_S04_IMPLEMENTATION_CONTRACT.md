@@ -1,6 +1,6 @@
 # CALPQ M04 Slice 04 — QualificationPath Graph & Path Selection
 
-Status: `IMPLEMENTED / CI PENDING`
+Status: `COMPLETED / VERIFIED`
 ID: `CALPQ-M04-S04-IMPL-0001`
 Tracking issue: #89
 
@@ -46,3 +46,18 @@ Slice 04 does not:
 
 ## Verification target
 Exactly 44 mandatory runtime scenarios, strict TypeScript ID/immutability proof, exact S03 ancestry and S01-S03/FV11/governance regressions. Exit evidence is added only after the complete implementation-head CI matrix is green.
+
+## Verification result
+On implementation head `d09b511bedbb87e7100e70f13026a9d23acebcde`:
+- dedicated M04 S04 workflow #2 = SUCCESS;
+- exactly 44/44 mandatory runtime scenarios PASS;
+- fail/skipped/todo = 0/0/0;
+- strict TypeScript ID/immutability proof PASS;
+- exact reviewed S03 ancestry PASS;
+- S01/S02/S03/FV11 regressions PASS;
+- complete observed PR-triggered matrix = 24/24 SUCCESS;
+- hard blockers = 0;
+- remediation = none;
+- mandatory tests waived/deferred = none.
+
+Slice 04 is ready for final evidence-head verification. Merge and Slice 05 start remain separate governed actions.

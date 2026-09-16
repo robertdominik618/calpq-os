@@ -1,6 +1,6 @@
 # CALPQ M04 Slice 04 — Test Index
 
-Status: `IMPLEMENTED / CI PENDING`
+Status: `VERIFIED / 44 MANDATORY RUNTIME SCENARIOS PASS`
 ID: `CALPQ-M04-S04-TEST-0001`
 Tracking issue: #89
 
@@ -53,3 +53,11 @@ Mandatory runtime scenarios: **44**.
 
 Compile-time proof covers semantic ID separation and readonly path/step/selection state.
 No mandatory test may be waived or deferred.
+
+## Verified implementation evidence
+Implementation head: `d09b511bedbb87e7100e70f13026a9d23acebcde`.
+Dedicated workflow `M04 Slice 04 Qualification Path` #2 = SUCCESS.
+Runtime: 44 passed / 0 failed / 0 skipped / 0 todo.
+Strict TypeScript proof PASS.
+Complete observed implementation-head PR matrix: 24/24 SUCCESS.
+Hard blockers: 0. Remediation: none.
