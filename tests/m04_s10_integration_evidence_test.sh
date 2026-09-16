@@ -26,7 +26,7 @@ count="$(grep -Ec "^test\\('M04S10-[0-9]{2}" packages/core/test/m04-s10-integrat
 
 grep -Fq '10. M04 integration evidence against representative target-profession scenarios.' docs/planning/M04_EXECUTION_PACKAGE.md \
   || fail 'Slice 10 execution-package scope is not present'
-grep -Fq 'synthetic integration data' docs/planning/M04_S10_IMPLEMENTATION_CONTRACT.md \
+grep -Fq 'synthetic test fixtures' docs/planning/M04_S10_IMPLEMENTATION_CONTRACT.md \
   || fail 'S10 synthetic/non-legal fixture boundary is not documented'
 
 node --test packages/core/test/m04-s10-integration-evidence.test.ts
