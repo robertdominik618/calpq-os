@@ -4,15 +4,9 @@ abstract class UuidV7Value {
   readonly #value: string;
 
   protected constructor(value: string) {
-    if (typeof value !== 'string') {
-      throw new TypeError('UUIDv7 value must be a string');
-    }
-
+    if (typeof value !== 'string') throw new TypeError('UUIDv7 value must be a string');
     const canonical = value.toLowerCase();
-    if (!UUID_V7_PATTERN.test(canonical)) {
-      throw new TypeError('Expected an RFC 9562 UUIDv7 value');
-    }
-
+    if (!UUID_V7_PATTERN.test(canonical)) throw new TypeError('Expected an RFC 9562 UUIDv7 value');
     this.#value = canonical;
     Object.freeze(this);
   }
@@ -35,6 +29,8 @@ export class RecognitionRouteId extends UuidV7Value { declare private readonly _
 export class RecognitionReviewCaseId extends UuidV7Value { declare private readonly __recognitionReviewCaseIdBrand: void; private constructor(value: string) { super(value); } static from(value: string): RecognitionReviewCaseId { return new RecognitionReviewCaseId(value); } }
 export class GapEvaluationId extends UuidV7Value { declare private readonly __gapEvaluationIdBrand: void; private constructor(value: string) { super(value); } static from(value: string): GapEvaluationId { return new GapEvaluationId(value); } }
 export class ExplanationGraphId extends UuidV7Value { declare private readonly __explanationGraphIdBrand: void; private constructor(value: string) { super(value); } static from(value: string): ExplanationGraphId { return new ExplanationGraphId(value); } }
+export class HistoricalCatalogQueryId extends UuidV7Value { declare private readonly __historicalCatalogQueryIdBrand: void; private constructor(value: string) { super(value); } static from(value: string): HistoricalCatalogQueryId { return new HistoricalCatalogQueryId(value); } }
+export class HistoricalReplayId extends UuidV7Value { declare private readonly __historicalReplayIdBrand: void; private constructor(value: string) { super(value); } static from(value: string): HistoricalReplayId { return new HistoricalReplayId(value); } }
 export class EligibilityAssessmentId extends UuidV7Value { declare private readonly __eligibilityAssessmentIdBrand: void; private constructor(value: string) { super(value); } static from(value: string): EligibilityAssessmentId { return new EligibilityAssessmentId(value); } }
 export class CredentialArtifactId extends UuidV7Value { declare private readonly __credentialArtifactIdBrand: void; private constructor(value: string) { super(value); } static from(value: string): CredentialArtifactId { return new CredentialArtifactId(value); } }
 export class EvidenceId extends UuidV7Value { declare private readonly __evidenceIdBrand: void; private constructor(value: string) { super(value); } static from(value: string): EvidenceId { return new EvidenceId(value); } }

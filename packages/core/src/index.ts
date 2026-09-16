@@ -14,6 +14,8 @@ export {
   EvidenceId,
   ExplanationGraphId,
   GapEvaluationId,
+  HistoricalCatalogQueryId,
+  HistoricalReplayId,
   ProfessionDefinitionId,
   QualificationPathId,
   RecognitionReviewCaseId,
@@ -128,4 +130,16 @@ export type {
   ExplanationUnresolvedFact,
   ExplanationUnresolvedFactCode as ExplanationUnresolvedFactCodeValue,
 } from './catalog/catalog-query-explainability.ts';
+export {
+  HistoricalCatalogVersionQuery,
+  HistoricalReplayState,
+  HistoricalSnapshotReplay,
+  HistoricalVersionQueryState,
+} from './catalog/historical-version-replay.ts';
+export type {
+  HistoricalCatalogVersionQueryInput,
+  HistoricalReplayState as HistoricalReplayStateCode,
+  HistoricalSnapshotReplayInput,
+  HistoricalVersionQueryState as HistoricalVersionQueryStateCode,
+} from './catalog/historical-version-replay.ts';
 export { AtomicRequirementResult, CredentialDefinitionReference, EligibilityAssessment, RequirementGroup, RequirementGroupMode, RequirementGroupResult, RequirementId, RequirementSet, aggregateRequirementGroup } from './eligibility/eligibility-assessment.ts';
