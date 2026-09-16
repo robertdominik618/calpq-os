@@ -69,6 +69,15 @@ export type {
 } from './catalog/activity-profession-catalog.ts';
 export { CredentialDefinition, RequirementDefinition } from './catalog/credential-requirement-catalog.ts';
 export {
+  GovernedRequirementSetVersion,
+  RequirementSetVersionSelection,
+  RequirementSetVersionSelectionState,
+  selectRequirementSetVersion,
+} from './catalog/requirement-set-versioning.ts';
+export type {
+  RequirementSetVersionSelectionState as RequirementSetVersionSelectionStateCode,
+} from './catalog/requirement-set-versioning.ts';
+export {
   AtomicRequirementResult,
   CredentialDefinitionReference,
   EligibilityAssessment,
