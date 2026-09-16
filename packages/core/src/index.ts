@@ -91,6 +91,15 @@ export type {
   QualificationPathStepType as QualificationPathStepTypeCode,
 } from './catalog/qualification-path.ts';
 export {
+  CatalogProvenanceBinding,
+  CatalogProvenanceTargetKind,
+} from './catalog/catalog-provenance-binding.ts';
+export type {
+  CatalogProvenanceTarget,
+  CatalogProvenanceTargetKind as CatalogProvenanceTargetKindCode,
+  CatalogSourceSnapshot,
+} from './catalog/catalog-provenance-binding.ts';
+export {
   AtomicRequirementResult,
   CredentialDefinitionReference,
   EligibilityAssessment,
