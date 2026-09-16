@@ -12,6 +12,7 @@ export {
   EquivalenceRuleId,
   EventId,
   EvidenceId,
+  ExplanationGraphId,
   GapEvaluationId,
   ProfessionDefinitionId,
   QualificationPathId,
@@ -110,4 +111,21 @@ export type {
   GapRuleReference,
   GapRuleReferenceKind as GapRuleReferenceKindCode,
 } from './catalog/gap-navigator.ts';
+export {
+  CatalogQueryExplanationGraph,
+  ExplanationClassification,
+  ExplanationEdgeKind,
+  ExplanationNodeKind,
+  ExplanationUnresolvedFactCode,
+} from './catalog/catalog-query-explainability.ts';
+export type {
+  CatalogQueryExplanationGraphInput,
+  ExplanationClassification as ExplanationClassificationCode,
+  ExplanationEdgeKind as ExplanationEdgeKindCode,
+  ExplanationGraphEdge,
+  ExplanationGraphNode,
+  ExplanationNodeKind as ExplanationNodeKindCode,
+  ExplanationUnresolvedFact,
+  ExplanationUnresolvedFactCode as ExplanationUnresolvedFactCodeValue,
+} from './catalog/catalog-query-explainability.ts';
 export { AtomicRequirementResult, CredentialDefinitionReference, EligibilityAssessment, RequirementGroup, RequirementGroupMode, RequirementGroupResult, RequirementId, RequirementSet, aggregateRequirementGroup } from './eligibility/eligibility-assessment.ts';
