@@ -74,6 +74,12 @@ export class RequirementSetId extends UuidV7Value {
   static from(value: string): RequirementSetId { return new RequirementSetId(value); }
 }
 
+export class QualificationPathId extends UuidV7Value {
+  declare private readonly __qualificationPathIdBrand: void;
+  private constructor(value: string) { super(value); }
+  static from(value: string): QualificationPathId { return new QualificationPathId(value); }
+}
+
 export class EligibilityAssessmentId extends UuidV7Value {
   declare private readonly __eligibilityAssessmentIdBrand: void;
   private constructor(value: string) { super(value); }

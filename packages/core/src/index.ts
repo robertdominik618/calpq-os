@@ -12,6 +12,7 @@ export {
   EventId,
   EvidenceId,
   ProfessionDefinitionId,
+  QualificationPathId,
   RequirementDefinitionId,
   RequirementSetId,
   RuleSetId,
@@ -77,6 +78,18 @@ export {
 export type {
   RequirementSetVersionSelectionState as RequirementSetVersionSelectionStateCode,
 } from './catalog/requirement-set-versioning.ts';
+export {
+  QualificationPathDefinition,
+  QualificationPathSelection,
+  QualificationPathSelectionState,
+  QualificationPathStep,
+  QualificationPathStepType,
+  selectQualificationPath,
+} from './catalog/qualification-path.ts';
+export type {
+  QualificationPathSelectionState as QualificationPathSelectionStateCode,
+  QualificationPathStepType as QualificationPathStepTypeCode,
+} from './catalog/qualification-path.ts';
 export {
   AtomicRequirementResult,
   CredentialDefinitionReference,
