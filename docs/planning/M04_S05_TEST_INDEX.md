@@ -1,10 +1,12 @@
 # CALPQ M04 Slice 05 — Test Index
 
-Status: `42 MANDATORY RUNTIME SCENARIOS / CI PENDING`
+Status: `VERIFIED / 42 MANDATORY RUNTIME SCENARIOS PASS`
 ID: `CALPQ-M04-S05-TEST-0001`
 Tracking issue: #92
+PR: #93
+Verified implementation head: `5274cccfd451779e18ead85b76ada511127265bf`
 
-Mandatory runtime scenarios:
+Mandatory runtime scenarios: **42/42 PASS**.
 
 1. ActivityDefinition target support.
 2. ProfessionDefinition target support.
@@ -49,6 +51,7 @@ Mandatory runtime scenarios:
 41. Historical source-version bindings remain independent.
 42. Architecture boundary: no S06+, evidence-verification, provider/AI or ambient-time authority and no backward import into S01-S04.
 
-Compile-time proof additionally covers controlled target-kind typing and readonly root/nested collections.
-
-No mandatory scenario may be waived or deferred.
+Compile-time proof covers controlled target-kind typing and readonly root/nested collections.
+Dedicated workflow `M04 Slice 05 Catalog Provenance Binding` #2 = SUCCESS.
+Complete observed implementation-head PR matrix = 24/24 SUCCESS.
+No mandatory test was waived or deferred.
