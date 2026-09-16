@@ -22,6 +22,8 @@
     "test/m04-s04-types.compile.ts",
     "test/m04-s05-types.compile.ts",
     "test/m04-s06-types.compile.ts",
-    "test/m04-s07-types.compile.ts"
+    "test/m04-s07-types.compile.ts",
+    "test/m04-s08-types.compile.ts",
+    "test/m04-s09-types.compile.ts"
   ]
 }
