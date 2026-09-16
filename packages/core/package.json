@@ -22,6 +22,7 @@
     "test:m04s07": "node --test test/m04-s07-gap-navigator.test.ts",
     "test:m04s08": "node --test test/m04-s08-catalog-query-explainability.test.ts",
     "test:m04s09": "node --test test/m04-s09-historical-version-replay.test.ts",
+    "test:m04s10": "node --test test/m04-s10-integration-evidence.test.ts",
     "typecheck": "npx --yes --package=typescript@7.0.2 -- tsc -p tsconfig.json"
   }
 }
