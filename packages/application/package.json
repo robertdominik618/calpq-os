@@ -9,6 +9,7 @@
     "./extraction": "./src/extraction/index.ts",
     "./intake": "./src/intake/index.ts",
     "./security": "./src/security/index.ts",
+    "./trust": "./src/trust/index.ts",
     "./test-support": "./test-support/index.ts"
   },
   "scripts": {
