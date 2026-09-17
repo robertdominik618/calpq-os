@@ -95,6 +95,8 @@ S06 does **not**:
 - implement S07 provider-neutral adapter routing;
 - implement S08 manual authority confirmation workflow.
 
+S07 owns route selection/orchestration.
+
 **identity != authority != verification route != evidence verification != eligibility != authorization**
 
 ## Exit evidence target
