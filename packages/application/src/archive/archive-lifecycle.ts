@@ -1,4 +1,4 @@
-import { ActorReference, CommandId, EvidenceReference, EvidenceSnapshot, SourceId, UtcInstant, VersionId } from '../../../core/src/index.ts';
+import { ActorKind, ActorReference, CommandId, EvidenceReference, EvidenceSnapshot, SourceId, UtcInstant, VersionId } from '../../../core/src/index.ts';
 import { ApplicationExecutionContext } from '../application-execution-context.ts';
 import { OrganizationScopeReference, PurposeReference, TenantScopeReference } from '../references.ts';
 import { AccessDisposition, TenantAccessDecision } from '../tenant/tenant-governance.ts';
@@ -62,6 +62,7 @@ export class ArchiveLifecycleGrant {
   private constructor(input: Required<ArchiveLifecycleGrantInput>) { Object.assign(this, input); Object.freeze(this); }
   static create(input: ArchiveLifecycleGrantInput): ArchiveLifecycleGrant {
     if (!(input.scope instanceof ArchiveScope) || !(input.actor instanceof ActorReference) || !(input.purpose instanceof PurposeReference) || !(input.accessDecision instanceof TenantAccessDecision)) throw new TypeError('Archive grant requires governed scope, actor and access decision');
+    if (input.actor.kind !== ActorKind.HUMAN_USER && input.actor.kind !== ActorKind.SYSTEM_PROCESS) throw new TypeError('Archive grant requires an individual human or system principal');
     const permissions = list(input.permissions, value => Object.values(ArchiveOperation).includes(value)).sort(); unique(permissions);
     if (!permissions.length) throw new TypeError('Archive grant requires explicit permissions');
     const access = input.accessDecision;
@@ -179,17 +180,17 @@ export class ArchiveCommand {
 }
 export interface ArchiveLifecycleEvent { readonly revision: number; readonly command: ArchiveCommand; readonly context: ApplicationExecutionContext; readonly grant: ArchiveLifecycleGrant; }
 export class ArchiveLifecycle {
-  readonly scope: ArchiveScope; readonly policy: ArchiveRetentionPolicy; readonly links: readonly ArchiveLink[]; readonly holds: readonly ArchiveHold[]; readonly pins: readonly ArchiveEvidenceSnapshot[];
+  readonly scope: ArchiveScope; readonly policy: ArchiveRetentionPolicy; readonly initialPolicy: ArchiveRetentionPolicy; readonly links: readonly ArchiveLink[]; readonly holds: readonly ArchiveHold[]; readonly pins: readonly ArchiveEvidenceSnapshot[];
   readonly records: readonly ArchiveLifecycleEvent[]; readonly revision: number; readonly status: 'ACTIVE' | 'TOMBSTONED'; readonly openedAt: UtcInstant; readonly lastChangedAt: UtcInstant;
   readonly openingContext: ApplicationExecutionContext; readonly openingGrant: ArchiveLifecycleGrant;
-  private constructor(input: { scope: ArchiveScope; policy: ArchiveRetentionPolicy; links: readonly ArchiveLink[]; holds: readonly ArchiveHold[]; pins: readonly ArchiveEvidenceSnapshot[]; records: readonly ArchiveLifecycleEvent[]; status: 'ACTIVE' | 'TOMBSTONED'; openingContext: ApplicationExecutionContext; openingGrant: ArchiveLifecycleGrant }) {
-    this.scope = input.scope; this.policy = input.policy; this.links = Object.freeze([...input.links]); this.holds = Object.freeze([...input.holds]); this.pins = Object.freeze([...input.pins]); this.records = Object.freeze([...input.records]); this.revision = input.records.length; this.status = input.status; this.openingContext = input.openingContext; this.openingGrant = input.openingGrant; this.openedAt = input.openingContext.requestedAt; this.lastChangedAt = input.records.at(-1)?.context.requestedAt ?? this.openedAt; Object.freeze(this);
+  private constructor(input: { scope: ArchiveScope; policy: ArchiveRetentionPolicy; initialPolicy: ArchiveRetentionPolicy; links: readonly ArchiveLink[]; holds: readonly ArchiveHold[]; pins: readonly ArchiveEvidenceSnapshot[]; records: readonly ArchiveLifecycleEvent[]; status: 'ACTIVE' | 'TOMBSTONED'; openingContext: ApplicationExecutionContext; openingGrant: ArchiveLifecycleGrant }) {
+    this.scope = input.scope; this.policy = input.policy; this.initialPolicy = input.initialPolicy; this.links = Object.freeze([...input.links]); this.holds = Object.freeze([...input.holds]); this.pins = Object.freeze([...input.pins]); this.records = Object.freeze([...input.records]); this.revision = input.records.length; this.status = input.status; this.openingContext = input.openingContext; this.openingGrant = input.openingGrant; this.openedAt = input.openingContext.requestedAt; this.lastChangedAt = input.records.at(-1)?.context.requestedAt ?? this.openedAt; Object.freeze(this);
   }
   static start(input: { readonly scope: ArchiveScope; readonly policy: ArchiveRetentionPolicy; readonly context: ApplicationExecutionContext; readonly grant: ArchiveLifecycleGrant }): ArchiveLifecycle {
     if (!(input.scope instanceof ArchiveScope) || !(input.policy instanceof ArchiveRetentionPolicy) || !(input.grant instanceof ArchiveLifecycleGrant)) throw new TypeError('Archive lifecycle requires governed inputs');
     input.grant.authorize(input.scope, input.context, ArchiveOperation.OPEN); input.policy.assertApplicable(input.scope, input.context.requestedAt);
     if (ms(input.context.requestedAt) < ms(input.scope.archive.archivedAt)) throw new RangeError('Lifecycle predates archive');
-    return new ArchiveLifecycle({ scope: input.scope, policy: input.policy, links: [], holds: [], pins: [], records: [], status: 'ACTIVE', openingContext: input.context, openingGrant: input.grant });
+    return new ArchiveLifecycle({ scope: input.scope, policy: input.policy, initialPolicy: input.policy, links: [], holds: [], pins: [], records: [], status: 'ACTIVE', openingContext: input.context, openingGrant: input.grant });
   }
   apply(input: { readonly command: ArchiveCommand; readonly context: ApplicationExecutionContext; readonly grant: ArchiveLifecycleGrant; readonly expectedRevision: number }): ArchiveLifecycle {
     if (!(input.command instanceof ArchiveCommand) || input.command.scope !== this.scope || !(input.grant instanceof ArchiveLifecycleGrant)) throw new TypeError('Foreign archive command or grant');
@@ -212,15 +213,21 @@ export class ArchiveLifecycle {
       case 'UNLINK': if (!links.some(link => link.id === change.reference)) throw new TypeError('Unknown archive link'); links = links.filter(link => link.id !== change.reference); break;
       case 'PLACE_HOLD': if (used('PLACE_HOLD', change.hold.id) || ms(change.hold.recordedAt) > ms(cmd.submittedAt)) throw new TypeError('Hold ID reused or hold not yet recorded'); holds.push(change.hold); holds.sort((a, b) => a.id.localeCompare(b.id)); break;
       case 'RELEASE_HOLD': if (!holds.some(hold => hold.id === change.reference)) throw new TypeError('Unknown archive hold'); holds = holds.filter(hold => hold.id !== change.reference); break;
-      case 'REPLACE_POLICY': change.policy.assertApplicable(this.scope, cmd.submittedAt); if (same(change.policy.version, this.policy.version) || ms(change.policy.reviewedAt) < ms(this.policy.reviewedAt)) throw new TypeError('Policy must have new version and nonregressing review time'); policy = change.policy; break;
+      case 'REPLACE_POLICY': {
+        change.policy.assertApplicable(this.scope, cmd.submittedAt);
+        const reusedVersion = same(change.policy.version, this.initialPolicy.version) || this.records.some(record => record.command.change.kind === 'REPLACE_POLICY' && same(record.command.change.policy.version, change.policy.version));
+        if (reusedVersion) throw new TypeError('Policy version was already used in archive history');
+        if (ms(change.policy.reviewedAt) < ms(this.policy.reviewedAt)) throw new TypeError('Policy review time must not regress');
+        policy = change.policy; break;
+      }
       case 'PIN_SNAPSHOT': if (change.snapshot.lifecycle !== this || used('PIN_SNAPSHOT', change.snapshot.id) || ms(change.snapshot.capturedAt) > ms(cmd.submittedAt)) throw new TypeError('Snapshot pin requires exact current lifecycle'); pins.push(change.snapshot); pins.sort((a, b) => a.id.localeCompare(b.id)); break;
       case 'RELEASE_SNAPSHOT': { const pin = pins.find(value => value.id === change.reference); if (pin === undefined || pin.preserveUntil === null || now <= ms(pin.preserveUntil)) throw new TypeError('Snapshot pin is unknown, indefinite or still required'); pins = pins.filter(value => value !== pin); break; }
       case 'TOMBSTONE': if (change.assessment.lifecycle !== this || change.assessment.outcome !== 'DISPOSAL_CANDIDATE' || ms(change.assessment.evaluatedAt) !== now) throw new TypeError('Tombstone requires exact current eligible assessment'); status = 'TOMBSTONED'; break;
     }
     const record = Object.freeze({ revision: this.revision + 1, command: cmd, context: input.context, grant: input.grant });
-    return new ArchiveLifecycle({ scope: this.scope, policy, links, holds, pins, records: [...this.records, record], status, openingContext: this.openingContext, openingGrant: this.openingGrant });
+    return new ArchiveLifecycle({ scope: this.scope, policy, initialPolicy: this.initialPolicy, links, holds, pins, records: [...this.records, record], status, openingContext: this.openingContext, openingGrant: this.openingGrant });
   }
-  toJSON() { return Object.freeze({ archive: this.scope.toJSON(), revision: this.revision, status: this.status, openedAt: this.openedAt.toString(), lastChangedAt: this.lastChangedAt.toString(), policy: this.policy.toJSON(), links: Object.freeze(this.links.map(link => link.toJSON())), holds: Object.freeze(this.holds.map(hold => hold.toJSON())), snapshotIds: Object.freeze(this.pins.map(pin => pin.id)), events: Object.freeze(this.records.map(record => Object.freeze({ revision: record.revision, command: record.command.toJSON(), actorId: record.context.actor.id.toString(), executedAt: record.context.requestedAt.toString(), correlationId: record.context.correlationId.toString(), grant: record.grant.toJSON() }))), physicalDeletionAuthorized: false }); }
+  toJSON() { return Object.freeze({ archive: this.scope.toJSON(), revision: this.revision, status: this.status, openedAt: this.openedAt.toString(), lastChangedAt: this.lastChangedAt.toString(), initialPolicy: this.initialPolicy.toJSON(), policy: this.policy.toJSON(), links: Object.freeze(this.links.map(link => link.toJSON())), holds: Object.freeze(this.holds.map(hold => hold.toJSON())), snapshotIds: Object.freeze(this.pins.map(pin => pin.id)), events: Object.freeze(this.records.map(record => Object.freeze({ revision: record.revision, command: record.command.toJSON(), actorId: record.context.actor.id.toString(), executedAt: record.context.requestedAt.toString(), correlationId: record.context.correlationId.toString(), grant: record.grant.toJSON() }))), physicalDeletionAuthorized: false }); }
 }
 
 export interface ArchiveSnapshotInput {
@@ -258,7 +265,16 @@ export class ArchiveEvidenceSnapshot {
     }
     return new ArchiveEvidenceSnapshot({ id: uuid(input.id), lifecycle: state, context: input.context, grant: input.grant, security: input.security, derivedRecords, extractionReviews, verificationResults, humanReviews, preserveUntil: input.preserveUntil }, EvidenceSnapshot.capture(evidence, input.context.requestedAt));
   }
-  toJSON() { return Object.freeze({ id: this.id, archive: this.lifecycle.scope.toJSON(), lifecycleRevision: this.lifecycle.revision, capturedAt: this.capturedAt.toString(), preserveUntil: this.preserveUntil?.toString() ?? null, policy: this.lifecycle.policy.toJSON(), links: Object.freeze(this.lifecycle.links.map(link => link.toJSON())), security: Object.freeze({ disposition: this.security.disposition, evaluatedAt: this.security.evaluatedAt.toString(), policyReference: this.security.policy.policyReference }), evidence: Object.freeze(this.evidenceSnapshot.entries.map(entry => Object.freeze({ evidenceId: entry.evidenceId.toString(), evidenceClass: entry.evidenceClass, evidenceKind: entry.evidenceKind, contentHash: entry.contentHash === null ? null : Object.freeze(entry.contentHash.toJSON()), verificationState: entry.verificationState.toString(), sourceId: entry.sourceId?.toString() ?? null, sourceVersion: entry.sourceVersion?.toString() ?? null }))), derivedLineage: Object.freeze(this.derivedRecords.map(item => Object.freeze({ evidenceId: item.derivedEvidence.id.toString(), parentId: item.derivedEvidence.derivationParent!.toString(), lineageIds: Object.freeze(item.lineageEvidenceIds.map(String)), processor: item.processor.toJSON() }))), extractionReviews: Object.freeze(this.extractionReviews.map(history => Object.freeze({ evidenceId: history.proposal.derivedEvidence.id.toString(), currentState: history.currentState, revisions: Object.freeze(history.revisions.map(revision => Object.freeze({ revision: revision.revisionNumber, state: revision.state, reviewedAt: revision.reviewedAt.toString(), reviewerId: revision.reviewedBy.id.toString(), actorRole: revision.actorRole }))) }))), verificationResults: Object.freeze(this.verificationResults.map(result => result.toJSON())), humanReviews: Object.freeze(this.humanReviews.map(history => history.toJSON())), capturedBy: this.context.actor.id.toString(), correlationId: this.context.correlationId.toString(), grant: this.grant.toJSON() }); }
+  toJSON() {
+    const verificationResults = Object.freeze(this.verificationResults.map(result => Object.freeze({
+      ...result.toJSON(),
+      method: result.providerRequest.route.method,
+      verifierEntityId: result.providerRequest.route.verifierEntity.id.toString(),
+      assertions: Object.freeze(result.checkedClaims.map(claim => Object.freeze({ claim, fingerprint: result.assertionFingerprintFor(claim) }))),
+      authorityResolutions: Object.freeze(result.authorityResolutions.map(resolution => resolution.toJSON())),
+    })));
+    return Object.freeze({ id: this.id, archive: this.lifecycle.scope.toJSON(), lifecycleRevision: this.lifecycle.revision, capturedAt: this.capturedAt.toString(), preserveUntil: this.preserveUntil?.toString() ?? null, policy: this.lifecycle.policy.toJSON(), links: Object.freeze(this.lifecycle.links.map(link => link.toJSON())), security: Object.freeze({ disposition: this.security.disposition, evaluatedAt: this.security.evaluatedAt.toString(), policyReference: this.security.policy.policyReference }), evidence: Object.freeze(this.evidenceSnapshot.entries.map(entry => Object.freeze({ evidenceId: entry.evidenceId.toString(), evidenceClass: entry.evidenceClass, evidenceKind: entry.evidenceKind, contentHash: entry.contentHash === null ? null : Object.freeze(entry.contentHash.toJSON()), verificationState: entry.verificationState.toString(), sourceId: entry.sourceId?.toString() ?? null, sourceVersion: entry.sourceVersion?.toString() ?? null }))), derivedLineage: Object.freeze(this.derivedRecords.map(item => Object.freeze({ evidenceId: item.derivedEvidence.id.toString(), parentId: item.derivedEvidence.derivationParent!.toString(), lineageIds: Object.freeze(item.lineageEvidenceIds.map(String)), processor: item.processor.toJSON() }))), extractionReviews: Object.freeze(this.extractionReviews.map(history => Object.freeze({ evidenceId: history.proposal.derivedEvidence.id.toString(), currentState: history.currentState, revisions: Object.freeze(history.revisions.map(revision => Object.freeze({ revision: revision.revisionNumber, state: revision.state, reviewedAt: revision.reviewedAt.toString(), reviewerId: revision.reviewedBy.id.toString(), actorRole: revision.actorRole }))) }))), verificationResults, humanReviews: Object.freeze(this.humanReviews.map(history => history.toJSON())), capturedBy: this.context.actor.id.toString(), correlationId: this.context.correlationId.toString(), grant: this.grant.toJSON() });
+  }
 }
 
 export interface ArchiveDependencyInventoryInput {

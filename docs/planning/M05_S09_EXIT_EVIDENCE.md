@@ -1,7 +1,7 @@
 # M05 Slice 09 — Implementation and Exit Evidence
 
-Status at authoring: `IMPLEMENTED / VALIDATION PENDING / NO RUNTIME SUCCESS CLAIMED`.
-Issue #125. Branch `impl/m05-s09-archive-retention-linking-snapshots`.
+Status at authoring: `IMPLEMENTED / INITIAL TEST FIX AND HARDENING / FINAL-HEAD REVALIDATION REQUIRED`.
+Issue #125. Pull request #126. Branch `impl/m05-s09-archive-retention-linking-snapshots`.
 Owner: `SCHVALUJI MERGE PR #124 A POKRAČOVÁNÍ NA M05 SLICE 09`.
 
 ## Predecessor
@@ -22,6 +22,24 @@ The S09 shell gate checks that contract/index/test commits precede first product
 Application-only scoped archive lifecycle with explicit grants, versioned retention policies, seven canonical link relations, S02 document relationships, holds, Core EvidenceSnapshot-backed manifests, complete supplied derived lineage, S04/S05/S07/S08 history/provenance preservation, snapshot pins, fresh dependency inventories and fail-closed disposal assessments. Logical tombstones preserve originals and events; no physical-delete operation exists.
 
 **archive link != evidence verification; retention expiry != deletion permission; snapshot != authorization**
+
+## Initial execution and correction
+
+Initial head `140625340d2a6aa0c326255e1934fa8b1449e15e`, S09 workflow run `35270013729`, job `105366681596`:
+- exact-head checkout, ancestry and strict TypeScript compile succeeded;
+- runtime: 56 tests / 55 pass / 1 fail / 0 cancelled / 0 skipped / 0 todo;
+- scenario M05S09-20 reused command 200/idempotency key for LINK and UNLINK. The production idempotency guard correctly raised `Archive idempotency key collision`;
+- fixture corrected to use command 201 for the distinct UNLINK. No production idempotency check was weakened and no scenario was removed.
+
+## Additional review hardening
+
+Within the existing version/provenance contract:
+1. Lifecycle retains immutable `initialPolicy` alongside current policy and events, so replacement does not discard the opening policy.
+2. Replacement rejects every policy version previously used in that lifecycle, including the initial version; a reused version cannot silently change retention semantics.
+3. Snapshot serialization explicitly preserves verification method, verifier entity, per-claim fingerprints and authority-resolution provenance. A fingerprint does not promote an INDETERMINATE result or original evidence.
+4. Archive grants require individual HUMAN_USER or SYSTEM_PROCESS principals, matching the original contract rather than accepting an organization as the executing principal.
+
+Existing scenarios M05S09-05, M05S09-12 and M05S09-31 contain added assertions; M05S09-20 has corrected command identity. All 56 scenario IDs remain present. These changes require fresh final-head validation; initial execution is not used as proof that the hardened commit passes.
 
 ## Reproducible gate
 
