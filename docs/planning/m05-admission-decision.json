@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "decision_id": "CALPQ-M05-ADM-DEC-0001",
+  "admission_record_id": "CALPQ-M05-ADM-0001",
+  "milestone": "M05",
+  "candidate": "Evidence & Verification Fabric",
+  "issue_number": 34,
+  "state": "ADMITTED_FOR_IMPLEMENTATION",
+  "admission_transition_id": "CALPQ-M05-ADMIT-0001",
+  "blocking_reviews": [],
+  "admitted_revision": "d2f04aa2bcc68edf1d20deb345faa8a8c239e23d",
+  "m04_reviewed_merge": "d2f04aa2bcc68edf1d20deb345faa8a8c239e23d",
+  "approved_by": "robertdominik618",
+  "approved_at": null,
+  "approval_time_precision": "NOT_INDEPENDENTLY_CAPTURED",
+  "approval_text": "tak jedeme",
+  "authorized_execution_entry": "M05_SLICE_01_MULTI_CHANNEL_INTAKE_CONTRACTS",
+  "admission_effective_condition": "ADMISSION_PR_MERGED_AND_POST_MERGE_VERIFIED",
+  "scope_boundary": "Existing M05 execution package only; intake transport does not grant trust; OCR/AI confidence is not verification; derived data may not replace immutable originals; provider-specific status may not leak into Core truth; M05 may orchestrate evidence verification but may not own legal eligibility, credential legal validity, path eligibility, authorization issuance or AuthorizationGrant, use free-form AI as evidence/authority truth, or admit M06-M08",
+  "last_updated_date": "2026-09-16"
+}
