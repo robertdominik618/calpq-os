@@ -5,6 +5,7 @@
   "type": "module",
   "exports": {
     ".": "./src/index.ts",
+    "./intake": "./src/intake/index.ts",
     "./test-support": "./test-support/index.ts"
   },
   "scripts": {
@@ -21,6 +22,7 @@
     "test:m03s08": "node --test test/m03-s08-responsive.test.ts",
     "test:m03s09": "node --test test/m03-s09-accessibility-localization.test.ts",
     "test:m03s10": "node --test test/m03-s10-integration-ux-boundary.test.ts",
+    "test:m05s01": "node --test test/m05-s01-multi-channel-intake.test.ts",
     "typecheck": "npx --yes --package=typescript@7.0.2 -- tsc -p tsconfig.json"
   }
 }
