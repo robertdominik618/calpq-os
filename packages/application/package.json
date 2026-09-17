@@ -10,6 +10,7 @@
     "./intake": "./src/intake/index.ts",
     "./security": "./src/security/index.ts",
     "./trust": "./src/trust/index.ts",
+    "./verification": "./src/verification/index.ts",
     "./test-support": "./test-support/index.ts"
   },
   "scripts": {
@@ -32,6 +33,7 @@
     "test:m05s04": "node --test test/m05-s04-extraction-review.test.ts",
     "test:m05s05": "node --test test/m05-s05-security-quarantine.test.ts",
     "test:m05s06": "node --test test/m05-s06-trust-registry.test.ts",
+    "test:m05s07": "node --test test/m05-s07-verification-route-registry.test.ts",
     "typecheck": "npx --yes --package=typescript@7.0.2 -- tsc -p tsconfig.json"
   }
 }
