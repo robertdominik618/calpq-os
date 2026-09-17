@@ -81,9 +81,9 @@ function execute(c: HumanReviewCase, cmd = command(c), options: { history?: Huma
   const history = options.history ?? HumanReviewHistory.start(c);
   return history.apply({ command: cmd, context: options.context ?? context(), mandate: options.mandate ?? mandate(c), expectedRevision: options.expectedRevision ?? history.revision });
 }
-function prior(f: ReturnType<typeof fixture>, outcome: VerificationRouteOutcome, fingerprint = 'assertion:A', route = f.autoRoute) {
+function prior(f: ReturnType<typeof fixture>, outcome: VerificationRouteOutcome, fingerprint = 'assertion:A', route = f.autoRoute, checkedAt = KNOWN) {
   const providerRequest = VerificationProviderRequest.create({ attemptId: VerificationAttemptId.from(uuid(300)), route, request: f.request, claims: [A], idempotencyKey: 'prior:attempt:1' });
-  const providerResult = VerificationProviderResult.create({ outcome, adapterReference: 'adapter:registry:test', adapterVersion: '1', checkedClaims: [A], assertionFingerprints: outcome === VerificationRouteOutcome.VERIFIED ? { [A]: fingerprint } : {}, sourceSnapshotReference: 'snapshot:provider:v1', sourceVersionReference: '1', checkedAt: KNOWN, reasonCodes: outcome === VerificationRouteOutcome.INDETERMINATE ? ['PROVIDER_UNAVAILABLE'] : [] });
+  const providerResult = VerificationProviderResult.create({ outcome, adapterReference: 'adapter:registry:test', adapterVersion: '1', checkedClaims: [A], assertionFingerprints: outcome === VerificationRouteOutcome.VERIFIED ? { [A]: fingerprint } : {}, sourceSnapshotReference: 'snapshot:provider:v1', sourceVersionReference: '1', checkedAt, reasonCodes: outcome === VerificationRouteOutcome.INDETERMINATE ? ['PROVIDER_UNAVAILABLE'] : [] });
   return VerificationRouteResult.normalize({ providerRequest, providerResult, authorityResolutions: f.resolutions });
 }
 const result = (history: HumanReviewHistory) => history.records.at(-1)!.claimResults[0]!;
@@ -145,8 +145,10 @@ test('M05S08-16 opening cannot predate required snapshots', () => {
 test('M05S08-17 foreign authority snapshot is rejected', () => {
   assert.throws(() => open(fixture(), { authorityResolutions: fixture().resolutions }));
 });
-test('M05S08-18 prior result from another request is rejected', () => {
+test('M05S08-18 prior results must bind exact request and knowledge cutoff', () => {
   const f = fixture(); assert.throws(() => open(fixture(), { priorResults: [prior(f, VerificationRouteOutcome.VERIFIED)] }));
+  const futureResult = prior(f, VerificationRouteOutcome.VERIFIED, 'assertion:A', f.autoRoute, OPEN);
+  assert.throws(() => open(f, { priorResults: [futureResult] }), /Prior result must bind exact request, registry and known time/);
 });
 test('M05S08-19 prior result outside route registry is rejected', () => {
   const f = fixture(); const route = VerificationRouteDefinition.create({ ...f.routeInput, id: VerificationRouteId.from(uuid(901)), method: VerificationMethod.OFFICIAL_REGISTRY_LOOKUP }); const p = prior(f, VerificationRouteOutcome.VERIFIED, 'assertion:A', route); assert.throws(() => open(f, { priorResults: [p] }));
@@ -244,8 +246,12 @@ test('M05S08-49 provider outage permits supported manual fallback', () => {
 test('M05S08-50 partial confirmation preserves unchecked claims', () => {
   const c = open(), h = execute(c); assert.equal(h.status, HumanReviewStatus.IN_REVIEW); assert.deepEqual(h.toJSON().outstandingCaseClaims, [B]); assert.deepEqual(h.toJSON().uncheckedRequestClaims, [B]); const scopedCase = open(fixture(), { claims: [A] }); const scopedHistory = execute(scopedCase); assert.equal(scopedHistory.status, HumanReviewStatus.CONFIRMED); assert.deepEqual(scopedHistory.toJSON().uncheckedRequestClaims, [B]);
 });
-test('M05S08-51 generic review completion does not verify evidence', () => {
-  const c = open(fixture({ method: VerificationMethod.HUMAN_REVIEW })); const h = execute(c, command(c, { action: HumanReviewAction.COMPLETE_REVIEW })); assert.equal(h.status, HumanReviewStatus.REVIEWED); assert.deepEqual(h.confirmedClaims, []); assert.deepEqual(h.records[0]!.claimResults, []); assert.throws(() => mandate(c, { permissions: [HumanReviewPermission.REVIEW, HumanReviewPermission.MANUAL_CONFIRMATION] }));
+test('M05S08-51 complete generic review covers full case without verifying evidence', () => {
+  const c = open(fixture({ method: VerificationMethod.HUMAN_REVIEW }));
+  assert.throws(() => command(c, { action: HumanReviewAction.COMPLETE_REVIEW, claims: [A] }), /Complete review must cover every case claim/);
+  const complete = command(c, { action: HumanReviewAction.COMPLETE_REVIEW, claims: c.claims });
+  assert.throws(() => execute(c, complete, { mandate: mandate(c, { claims: [A] }) }), /Reviewer invocation scope mismatch/);
+  const h = execute(c, complete); assert.equal(h.status, HumanReviewStatus.REVIEWED); assert.deepEqual(h.confirmedClaims, []); assert.deepEqual(h.records[0]!.claimResults, []); assert.throws(() => mandate(c, { permissions: [HumanReviewPermission.REVIEW, HumanReviewPermission.MANUAL_CONFIRMATION] }));
 });
 test('M05S08-52 review rejection does not assert negative claim truth', () => {
   const c = open(), h = execute(c, command(c, { action: HumanReviewAction.REJECT })); assert.equal(h.status, HumanReviewStatus.REJECTED); assert.deepEqual(h.records[0]!.claimResults, []); assert(!JSON.stringify(h).includes('FAILED'));
@@ -253,8 +259,10 @@ test('M05S08-52 review rejection does not assert negative claim truth', () => {
 test('M05S08-53 evidence requests and escalation remain nonterminal', () => {
   const c = open(), first = command(c, { action: HumanReviewAction.REQUEST_EVIDENCE }), h = execute(c, first); assert.equal(h.status, HumanReviewStatus.AWAITING_EVIDENCE); const second = command(c, { id: CommandId.from(uuid(201)), idempotencyKey: 'review:2', action: HumanReviewAction.ESCALATE }); const next = execute(c, second, { history: h }); assert.equal(next.status, HumanReviewStatus.ESCALATED); assert.equal(next.revision, 2);
 });
-test('M05S08-54 exact replay preserves history identity and revision', () => {
+test('M05S08-54 exact same-actor replay preserves history identity and revision', () => {
   const c = open(), cmd = command(c), h = execute(c, cmd); const replay = execute(c, cmd, { history: h, expectedRevision: 0, context: context({ requestedAt: LATER }) }); assert.equal(replay, h); assert.equal(replay.revision, 1);
+  const otherReviewer = actor(8);
+  assert.throws(() => execute(c, cmd, { history: h, expectedRevision: 0, mandate: mandate(c, { reviewer: otherReviewer }), context: context({ actor: otherReviewer, requestedAt: LATER }) }), /Review idempotency key collision/);
 });
 test('M05S08-55 idempotency key collision is rejected', () => {
   const c = open(), h = execute(c); assert.throws(() => execute(c, command(c, { rationaleReference: 'rationale:changed' }), { history: h, expectedRevision: 0 }));
@@ -263,16 +271,19 @@ test('M05S08-56 stale and invalid expected revisions are rejected', () => {
   const c = open(), h = execute(c), next = command(c, { id: CommandId.from(uuid(201)), idempotencyKey: 'review:2', claims: [B] }); assert.throws(() => execute(c, next, { history: h, expectedRevision: 0 })); for (const expectedRevision of [-1, NaN, 1.5, Number.MAX_SAFE_INTEGER + 1]) assert.throws(() => execute(c, command(c), { expectedRevision }));
 });
 test('M05S08-57 terminal history rejects new mutations', () => {
-  const c = open(), h = execute(c, command(c, { action: HumanReviewAction.COMPLETE_REVIEW })); assert.throws(() => execute(c, command(c, { id: CommandId.from(uuid(202)), idempotencyKey: 'review:after-terminal' }), { history: h }));
+  const c = open(), h = execute(c, command(c, { action: HumanReviewAction.COMPLETE_REVIEW, claims: c.claims })); assert.throws(() => execute(c, command(c, { id: CommandId.from(uuid(202)), idempotencyKey: 'review:after-terminal' }), { history: h }));
 });
-test('M05S08-58 command and invocation time remain monotonic', () => {
-  const c = open(), cmd = command(c); assert.throws(() => execute(c, cmd, { context: context({ requestedAt: CHECK }) })); const h = execute(c, command(c, { action: HumanReviewAction.ESCALATE }), { context: context({ requestedAt: LATER }) }); assert.throws(() => execute(c, command(c, { id: CommandId.from(uuid(201)), idempotencyKey: 'review:2' }), { history: h })); assert.throws(() => command(c, { submittedAt: T0 }));
+test('M05S08-58 command and invocation time remain monotonic including replay', () => {
+  const c = open(), cmd = command(c); assert.throws(() => execute(c, cmd, { context: context({ requestedAt: CHECK }) }));
+  const confirmed = execute(c, cmd);
+  assert.throws(() => execute(c, cmd, { history: confirmed, expectedRevision: 0, context: context({ requestedAt: SUBMIT }) }), /Review invocation cannot predate recorded history, including replay/);
+  const h = execute(c, command(c, { action: HumanReviewAction.ESCALATE }), { context: context({ requestedAt: LATER }) }); assert.throws(() => execute(c, command(c, { id: CommandId.from(uuid(201)), idempotencyKey: 'review:2' }), { history: h })); assert.throws(() => command(c, { submittedAt: T0 }));
 });
 test('M05S08-59 uncontrolled action and absent confirmation permission are rejected', () => {
   const c = open(); assert.throws(() => command(c, { action: 'AUTO_APPROVE' as never })); assert.throws(() => execute(c, command(c), { mandate: mandate(c, { permissions: [HumanReviewPermission.REVIEW] }) })); assert.throws(() => command(c, { observations: [] })); assert.throws(() => command(c, { action: HumanReviewAction.ESCALATE, observations: [observation(c)] }));
 });
 test('M05S08-60 histories and upstream snapshots remain immutable', () => {
-  const f = fixture(), c = open(f), originalJSON = JSON.stringify(f.original), registryJSON = JSON.stringify(f.registry), h0 = HumanReviewHistory.start(c), h = execute(c, command(c), { history: h0 }); assert.equal(h0.revision, 0); assert.equal(h0.records.length, 0); assert(Object.isFrozen(h.records[0])); assert(Object.isFrozen(result(h).reasonCodes)); assert.throws(() => (h.records as unknown[]).push({})); assert.equal(Reflect.set(h, 'revision', 999), false); assert.equal(JSON.stringify(f.original), originalJSON); assert.equal(JSON.stringify(f.registry), registryJSON); assert.equal(f.original.verificationState.toString(), VerificationState.from(VerificationStateCode.UNVERIFIED).toString());
+  const f = fixture(), c = open(f), originalJSON = JSON.stringify(f.original), registryJSON = JSON.stringify(f.registry), h0 = HumanReviewHistory.start(c), h = execute(c, command(c), { history: h0 }); assert.equal(h0.revision, 0); assert.equal(h0.records.length, 0); assert(Object.isFrozen(h.records[0])); assert(Object.isFrozen(result(h).reasonCodes)); assert.throws(() => (h.records as unknown[]).push({})); assert.equal(Reflect.set(h, 'revision', 999), false); assert.equal(JSON.stringify(f.original), originalJSON); assert.equal(JSON.stringify(f.registry), registryJSON); assert.equal(JSON.stringify(f.original.verificationState), JSON.stringify(VerificationState.from(VerificationStateCode.UNVERIFIED)));
 });
 test('M05S08-61 canonical command serialization is deterministic', () => {
   const c = open(), first = command(c, { claims: [A, B], evidenceReferences: ['evidence:z', 'evidence:a'] }), second = command(c, { claims: [B, A], evidenceReferences: ['evidence:a', 'evidence:z'] }); assert.equal(JSON.stringify(first), JSON.stringify(second)); assert(Object.isFrozen(first.observations)); const serialized = first.toJSON(); assert(Object.isFrozen(serialized.observations));

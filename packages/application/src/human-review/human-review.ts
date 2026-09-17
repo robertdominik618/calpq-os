@@ -82,7 +82,7 @@ export class HumanReviewCase {
     if (instant(input.context.requestedAt, 'Review opening') < Math.max(instant(input.request.asKnownAt, 'Request knowledge'), instant(input.registry.asKnownAt, 'Registry knowledge'), instant(archive.archivedAt, 'Archive time'), instant(input.security.evaluatedAt, 'Security time'))) throw new RangeError('Review opening predates a required snapshot');
     if (!Array.isArray(input.authorityResolutions) || input.authorityResolutions.some(result => !(result instanceof AuthorityResolutionResult) || result.snapshot !== input.registry.trustSnapshot)) throw new TypeError('Review authority must bind exact Trust Registry snapshot');
     if (new Set(input.authorityResolutions.map(result => result.id.toString())).size !== input.authorityResolutions.length) throw new TypeError('Review authority resolution IDs must be unique');
-    if (!Array.isArray(input.priorResults) || input.priorResults.some(result => !(result instanceof VerificationRouteResult) || result.providerRequest.request !== input.request || !input.registry.routes.includes(result.providerRequest.route) || result.authorityResolutions.some(authority => authority.snapshot !== input.registry.trustSnapshot) || instant(result.providerResult.checkedAt, 'Prior check') > instant(input.context.requestedAt, 'Review opening'))) throw new TypeError('Prior result must bind exact request, registry and known time');
+    if (!Array.isArray(input.priorResults) || input.priorResults.some(result => !(result instanceof VerificationRouteResult) || result.providerRequest.request !== input.request || !input.registry.routes.includes(result.providerRequest.route) || result.authorityResolutions.some(authority => authority.snapshot !== input.registry.trustSnapshot) || instant(result.providerResult.checkedAt, 'Prior check') > instant(input.request.asKnownAt, 'Request knowledge'))) throw new TypeError('Prior result must bind exact request, registry and known time');
     if (new Set(input.priorResults.map(result => result.providerRequest.attemptId.toString())).size !== input.priorResults.length) throw new TypeError('Prior attempt IDs must be unique');
     const suppliedExclusions = input.excludedReviewerIds ?? [];
     if (!Array.isArray(suppliedExclusions) || suppliedExclusions.some(id => !(id instanceof ActorId))) throw new TypeError('Excluded reviewers require ActorId');
@@ -230,6 +230,7 @@ export class HumanReviewCommand {
     if (!(input.id instanceof CommandId) || !(input.reviewCase instanceof HumanReviewCase) || !Object.values(HumanReviewAction).includes(input.action)) throw new TypeError('Review command requires governed identity, case and action');
     const claims = texts(input.claims, 'Command claims');
     if (claims.some(claim => !input.reviewCase.claims.includes(claim))) throw new TypeError('Command claims exceed case');
+    if (input.action === HumanReviewAction.COMPLETE_REVIEW && claims.length !== input.reviewCase.claims.length) throw new TypeError('Complete review must cover every case claim');
     if (instant(input.submittedAt, 'Command submission') < instant(input.reviewCase.context.requestedAt, 'Case opening')) throw new RangeError('Command submission predates case');
     if (!Array.isArray(input.observations) || input.observations.some(observation => !(observation instanceof ManualClaimObservation) || observation.reviewCase !== input.reviewCase || !claims.includes(observation.claim) || instant(observation.checkedAt, 'Observation check') > instant(input.submittedAt, 'Command submission'))) throw new TypeError('Command observations must bind exact case, claims and submission time');
     if (new Set(input.observations.map(observation => observation.claim)).size !== input.observations.length) throw new TypeError('Duplicate claim observations');
@@ -299,6 +300,8 @@ export class HumanReviewHistory {
     input.mandate.assertCanApply(input.context, input.command);
     if (!Number.isSafeInteger(input.expectedRevision) || input.expectedRevision < 0) throw new RangeError('Expected review revision must be a nonnegative safe integer');
     if (instant(input.context.requestedAt, 'Invocation time') < instant(input.command.submittedAt, 'Submission time')) throw new RangeError('Invocation predates submitted command');
+    const previous = this.records.at(-1);
+    if (previous !== undefined && instant(input.context.requestedAt, 'Invocation time') < instant(previous.context.requestedAt, 'Previous invocation')) throw new RangeError('Review invocation cannot predate recorded history, including replay');
     const prior = this.records.find(record => record.command.idempotencyKey === input.command.idempotencyKey);
     if (prior !== undefined) {
       if (JSON.stringify(prior.command.toJSON()) !== JSON.stringify(input.command.toJSON()) || !same(prior.context.actor.id, input.context.actor.id)) throw new TypeError('Review idempotency key collision');
@@ -307,8 +310,7 @@ export class HumanReviewHistory {
     if (this.records.some(record => same(record.command.id, input.command.id))) throw new TypeError('Review command ID already used');
     if (input.expectedRevision !== this.revision) throw new RangeError('Review revision conflict');
     if (this.status === HumanReviewStatus.REVIEWED || this.status === HumanReviewStatus.REJECTED || this.status === HumanReviewStatus.CONFIRMED) throw new TypeError('Terminal review cannot be changed');
-    const previous = this.records.at(-1);
-    if (previous !== undefined && (instant(input.context.requestedAt, 'Invocation time') < instant(previous.context.requestedAt, 'Previous invocation') || instant(input.command.submittedAt, 'Submission time') < instant(previous.command.submittedAt, 'Previous submission'))) throw new RangeError('Review history time must be monotonic');
+    if (previous !== undefined && instant(input.command.submittedAt, 'Submission time') < instant(previous.command.submittedAt, 'Previous submission')) throw new RangeError('Review submission time must be monotonic');
     if (input.command.action === HumanReviewAction.CONFIRM_CLAIMS && input.command.claims.some(claim => this.confirmedClaims.includes(claim))) throw new TypeError('Previously confirmed claim requires a new governed case');
     const results = Object.freeze(input.command.observations.map(evaluateObservation));
     const confirmed = Object.freeze([...new Set([...this.confirmedClaims, ...results.filter(result => result.outcome === VerificationRouteOutcome.VERIFIED).map(result => result.claim)])].sort());

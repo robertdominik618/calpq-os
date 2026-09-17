@@ -1,9 +1,10 @@
 # M05 Slice 08 — Mandatory Scenario Index
 
-Status: `PLANNED / EXECUTABLE RESULTS NOT YET CLAIMED`
-Tracking: #123. Contract: `M05_S08_IMPLEMENTATION_CONTRACT.md`.
+Status: `IMPLEMENTED / INITIAL 64-SCENARIO GATE PASSED / FINAL-HEAD REVALIDATION REQUIRED`
+Tracking: #123 / PR #124. Contract: `M05_S08_IMPLEMENTATION_CONTRACT.md`.
 Runtime target: `packages/application/test/m05-s08-human-review.test.ts`.
 Compile target: `packages/application/test/m05-s08-types.compile.ts`.
+The index was committed before production implementation at `052eb2dc12e72f86ba848fc0218200239d125c07`. Initial head `70bccc79b40b93278432816f86202d2db318aec4` passed all 64 scenarios and strict readonly compile. The additional adversarial assertions in scenarios 18, 51, 54 and 58 require final-head revalidation.
 Every ID below must be an executed, non-skipped mandatory runtime test. A passing count alone is not evidence unless identities match this index and the final commit is verified.
 
 | ID | Required evidence |
@@ -25,7 +26,7 @@ Every ID below must be an executed, non-skipped mandatory runtime test. A passin
 | M05S08-15 | Future-known route cannot enter historical review |
 | M05S08-16 | Opening time cannot predate required snapshots |
 | M05S08-17 | Foreign authority snapshot is rejected |
-| M05S08-18 | Prior result from another request is rejected |
+| M05S08-18 | Prior results from another request or beyond the knowledge cutoff are rejected |
 | M05S08-19 | Prior result outside the route registry is rejected |
 | M05S08-20 | Duplicate authority resolution identities are rejected |
 | M05S08-21 | Case collections are copied and frozen |
@@ -58,14 +59,14 @@ Every ID below must be an executed, non-skipped mandatory runtime test. A passin
 | M05S08-48 | Prior contradictory or unresolved result cannot be silently overwritten |
 | M05S08-49 | Provider outage permits independently supported manual fallback |
 | M05S08-50 | Partial confirmation preserves unchecked claims |
-| M05S08-51 | Generic review completion does not verify evidence |
+| M05S08-51 | Generic completion requires full case/reviewer claim coverage and does not verify evidence |
 | M05S08-52 | Review rejection does not assert negative legal truth |
 | M05S08-53 | Evidence request and escalation remain nonterminal |
-| M05S08-54 | Exact replay preserves history identity and revision |
+| M05S08-54 | Exact same-actor replay preserves history; another reviewer cannot reuse that command |
 | M05S08-55 | Reused idempotency key with changed content is rejected |
 | M05S08-56 | Stale or invalid expected revision is rejected |
 | M05S08-57 | Terminal history rejects new mutations |
-| M05S08-58 | Submission and execution time remain monotonic |
+| M05S08-58 | Submission/execution time is monotonic and backdated replay is rejected |
 | M05S08-59 | Uncontrolled actions and missing confirmation permission are rejected |
 | M05S08-60 | Histories, records and upstream snapshots remain immutable |
 | M05S08-61 | Canonical command serialization is deterministic |
