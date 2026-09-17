@@ -9,6 +9,7 @@
     "./extraction": "./src/extraction/index.ts",
     "./intake": "./src/intake/index.ts",
     "./security": "./src/security/index.ts",
+    "./trust": "./src/trust/index.ts",
     "./test-support": "./test-support/index.ts"
   },
   "scripts": {
@@ -30,6 +31,7 @@
     "test:m05s03": "node --test test/m05-s03-derived-extraction.test.ts",
     "test:m05s04": "node --test test/m05-s04-extraction-review.test.ts",
     "test:m05s05": "node --test test/m05-s05-security-quarantine.test.ts",
+    "test:m05s06": "node --test test/m05-s06-trust-registry.test.ts",
     "typecheck": "npx --yes --package=typescript@7.0.2 -- tsc -p tsconfig.json"
   }
 }
