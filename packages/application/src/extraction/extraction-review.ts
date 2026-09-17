@@ -182,10 +182,10 @@ function validateRevisionState(
     if (!decisions.some((decision) => decision.disposition === ExtractionFieldReviewDisposition.CORRECTED)) {
       throw new TypeError('USER_CORRECTED revision requires at least one CORRECTED field decision');
     }
-    if (decisions.some((decision) => ![
-      ExtractionFieldReviewDisposition.CONFIRMED,
-      ExtractionFieldReviewDisposition.CORRECTED,
-    ].includes(decision.disposition))) {
+    if (decisions.some((decision) =>
+      decision.disposition !== ExtractionFieldReviewDisposition.CONFIRMED &&
+      decision.disposition !== ExtractionFieldReviewDisposition.CORRECTED
+    )) {
       throw new TypeError('USER_CORRECTED revision may contain only CONFIRMED or CORRECTED field decisions');
     }
     return;
@@ -252,7 +252,7 @@ export class ExtractionReviewRevision {
     if (!Number.isSafeInteger(input.revisionNumber) || input.revisionNumber < 1) {
       throw new RangeError('Extraction review revision number must be a positive safe integer');
     }
-    if (!REVIEW_STATES.has(input.state) || input.state === ExtractionReviewState.PROPOSED) {
+    if (!REVIEW_STATES.has(input.state)) {
       throw new TypeError('Extraction review revision requires a non-PROPOSED controlled state');
     }
     if (!(input.reviewedBy instanceof ActorReference)) {
@@ -367,7 +367,7 @@ export class ExtractionProposalReviewHistory {
       actorRole: input.actorRole,
       reviewedAt: input.reviewedAt,
       reason: input.reason,
-      fieldDecisions: input.fieldDecisions,
+      ...(input.fieldDecisions === undefined ? {} : { fieldDecisions: input.fieldDecisions }),
     });
 
     return new ExtractionProposalReviewHistory(
