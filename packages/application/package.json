@@ -7,6 +7,7 @@
     ".": "./src/index.ts",
     "./archive": "./src/archive/index.ts",
     "./extraction": "./src/extraction/index.ts",
+    "./human-review": "./src/human-review/index.ts",
     "./intake": "./src/intake/index.ts",
     "./security": "./src/security/index.ts",
     "./trust": "./src/trust/index.ts",
@@ -34,6 +35,7 @@
     "test:m05s05": "node --test test/m05-s05-security-quarantine.test.ts",
     "test:m05s06": "node --test test/m05-s06-trust-registry.test.ts",
     "test:m05s07": "node --test test/m05-s07-verification-route-registry.test.ts",
+    "test:m05s08": "node --test test/m05-s08-human-review.test.ts",
     "typecheck": "npx --yes --package=typescript@7.0.2 -- tsc -p tsconfig.json"
   }
 }
