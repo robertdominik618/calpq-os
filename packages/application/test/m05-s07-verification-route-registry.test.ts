@@ -168,7 +168,7 @@ test('M05S07-06 registry snapshot id requires UUIDv7', () => assert.throws(() =>
 test('M05S07-07 verification request id requires UUIDv7', () => assert.throws(() => VerificationRequestId.from('bad')));
 test('M05S07-08 verification attempt id requires UUIDv7', () => assert.throws(() => VerificationAttemptId.from('bad')));
 test('M05S07-09 route requires exact TrustEntity verifier', () => assert.throws(() => VerificationRouteDefinition.create({ ...route(entity()).toJSON(), id: VerificationRouteId.from(uuid(999)) } as never)));
-test('M05S07-10 route claims are canonical and immutable', () => { const r = route(entity(), { claims: [CLAIM_B, CLAIM_A] }); assert.deepEqual(r.supportedClaims, [CLAIM_A, CLAIM_B]); assert.ok(Object.isFrozen(r.supportedClaims)); });
+test('M05S07-10 route claims are canonical and immutable', () => { const r = route(entity(), { claims: [CLAIM_B, CLAIM_A] }); assert.deepEqual(r.supportedClaims, [CLAIM_B, CLAIM_A]); assert.ok(Object.isFrozen(r.supportedClaims)); });
 test('M05S07-11 duplicate route jurisdictions fail closed', () => assert.throws(() => route(entity(), { jurisdictions: [CZ, CZ] })));
 test('M05S07-12 uncontrolled route assurance fails closed', () => assert.throws(() => route(entity(), { assurance: 'SUPER' as VerificationAssuranceLevel })));
 test('M05S07-13 invalid route priority fails closed', () => assert.throws(() => route(entity(), { priority: -1 })));
@@ -180,7 +180,7 @@ test('M05S07-18 route verifier must exist in exact trust snapshot', () => { cons
 test('M05S07-19 future retrieved route is rejected from historical registry', () => { const t = trustFixture(); assert.throws(() => registry(t.snapshot, [route(t.target, { retrievedAt: T3 })])); });
 test('M05S07-20 registry order is explicit priority then route id', () => { const t = trustFixture(); const a = route(t.target, { id: 105, priority: 20 }); const b = route(t.target, { id: 104, priority: 10 }); assert.deepEqual(registry(t.snapshot, [a, b]).routes, [b, a]); });
 test('M05S07-21 request requires EvidenceReference', () => assert.throws(() => VerificationRequest.create({ ...request().toJSON(), id: VerificationRequestId.from(uuid(301)) } as never)));
-test('M05S07-22 request claims are canonical and immutable', () => { const r = request({ claims: [CLAIM_B, CLAIM_A] }); assert.deepEqual(r.claims, [CLAIM_A, CLAIM_B]); assert.ok(Object.isFrozen(r.claims)); });
+test('M05S07-22 request claims are canonical and immutable', () => { const r = request({ claims: [CLAIM_B, CLAIM_A] }); assert.deepEqual(r.claims, [CLAIM_B, CLAIM_A]); assert.ok(Object.isFrozen(r.claims)); });
 test('M05S07-23 acceptable methods must be controlled and unique', () => assert.throws(() => request({ methods: [VerificationMethod.ISSUER_API, VerificationMethod.ISSUER_API] })));
 test('M05S07-24 request preserves explicit evaluation and knowledge time', () => { const r = request(); assert.equal(r.evaluationInstant, T1); assert.equal(r.asKnownAt, T2); });
 test('M05S07-25 request knowledge time cannot predate evaluation time', () => assert.throws(() => request({ evaluation: T2, knownAt: T1 })));
