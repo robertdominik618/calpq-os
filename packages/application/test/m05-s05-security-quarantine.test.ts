@@ -466,9 +466,23 @@ test('M05S05-41 missing-required-controls array is immutable', () => {
 
 test('M05S05-42 assessment does not mutate original evidence', () => {
   const entry = archive();
-  const before = JSON.stringify(entry.originalArtifact.toJSON());
+  const originalReference = entry.originalArtifact;
+  const before = {
+    id: originalReference.id.toString(),
+    verificationState: originalReference.verificationState.toString(),
+    contentReference: originalReference.contentReference,
+    contentHash: originalReference.contentHash?.toString() ?? null,
+    derivationParent: originalReference.derivationParent?.toString() ?? null,
+  };
   assess({ entry, observations: twoPass(entry) });
-  assert.equal(JSON.stringify(entry.originalArtifact.toJSON()), before);
+  assert.strictEqual(entry.originalArtifact, originalReference);
+  assert.deepEqual({
+    id: entry.originalArtifact.id.toString(),
+    verificationState: entry.originalArtifact.verificationState.toString(),
+    contentReference: entry.originalArtifact.contentReference,
+    contentHash: entry.originalArtifact.contentHash?.toString() ?? null,
+    derivationParent: entry.originalArtifact.derivationParent?.toString() ?? null,
+  }, before);
 });
 
 test('M05S05-43 security PASS does not promote verification', () => {
