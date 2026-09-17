@@ -25,6 +25,7 @@
     "test/m03-s07-types.compile.ts",
     "test/m03-s08-types.compile.ts",
     "test/m03-s09-types.compile.ts",
-    "test/m03-s10-types.compile.ts"
+    "test/m03-s10-types.compile.ts",
+    "test/m05-s01-types.compile.ts"
   ]
 }

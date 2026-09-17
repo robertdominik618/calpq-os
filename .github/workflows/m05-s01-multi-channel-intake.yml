@@ -1,0 +1,58 @@
+name: M05 Slice 01 Multi-channel Intake Contracts
+
+on:
+  push:
+    paths:
+      - 'packages/application/src/intake/**'
+      - 'packages/application/src/index.ts'
+      - 'packages/application/test/m05-s01-*'
+      - 'packages/application/package.json'
+      - 'packages/application/tsconfig.json'
+      - 'docs/planning/M05_S01_*.md'
+      - 'docs/planning/M05_EXECUTION_PACKAGE.md'
+      - 'docs/planning/M05_ADMISSION_RECORD.md'
+      - 'docs/planning/m05-admission-decision.json'
+      - 'tests/m05_s01_multi_channel_intake_test.sh'
+      - 'tests/fv09_document_intake_test.sh'
+      - 'tests/fv10_verification_test.sh'
+      - 'tests/m05_admission_test.sh'
+      - '.github/workflows/m05-s01-multi-channel-intake.yml'
+      - 'scripts/governance_lifecycle_phase.sh'
+  pull_request:
+    paths:
+      - 'packages/application/src/intake/**'
+      - 'packages/application/src/index.ts'
+      - 'packages/application/test/m05-s01-*'
+      - 'packages/application/package.json'
+      - 'packages/application/tsconfig.json'
+      - 'docs/planning/M05_S01_*.md'
+      - 'docs/planning/M05_EXECUTION_PACKAGE.md'
+      - 'docs/planning/M05_ADMISSION_RECORD.md'
+      - 'docs/planning/m05-admission-decision.json'
+      - 'tests/m05_s01_multi_channel_intake_test.sh'
+      - 'tests/fv09_document_intake_test.sh'
+      - 'tests/fv10_verification_test.sh'
+      - 'tests/m05_admission_test.sh'
+      - '.github/workflows/m05-s01-multi-channel-intake.yml'
+      - 'scripts/governance_lifecycle_phase.sh'
+
+permissions:
+  contents: read
+
+jobs:
+  m05-s01-multi-channel-intake:
+    name: M05 S01 multi-channel intake evidence
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+      - name: Set up Node.js 24 LTS
+        uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version-file: .node-version
+      - name: Run M05 Slice 01 evidence
+        shell: bash
+        run: bash tests/m05_s01_multi_channel_intake_test.sh
