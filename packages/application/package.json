@@ -41,6 +41,7 @@
     "typecheck": "npx --yes --package=typescript@7.0.2 -- tsc -p tsconfig.json",
     "test:m06s01": "node --test test/m06-s01-lifecycle-timeline.test.ts",
     "test:m06s02": "node --test test/m06-s02-expiry-renewal-policy.test.ts",
-    "test:m06s03": "node --test test/m06-s03-recurring-obligation.test.ts"
+    "test:m06s03": "node --test test/m06-s03-recurring-obligation.test.ts",
+    "test:m06s04": "node --test test/m06-s04-renewal-case.test.ts"
   }
 }
