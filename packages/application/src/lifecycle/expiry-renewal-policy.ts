@@ -83,7 +83,8 @@ export type ExpiryRule =
   | {readonly kind:'NO_FIXED_EXPIRY'}
   | {readonly kind:'AFTER_ANCHOR'; readonly anchor:'ISSUED_ON'|'EFFECTIVE_FROM'; readonly amount:number; readonly unit:CalendarUnit; readonly monthEnd:MonthEndConvention; readonly boundary:'ANNIVERSARY_DATE'|'PREVIOUS_DAY'};
 export type RenewalRule =
-  | {readonly mode:'NOT_REQUIRED'|'UNKNOWN'}
+  | {readonly mode:'NOT_REQUIRED'}
+  | {readonly mode:'UNKNOWN'}
   | {readonly mode:'WINDOW'; readonly opensDaysBeforeExpiry:number; readonly dueDaysBeforeExpiry:number; readonly graceDaysAfterDue:number};
 
 function expiryRule(rule: ExpiryRule): ExpiryRule {
