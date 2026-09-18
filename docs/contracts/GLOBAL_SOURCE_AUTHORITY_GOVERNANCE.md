@@ -15,7 +15,7 @@ Keep stable authority identity separate from time-bound mandate: credential fami
 
 ## Imported material and errata
 
-The 38 source records and 94 seeds in the adopted archive retain exact original URLs/status/limitations. Treat them as imported discovery/evidence proposals, not renewed legal research. The original progress source erroneously points to PRADO Japan; adoption records the observed repository reference separately. Non-EU market rows may carry an EU-list URL as their original source; that is not evidence for all fields or global completeness. Population projections/land area are planning snapshots and must not feed eligibility. No live prices, fees, legal deadlines, membership or standard-version changes are researched or activated by this commit.
+The 38 source records and 94 seeds in the adopted archive retain exact original URLs/status/limitations. Treat them as imported discovery/evidence proposals, not renewed legal research. The original progress source erroneously points to PRADO Japan; adoption records the observed repository reference separately. Actual market source fields cite the EU list on 27 EU rows and explicitly state Vlastní návrh tržního pořadí on the remaining 66 rows. The latter is product-planning attribution, not a URL or an official source. This corrects the initial intake wording suggesting EU URLs on non-EU rows. Neither type establishes all market attributes or catalogue completeness. Population projections/land area are planning snapshots and must not feed eligibility. No live prices, fees, legal deadlines, membership or standard-version changes are researched or activated by this commit.
 
 ## Publishing process
 

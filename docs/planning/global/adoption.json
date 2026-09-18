@@ -52,7 +52,7 @@
   "expanded_project_percentage": null,
   "errata": [
     {"id": "GE-01", "source_pointer": "/governance/prior_v1_progress/source", "finding": "Original points to PRADO Japan, not project evidence.", "handling": "Original unchanged; adoption prior_v1_progress uses the inspected GitHub record."},
-    {"id": "GE-02", "source_pointer": "/markets/*/source", "finding": "An EU list URL on non-EU market rows does not validate their entire record.", "handling": "Preserve original; proposed market metadata is not a validated legal-regime registry."},
+    {"id": "GE-02", "source_pointer": "/markets/*/source", "finding": "Actual source classification: 27 EU rows cite the EU list; 66 other rows explicitly say Vlastní návrh tržního pořadí. Neither validates all row attributes.", "handling": "Original unchanged. Corrects this intake's initial overbroad statement about EU URLs on non-EU rows; market ordering is product planning, not an official legal-regime registry."},
     {"id": "GE-03", "source_pointer": "/population_signals and /land_area_signals and /sources", "finding": "Imported 2026 projection/area/URL snapshots have not been reverified by this architecture intake.", "handling": "Planning only; no live legal facts or customer forecast."},
     {"id": "GE-04", "source_pointer": "/status and all per-record statuses", "finding": "The original records describe the proposal before owner approval.", "handling": "Keep historical bytes; this separate adoption accepts target scope, not runtime delivery."}
   ],

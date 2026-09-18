@@ -12,7 +12,7 @@ Schválen je celý návrh 1–5 včetně všech 28 pododdílů 4.1–4.28 a cíl
 [Adoption JSON](adoption.json) váže rozhodnutí na přesné hashe. [Původní JSON](source/approved-input.json.gz) je uložen gzipem beze změny 147025 dekomprimovaných bytů. Originální SHA-256: `9ca9f824e095139607260a4a8b0343ace23fa70a652fa3bc848bcc90d6fe7c73`. Ukládá všechna původní data, URL, pořadí a statusy; tento zdroj se nestává produkčním rule packem. Workbook 46185 bytes / SHA-256 `ad961d7270f49dffb3355da2187afe962e0e9a4f31d9eb51b42b361edd6f7e8c` je identifikovaný doprovodný uživatelský soubor, nikoli další binární soubor uložený v tomto PR. Deset listů bylo ověřeno čtením struktury OOXML; bez editace nebo přepočtu.
 
 GE-01: původní `/governance/prior_v1_progress/source` odkazuje chybně na PRADO Japan. Samostatná adopce odkazuje na kontrolovaný projektový záznam PR #133, původní JSON se neopravuje potichu.
-GE-02: EU-list URL u některých neevropských trhů není důkaz všech jejich atributů. Řádky jsou přijaté cíle expanze, ne autoritativní registr příslušnosti.
+GE-02: přesné porovnání doložilo 27 tržních řádků s URL seznamu EU a 66 ostatních s textem `Vlastní návrh tržního pořadí`. Poslední údaj není URL ani úřední podklad. Tímto opravujeme počáteční nepřesné tvrzení intake o EU-list URL u neevropských řádků; originální data se nemění. Ani seznam EU neověřuje všechny obchodní atributy řádku.
 GE-03: populační/rozlohové a jiné externí údaje jsou importované snapshoty, v tomto kroku znovu neověřené. Nejsou zdrojem eligibility nebo prognózou zákazníků.
 GE-04: status PROPOSAL_NOT_APPROVED_NOT_DEPLOYED v originálu správně zaznamenává minulost. Dnešní přijetí je samostatná vrstva; právní a provozní statusy se nepovyšují na hotové.
 
