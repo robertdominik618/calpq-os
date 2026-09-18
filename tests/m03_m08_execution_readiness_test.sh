@@ -62,7 +62,7 @@ fi
 if [[ -f docs/planning/m05-admission-decision.json ]] \
   && jq -e '.state == "ADMITTED_FOR_IMPLEMENTATION"' docs/planning/m05-admission-decision.json >/dev/null; then
   grep -q 'ADMITTED / IMPLEMENTATION AUTHORIZED AFTER MERGE + POST-MERGE GREEN' docs/planning/M05_EXECUTION_PACKAGE.md \
-    || fail 'M05 admitted decision requires conditional M05 package status'
+    || fail 'M05 admitted decision requires conditional execution-package status'
   [[ -f docs/planning/M05_ADMISSION_RECORD.md ]] || fail 'M05 admission record missing'
   [[ -f docs/planning/M04_S10_EXIT_EVIDENCE.md ]] || fail 'M04 durable S10 exit evidence missing for M05 admission'
   jq -e '.milestone == "M05"
