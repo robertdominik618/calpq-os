@@ -9,6 +9,7 @@ export const RENEWAL_CASE_OPERATION = 'credential.lifecycle.renewal-case';
 export const RENEWAL_CASE_FIELD = 'credential:renewal-case';
 export type RenewalCaseState = 'DRAFT' | 'PREPARING' | 'READY' | 'SUBMITTED' | 'AWAITING_INFORMATION' | 'RENEWAL_RECORDED' | 'REJECTION_RECORDED' | 'CANCELLED';
 export type RenewalCasePermission = 'OPEN' | 'READ' | 'PREPARE' | 'ATTACH_PACKAGE' | 'MARK_READY' | 'RECORD_EXTERNAL' | 'RECORD_OUTCOME' | 'CANCEL';
+type DeepReadonly<T> = T extends readonly (infer U)[] ? readonly DeepReadonly<U>[] : T extends object ? { readonly [K in keyof T]: DeepReadonly<T[K]> } : T;
 const PERMISSIONS: readonly RenewalCasePermission[] = Object.freeze(['OPEN', 'READ', 'PREPARE', 'ATTACH_PACKAGE', 'MARK_READY', 'RECORD_EXTERNAL', 'RECORD_OUTCOME', 'CANCEL']);
 const TERMINAL: readonly RenewalCaseState[] = Object.freeze(['RENEWAL_RECORDED', 'REJECTION_RECORDED', 'CANCELLED']);
 function opaque(value: string): string {
@@ -35,12 +36,12 @@ function exact(value: unknown, keys: readonly string[]): void {
   if (value === null || typeof value !== 'object' || Array.isArray(value) || Object.keys(value).sort().join('|') !== [...keys].sort().join('|')) throw new TypeError('Missing or unexpected controlled payload fields');
 }
 // Traverse only assembled metadata, never raw document or caller payload objects.
-function freeze<T>(value: T): T {
+function freeze<T>(value: T): DeepReadonly<T> {
   if (value !== null && typeof value === 'object') {
     for (const child of Object.values(value as Record<string, unknown>)) freeze(child);
     Object.freeze(value);
   }
-  return value;
+  return value as DeepReadonly<T>;
 }
 function sourceView(s: SourceReference) {
   return { id: s.id.toString(), version: s.version.toString(), authorityId: s.authority.id.toString(), jurisdiction: s.jurisdiction.toString(), retrievedAt: s.retrievedAt.toString(), verificationState: s.verificationState.toString(), effectiveFrom: s.effectiveFrom?.toString() ?? null, effectiveTo: s.effectiveTo?.toString() ?? null, hash: s.contentHash?.toString() ?? null };
