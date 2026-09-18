@@ -9,12 +9,17 @@ for commit in "$base" "$contract" "$index"; do git merge-base --is-ancestor "$co
 first=$(git rev-list --reverse "$base"..HEAD -- packages/application/test-support/m05-integration-fixtures.ts packages/application/test/m05-s10-integration.test.ts | sed -n '1p')
 [[ -n "$first" ]]
 git merge-base --is-ancestor "$index" "${first}^"
+scope_tip=HEAD
+if git merge-base --is-ancestor 2deb81901339c2e7631d096939898fa5dd562e53 HEAD; then
+  node scripts/ci/m06-admission-preparation.mjs
+  scope_tip=2deb81901339c2e7631d096939898fa5dd562e53
+fi
 while IFS= read -r path; do
   case "$path" in
     docs/planning/M05_S10_*.md|packages/application/test-support/m05-integration-fixtures.ts|packages/application/test/m05-s10-integration.test.ts|packages/application/test/m05-s10-types.compile.ts|packages/application/tsconfig.json|scripts/ci/m05-runtime-ledger.mjs|tests/m05_s10_runtime_ledger_test.mjs|tests/m05_s10_integration_test.sh|.github/workflows/m05-s10-integration.yml) ;;
     *) echo "S10 integration-only scope violated: $path" >&2; exit 1 ;;
   esac
-done < <(git diff --name-only "$base"...HEAD)
+done < <(git diff --name-only "$base"..."$scope_tip")
 node --input-type=module <<'NODE'
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
@@ -32,5 +37,5 @@ npx --yes --package=typescript@7.0.2 -- tsc -p packages/application/tsconfig.jso
 node --test tests/m05_s10_runtime_ledger_test.mjs
 node scripts/ci/m05-runtime-ledger.mjs
 bash tests/architecture_boundaries_test.sh
-printf 'M05 S10 INTEGRATION: PASS / 48 COMPOSED SCENARIOS / S01-S10 RUNTIME LEDGER / STRICT TYPES / ARCHITECTURE / NO PRODUCTION OR EXISTING GATE CHANGES\n'
+printf 'M05 S10 INTEGRATION: PASS / 48 COMPOSED SCENARIOS / S01-S10 RUNTIME LEDGER / STRICT TYPES / ARCHITECTURE / CLOSED S10 SCOPE PRESERVED / CURRENT CHECKOUT REGRESSIONS\n'
 printf 'Full same-head PR regression workflow matrix remains a separate mandatory acceptance gate.\n'
