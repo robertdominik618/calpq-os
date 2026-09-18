@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "milestone": "M06",
+  "slice": "S01",
+  "state": "ACTIVE_AFTER_VERIFIED_ADMISSION",
+  "decision_id": "CALPQ-M06-ADM-DEC-0001",
+  "authorized_execution_entry": "M06_SLICE_01_CREDENTIAL_LIFECYCLE_TIMELINE_PROJECTION",
+  "admission_pr": 133,
+  "admission_head": "aa266f897f0301ce01f047c44f197c8fd1493c1b",
+  "admission_merge": "0245ba339e019d2f297cb399679bbdee25e53483",
+  "admission_tree": "f0b52b4d0531ba89d9572d45bb1a0a180673ffd4",
+  "owner_merge_approval_reference": "https://github.com/robertdominik618/calpq-os/pull/133#issuecomment-5729438587",
+  "post_merge_evidence_reference": "https://github.com/robertdominik618/calpq-os/pull/133#issuecomment-5729475571",
+  "production_release_authorized": false
+}
