@@ -36,3 +36,19 @@ Technology selection is approved, M00 remains blocked and product feature develo
 ## Change intake
 
 New product ideas enter through `CALPQ-PRIPOJ`. Material architecture changes require impact analysis and an ADR before implementation.
+
+## Accepted extension register — 2026-09-18
+
+This dated register is additive. Historical milestone prose above is not a current delivery assertion; see actual governance records and drift issue #129. The EXPATS change does not rewrite admissions or merge other branches.
+
+| Area | Canonical extension artifact |
+|---|---|
+| EXPATS complete target, 24 functional areas | [CALPQ-EXPAT-0001](../architecture/CALPQ_EXPAT_0001_GLOBAL_MOBILITY.md) |
+| Architecture decision | [ADR-0004](../adr/ADR-0004-expat-global-mobility.md) |
+| Mobility case / commands / events / state boundaries | [EXPAT_MOBILITY_CONTEXT](../contracts/EXPAT_MOBILITY_CONTEXT.md) |
+| Shared language coverage and semantic parity | [LOCALIZATION_SEMANTIC_PARITY](../contracts/LOCALIZATION_SEMANTIC_PARITY.md) |
+| Family, B2B, health, protection and provider safeguards | [EXPAT_PRIVACY_SAFEGUARD_MODEL](../security/EXPAT_PRIVACY_SAFEGUARD_MODEL.md) |
+| Owner approval, source coverage, impact and phased delivery | [Intake and delivery](../planning/CALPQ_EXPAT_0001_INTAKE_AND_DELIVERY.md) |
+| 24 capability pairs + 16 cross-cutting product acceptance scenarios | [Scope registry](../planning/expat_scope.json) |
+
+Architecture approval and repository storage are separate from reviewed merge, runtime implementation, rule publication and deployment. Localization is shared across CALPQ, not confined to EXPATS. Health PR #84 remains a visible unmerged dependency at the pinned baseline.
