@@ -181,4 +181,8 @@ export function main() {
   console.log(`M06 GOVERNANCE PASS head=${head} mode=${mode} entry=${ENTRY} product_delivery_credit=0 release=false`);
   return mode;
 }
-if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) main();
+if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
+  if (existsSync('docs/planning/m06-s02-execution.json')) {
+    execFileSync(process.execPath, [resolve('scripts/ci/m06-s02-scope.mjs')], {stdio:'inherit'});
+  } else main();
+}

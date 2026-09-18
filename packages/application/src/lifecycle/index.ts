@@ -15,3 +15,5 @@ export type {
   CredentialLifecycleTimelineInput,
   CredentialLifecycleTimelineView,
 } from './credential-lifecycle-timeline.ts';
+export { ExpiryRenewalPolicy, ExpiryRenewalEvaluation, LifecycleCalendarContext, shiftLifecycleDate, EXPIRY_RENEWAL_OPERATION, EXPIRY_RENEWAL_FIELD } from './expiry-renewal-policy.ts';
+export type { ExpiryRenewalPolicyInput, ExpiryRenewalEvaluationInput, ExpiryRenewalEvaluationView, ExpiryRule, RenewalRule, CalendarUnit, MonthEndConvention } from './expiry-renewal-policy.ts';
