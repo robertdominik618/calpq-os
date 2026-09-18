@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import {readFileSync} from 'node:fs';
+import {readFileSync,existsSync} from 'node:fs';
 import {execFileSync} from 'node:child_process';
 import {fileURLToPath} from 'node:url';
 import {resolve} from 'node:path';
@@ -102,4 +102,8 @@ export function main() {
   assert.equal(git('rev-parse','HEAD').trim(),head);
   console.log(`M06 S02 SCOPE PASS head=${head} predecessor=${BASE} entry=${ENTRY} release=false`);
 }
-if(process.argv[1] && resolve(process.argv[1])===fileURLToPath(import.meta.url))main();
+if(process.argv[1] && resolve(process.argv[1])===fileURLToPath(import.meta.url)){
+  if(existsSync('docs/planning/m06-s03-execution.json')){
+    execFileSync(process.execPath,[resolve('scripts/ci/m06-s03-scope.mjs')],{stdio:'inherit'});
+  }else main();
+}

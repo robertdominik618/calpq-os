@@ -17,3 +17,5 @@ export type {
 } from './credential-lifecycle-timeline.ts';
 export { ExpiryRenewalPolicy, ExpiryRenewalEvaluation, LifecycleCalendarContext, shiftLifecycleDate, EXPIRY_RENEWAL_OPERATION, EXPIRY_RENEWAL_FIELD } from './expiry-renewal-policy.ts';
 export type { ExpiryRenewalPolicyInput, ExpiryRenewalEvaluationInput, ExpiryRenewalEvaluationView, ExpiryRule, RenewalRule, CalendarUnit, MonthEndConvention } from './expiry-renewal-policy.ts';
+export { RecurringObligationRule, RecurringObligation, ObligationCompletionRecord, RecurringObligationProjection, RECURRING_OBLIGATION_OPERATION, RECURRING_OBLIGATION_FIELD } from './recurring-obligation.ts';
+export type { RecurringObligationRuleInput, RecurringObligationInput, ObligationCompletionRecordInput, RecurringObligationProjectionInput, RecurringObligationProjectionView, RecurringObligationOccurrence, ObligationAnchor, ObligationKind, RecurrenceCadence } from './recurring-obligation.ts';
