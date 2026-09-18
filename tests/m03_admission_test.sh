@@ -73,17 +73,24 @@ else
     || fail 'M05 must remain blocked until a valid separate admission decision exists'
 fi
 
-for m in 06 07 08; do
+if [[ -f docs/planning/m06-admission-decision.json ]]; then
+  node scripts/ci/m06-admission.mjs
+else
+  grep -q 'IMPLEMENTATION BLOCKED' docs/planning/M06_EXECUTION_PACKAGE.md \
+    || fail 'M06 requires a valid separate admission decision'
+fi
+
+for m in 07 08; do
   grep -q 'IMPLEMENTATION BLOCKED' "docs/planning/M${m}_EXECUTION_PACKAGE.md" \
     || fail "M${m} must remain implementation-blocked"
 done
 
 if grep -R -nE 'ADMITTED / IMPLEMENTATION AUTHORIZED|ADMITTED_FOR_IMPLEMENTATION' \
-  docs/planning/M0{6,7,8}_EXECUTION_PACKAGE.md >/dev/null; then
+  docs/planning/M0{7,8}_EXECUTION_PACKAGE.md >/dev/null; then
   fail 'M06-M08 admission leaked into earlier transition'
 fi
 
 grep -q 'Professional Passport' docs/planning/M03_PRODUCT_SURFACE_BASELINE.md || fail 'M03 accepted product-surface scope missing'
 grep -q 'no business/legal truth computed in UI' "$package" || fail 'M03 UI authority boundary missing'
 
-printf 'M03 ADMISSION: PASS / M03 REMAINS VALID / M04+M05 SEPARATE MACHINE ADMISSION AWARE / M06-M08 BLOCKED\n'
+printf 'M03 ADMISSION: PASS / M03 REMAINS VALID / M04+M05 SEPARATE MACHINE ADMISSION AWARE / M06 SEPARATELY VALIDATED / M07-M08 BLOCKED\n'
