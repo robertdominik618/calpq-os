@@ -1,6 +1,8 @@
 # CALPQ M06 Execution Package — Lifecycle, Renewal & Continuous Compliance
 
-Status: `PLANNING COMPLETE / IMPLEMENTATION BLOCKED`
+Status: `ADMITTED / S01 IMPLEMENTATION AUTHORIZED AFTER MERGE + POST-MERGE GREEN`
+
+Admission: `M06_ADMISSION_RECORD.md` and `m06-admission-decision.json`. Only Slice 01 is authorized, subject to verified admission activation; Slice 02–10 remain separately governed.
 
 ## Objective
 Turn point-in-time credential truth into governed lifecycle maintenance without mutating history.

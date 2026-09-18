@@ -77,7 +77,14 @@ if git diff --name-only "${admitted_revision}...HEAD" -- packages/core/src | gre
   fail 'M05 admission transition must not change production Core source'
 fi
 
-for m in 06 07 08; do
+if [[ -f docs/planning/m06-admission-decision.json ]]; then
+  node scripts/ci/m06-admission.mjs
+else
+  grep -q 'IMPLEMENTATION BLOCKED' docs/planning/M06_EXECUTION_PACKAGE.md \
+    || fail 'M06 requires a valid separate admission decision'
+fi
+
+for m in 07 08; do
   grep -q 'IMPLEMENTATION BLOCKED' "docs/planning/M${m}_EXECUTION_PACKAGE.md" \
     || fail "M${m} must remain implementation-blocked"
 done
@@ -93,4 +100,4 @@ scope_boundary="$(jq -r '.scope_boundary' "$decision")"
 bash tests/fv09_document_intake_test.sh
 bash tests/fv10_verification_test.sh
 
-printf 'M05 ADMISSION: PASS / M04 MERGE VERIFIED / M01 CONTRACTS + FV09/FV10 RUNTIME PRESENT / SLICE 01 CONDITIONALLY AUTHORIZED / M06-M08 BLOCKED\n'
+printf 'M05 ADMISSION: PASS / M04 MERGE VERIFIED / M01 CONTRACTS + FV09/FV10 RUNTIME PRESENT / SLICE 01 CONDITIONALLY AUTHORIZED / M06 SEPARATELY VALIDATED / M07-M08 BLOCKED\n'

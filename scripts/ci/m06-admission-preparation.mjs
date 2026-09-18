@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import { readFileSync } from 'node:fs';
+import { existsSync, readFileSync } from 'node:fs';
 import { execFileSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 import { resolve } from 'node:path';
@@ -68,6 +68,10 @@ export function validatePackage(text) {
 function git(...args) { return execFileSync('git', args, {encoding:'utf8'}); }
 export function main() {
   process.chdir(fileURLToPath(new URL('../../', import.meta.url)));
+  if (existsSync('docs/planning/m06-admission-decision.json')) {
+    execFileSync(process.execPath, [resolve('scripts/ci/m06-admission.mjs')], {stdio:'inherit'});
+    return git('rev-parse','HEAD').trim();
+  }
   const head = git('rev-parse','HEAD').trim();
   for (const anchor of [M04, M05, CONTRACT]) git('merge-base','--is-ancestor',anchor,head);
   assert.equal(git('rev-parse',`${M05}^{tree}`).trim(), TREE, 'Accepted M05 tree mismatch');

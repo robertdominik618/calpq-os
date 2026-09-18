@@ -89,13 +89,20 @@ else
     || fail 'M05 must remain blocked until a valid separate admission decision exists'
 fi
 
-for m in 06 07 08; do
+if [[ -f docs/planning/m06-admission-decision.json ]]; then
+  node scripts/ci/m06-admission.mjs
+else
+  grep -q 'IMPLEMENTATION BLOCKED' docs/planning/M06_EXECUTION_PACKAGE.md \
+    || fail 'M06 requires a valid separate admission decision'
+fi
+
+for m in 07 08; do
   grep -q 'IMPLEMENTATION BLOCKED' "docs/planning/M${m}_EXECUTION_PACKAGE.md" \
     || fail "M${m} must remain implementation-blocked"
 done
 
 if grep -R -nE 'ADMITTED / IMPLEMENTATION AUTHORIZED|ADMITTED_FOR_IMPLEMENTATION' \
-  docs/planning/M0{6,7,8}_EXECUTION_PACKAGE.md >/dev/null; then
+  docs/planning/M0{7,8}_EXECUTION_PACKAGE.md >/dev/null; then
   fail 'M06-M08 admission leaked into M05 transition'
 fi
 
@@ -106,4 +113,4 @@ scope_boundary="$(jq -r '.scope_boundary' "$decision")"
 [[ "$scope_boundary" == *'free-form AI'* ]] || fail 'AI authority boundary missing'
 [[ "$scope_boundary" == *'rewrite history'* ]] || fail 'historical rewrite boundary missing'
 
-printf 'M04 ADMISSION: PASS / M04 REMAINS VALID / SEPARATE M05 MACHINE ADMISSION AWARE / M06-M08 BLOCKED\n'
+printf 'M04 ADMISSION: PASS / M04 REMAINS VALID / SEPARATE M05 MACHINE ADMISSION AWARE / M06 SEPARATELY VALIDATED / M07-M08 BLOCKED\n'

@@ -14,9 +14,9 @@ const tap=readFileSync(process.argv[2],'utf8');
 const expected=Array.from({length:20},(_,i)=>`M06PREPTEST-${String(i+1).padStart(2,'0')}`);
 assert.deepEqual([...tap.matchAll(/^ok \d+ - (M06PREPTEST-\d{2})\b/gm)].map(m=>m[1]),expected);
 NODE
-printf 'M06 PREPARATION: 20/20 validator tests PASS; product implementation remains BLOCKED.\n'
+printf 'M06 PREPARATION: 20/20 historical preparation-validator tests PASS; successor authorization is checked separately.\n'
 printf 'Run unchanged M04 integration and all transitive dependencies on this checkout.\n'
 bash tests/m04_s10_integration_evidence_test.sh
 printf 'Run full M05 S10 evidence and 500-scenario runtime ledger on this checkout.\n'
 bash tests/m05_s10_integration_test.sh
-printf 'M06 ADMISSION PREPARATION PASS / NOT FORMAL ADMISSION / NO PRODUCT CODE / FULL PR MATRIX REMAINS REQUIRED\n'
+printf 'M06 PREPARATION REGRESSION PASS / SUCCESSOR CHECKED SEPARATELY / FULL PR MATRIX REMAINS REQUIRED\n'
