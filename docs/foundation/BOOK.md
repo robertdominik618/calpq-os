@@ -52,3 +52,19 @@ This dated register is additive. Historical milestone prose above is not a curre
 | 24 capability pairs + 16 cross-cutting product acceptance scenarios | [Scope registry](../planning/expat_scope.json) |
 
 Architecture approval and repository storage are separate from reviewed merge, runtime implementation, rule publication and deployment. Localization is shared across CALPQ, not confined to EXPATS. Health PR #84 remains a visible unmerged dependency at the pinned baseline.
+
+## Global extension register — CALPQ-GLOBAL-0001 (2026-09-18)
+
+| Area | Canonical artifact |
+|---|---|
+| Complete global target, all 28 proposal sections | [GLOBAL Architecture](../architecture/CALPQ_GLOBAL_0001_ARCHITECTURE.md) |
+| Global decision | [ADR-0005](../adr/ADR-0005-global-jurisdiction-packs.md) |
+| National/subnational/regime applicability | [Global jurisdiction](../contracts/GLOBAL_JURISDICTION_APPLICABILITY.md) |
+| Versioned declarative packs and honest coverage | [CountryCredentialPack](../contracts/GLOBAL_COUNTRY_PACK.md) |
+| Directional scoped foreign recognition | [Recognition extension](../contracts/GLOBAL_RECOGNITION_EXTENSION.md) |
+| Source rights, mandates, review and changes | [Global source governance](../contracts/GLOBAL_SOURCE_AUTHORITY_GOVERNANCE.md) |
+| Workforce, personal/family, prices, pilot and distribution | [Market/commercial boundary](../contracts/GLOBAL_MARKET_COMMERCIAL_BOUNDARY.md) |
+| Sensitive data, portability and market operations | [Global privacy](../security/GLOBAL_PRIVACY_OPERATIONS.md) |
+| Owner approval, lossless source archive, source errata, 93 markets/94 seeds/35 languages/20 sectors/16 packages/40 scenarios | [Adoption and traceability](../planning/global/ADOPTION_AND_TRACEABILITY.md) |
+
+Global adoption is a source-preserving architecture addition on top of the EXPATS branch, not a copy of its Core. The original proposal status is retained in the archive; current scope approval is separate from source validation, actual runtime, reviewed merge and deployment. Old milestone prose remains historical; this intake does not change the 60/130 original-plan metric or resolve #136 implicitly.

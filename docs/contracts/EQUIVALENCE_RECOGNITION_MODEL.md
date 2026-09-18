@@ -74,3 +74,9 @@ An authoritative recognition decision is immutable evidence with:
 4. Recognition/equivalence effects apply only to the exact jurisdiction, scope and effective dates encoded by the rule/decision.
 5. Partial equivalence must preserve all remaining requirements explicitly.
 6. AI may suggest candidate mappings but cannot create a verified equivalence or recognition decision.
+
+## Global scope specialization — CALPQ-GLOBAL-0001 (2026-09-18)
+
+[Global Recognition Extension](GLOBAL_RECOGNITION_EXTENSION.md) adds directional source/target jurisdiction, exact subject-kind/activity/interval and mandating authority context over the existing entities and effect types above. A→B does not imply B→A; A→B and B→C do not automatically imply A→C. Document reuse is purpose-specific, and one person's RecognitionDecision is not a general rule. Academic recognition, professional recognition, residence, labour access and AssignmentGuard remain separate outcomes.
+
+[Jurisdiction applicability](GLOBAL_JURISDICTION_APPLICABILITY.md) selects reviewed rules, [source governance](GLOBAL_SOURCE_AUTHORITY_GOVERNANCE.md) validates mandates and provenance, and [GLOBAL Architecture](../architecture/CALPQ_GLOBAL_0001_ARCHITECTURE.md) declares the target scope. This addition changes no existing runtime enum, grants no individual recognition, publishes no legal rule and introduces no parallel evaluator.
