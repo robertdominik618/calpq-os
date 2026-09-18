@@ -1,0 +1,46 @@
+name: GLOBAL Architecture Integrity
+
+on:
+  push:
+    branches: [architecture/calpq-global-0001-jurisdiction-packs]
+  pull_request:
+    paths:
+      - 'docs/**'
+      - scripts/global_architecture_check.sh
+      - tests/global_architecture_test.sh
+      - .github/workflows/global-architecture.yml
+
+permissions:
+  contents: read
+
+env:
+  PYTHONDONTWRITEBYTECODE: '1'
+
+jobs:
+  global-architecture:
+    name: GLOBAL architecture integrity
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - name: Checkout exact proposed head
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # existing repository pin
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Print evidence identity
+        run: |
+          git rev-parse HEAD
+          python3 --version
+      - name: Validate actual source archive adoption and architecture
+        run: bash scripts/global_architecture_check.sh
+      - name: Execute all 42 architecture-validator tests without skips
+        run: bash tests/global_architecture_test.sh
+      - name: Verify exact GLOBAL intake scope and architecture-first ancestry
+        if: ${{ github.head_ref == 'architecture/calpq-global-0001-jurisdiction-packs' || github.ref == 'refs/heads/architecture/calpq-global-0001-jurisdiction-packs' }}
+        run: bash scripts/global_architecture_check.sh --base 5b8b655b4b0102c4513c79ca996068c99b949e0e
+      - name: Verify inherited EXPATS content and all 34 validator tests
+        run: |
+          set -euo pipefail
+          bash scripts/check_expat_architecture.sh
+          bash tests/expat_architecture_test.sh

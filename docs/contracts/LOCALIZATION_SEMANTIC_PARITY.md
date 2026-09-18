@@ -40,3 +40,9 @@ Require RTL mirroring where appropriate without reversing document meaning, scre
 ## Tests and content operations
 
 Cross-language scenario tests compare structured outcomes; pseudo-localization tests catch truncation; reviewed golden fixtures cover Czech/English/Ukrainian semantics, RTL, plurals, negation and numeric/date ambiguity. Test reviewer revocation, stale fallback, inaccessible media and missing locale. A screenshot or translated UI does not prove substantive route review. Human linguistic/sector review is a distinct release gate; automated completeness checks cannot certify it.
+
+## Accepted global extension — CALPQ-GLOBAL-0001 (2026-09-18)
+
+[GLOBAL §4.10](../architecture/CALPQ_GLOBAL_0001_ARCHITECTURE.md) adopts 35 target languages using this same contract and expands the original EXPATS target without removing its 20 locales or any layer/trust invariant. The explicit global rollout waves supersede earlier draft cohort ordering only for global planning, not historical evidence or existing runtime support. Additional market-specific language candidates are future scope, not automatically delivered translations.
+
+Separate language, script, region-specific terminology, content layer, source rule version and legal target jurisdiction. Include de-DE/de-AT/de-CH, pt-PT/pt-BR, es-ES/es-MX, regional French, zh-Hans/zh-Hant, mn-Cyrl and pa script variants. UI/AI explanation/reviewed content/official text availability are independent coverage flags, not a legal authority ladder. No language implies nationality or direct sale in its associated market. Publication/fallback and accessibility controls above remain unchanged. [Global source governance](GLOBAL_SOURCE_AUTHORITY_GOVERNANCE.md) governs content provenance and [market boundary](GLOBAL_MARKET_COMMERCIAL_BOUNDARY.md) governs actual service activation.
