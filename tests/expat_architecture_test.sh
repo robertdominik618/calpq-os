@@ -1,14 +1,23 @@
+#!/usr/bin/env bash
+# Synthetic architecture-validator tests only; not product acceptance tests.
+set -euo pipefail
+repo_root="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+cd "$repo_root"
+python3 - <<'CALPQ_EXPAT_TEST_PY'
 """Synthetic adversarial tests for the architecture checker, not product tests."""
 import copy
-import importlib.util
+import types
+import re
 from pathlib import Path
 import unittest
 
-ROOT = Path(__file__).resolve().parents[2]
-SPEC = importlib.util.spec_from_file_location("expat_check", ROOT / "scripts/check_expat_architecture.py")
-assert SPEC and SPEC.loader
-m = importlib.util.module_from_spec(SPEC)
-SPEC.loader.exec_module(m)
+ROOT = Path.cwd()
+checker = ROOT / "scripts/check_expat_architecture.sh"
+source = checker.read_text(encoding="utf-8")
+body = source.split("<<'CALPQ_EXPAT_PY'\n", 1)[1].rsplit("\nCALPQ_EXPAT_PY", 1)[0]
+m = types.ModuleType("expat_check")
+exec(compile(body, str(checker), "exec"), m.__dict__)
+
 
 
 def fixture():
@@ -153,4 +162,14 @@ class ArchitectureGuardTests(unittest.TestCase):
         self.files[m.BASELINE] = self.files[m.BASELINE].replace("DIF-06", "gone"); self.invalid()
 
 if __name__ == "__main__":
-    unittest.main()
+    suite = unittest.defaultTestLoader.loadTestsFromTestCase(ArchitectureGuardTests)
+    names = [case.id() for case in suite]
+    identities = [re.search(r"\.test_(\d{2})_", name) for name in names]
+    if len(names) != 34 or any(x is None for x in identities) or {x.group(1) for x in identities} != {f"{i:02d}" for i in range(1, 35)}:
+        raise SystemExit("FAIL: mandatory 34-test identity set changed")
+    result = unittest.TextTestRunner(verbosity=2).run(suite)
+    if not result.wasSuccessful() or result.testsRun != 34 or result.skipped or result.expectedFailures or result.unexpectedSuccesses:
+        raise SystemExit("FAIL: tests failed, skipped or incomplete")
+    print("PASS 34/34 architecture-validator tests; no skipped or expected-failure tests.")
+
+CALPQ_EXPAT_TEST_PY

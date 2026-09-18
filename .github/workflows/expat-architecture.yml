@@ -7,8 +7,8 @@ on:
   pull_request:
     paths:
       - 'docs/**'
-      - scripts/check_expat_architecture.py
-      - tests/governance/test_expat_architecture.py
+      - scripts/check_expat_architecture.sh
+      - tests/expat_architecture_test.sh
       - .github/workflows/expat-architecture.yml
 
 permissions:
@@ -37,29 +37,11 @@ jobs:
           python3 --version
       - name: Validate actual architecture files and complete source scope
         shell: bash
-        run: python3 scripts/check_expat_architecture.py
+        run: bash scripts/check_expat_architecture.sh
       - name: Run all 34 adversarial architecture-validator tests without skips
         shell: bash
-        run: |
-          python3 - <<'PY'
-          import re
-          import unittest
-          suite = unittest.defaultTestLoader.discover('tests/governance', pattern='test_expat_architecture.py')
-          def flatten(node):
-              for child in node:
-                  if isinstance(child, unittest.TestSuite):
-                      yield from flatten(child)
-                  else:
-                      yield child
-          names = [case.id() for case in flatten(suite)]
-          identities = [re.search(r'\.test_(\d{2})_', name) for name in names]
-          if len(names) != 34 or any(x is None for x in identities) or {x.group(1) for x in identities} != {f'{i:02d}' for i in range(1, 35)}:
-              raise SystemExit('FAIL: mandatory 34-test identity set changed')
-          result = unittest.TextTestRunner(verbosity=2).run(suite)
-          if not result.wasSuccessful() or result.testsRun != 34 or result.skipped or result.expectedFailures or result.unexpectedSuccesses:
-              raise SystemExit('FAIL: tests failed, skipped or incomplete')
-          print('PASS 34/34 architecture-validator tests; no skipped or expected-failure tests.')
-          PY
-      - name: Verify exact scope and architecture-before-tooling history
+        run: bash tests/expat_architecture_test.sh
+      - name: Verify this intake's exact scope and architecture-before-tooling history
+        if: ${{ github.head_ref == 'architecture/calpq-expat-0001-global-mobility' || github.ref == 'refs/heads/architecture/calpq-expat-0001-global-mobility' }}
         shell: bash
-        run: python3 scripts/check_expat_architecture.py --base 4a3c97e2314b2c8ccdf508123bb9ce5a04b499f0
+        run: bash scripts/check_expat_architecture.sh --base 4a3c97e2314b2c8ccdf508123bb9ce5a04b499f0

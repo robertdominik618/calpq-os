@@ -83,7 +83,7 @@ Each phase requires an implementation contract before runtime code, explicit pat
 4. Architecture-before-tooling commit order is visible; exact diff is restricted to the package allowlist and append-only canonical references.
 5. Executable pack validator and adversarial tests pass on the reviewed head; report their actual run, not planned status.
 6. Production code/gates/old tests are unchanged; no rules are published and no product acceptance is fabricated.
-7. PR/commit and inspected evidence are recorded. Merge requires its separate reviewed approval; no background merge or automatic deployment is enabled.
+7. PR/commit and inspected evidence are recorded. Merge requires its separate reviewed approval and compatible integration governance; no background merge or automatic deployment is enabled.
 
 ## Product acceptance versus architecture validation
 
@@ -97,4 +97,14 @@ The latest inspected governance record (#133) reports original-v1 allocation **6
 
 ## Verification procedure
 
-On the PR's exact head run `python3 scripts/check_expat_architecture.py` and `python3 -m unittest discover -s tests/governance -p 'test_expat_architecture.py' -v`. Run `python3 scripts/check_expat_architecture.py --base 4a3c97e2314b2c8ccdf508123bb9ce5a04b499f0` in a full-history checkout to verify the exact changed-file allowlist and preserved canonical prefixes. The dedicated CI does all three, prints exact head and records no user documents or secrets. Review output, existing CI and merge-base freshness before merge.
+On the PR's exact head run `bash scripts/check_expat_architecture.sh` and `bash tests/expat_architecture_test.sh`. Run `bash scripts/check_expat_architecture.sh --base 4a3c97e2314b2c8ccdf508123bb9ce5a04b499f0` in a full-history checkout to verify the exact changed-file allowlist and preserved canonical prefixes. The dedicated CI runs all three on this intake branch, prints exact head and records no user documents or secrets. Review output, existing CI and merge-base freshness before merge.
+
+On future unrelated PRs, content integrity and all 34 validator tests still run, but this intake's historical 12-file diff is not imposed on unrelated later work. The closed-diff check is specific to `architecture/calpq-expat-0001-global-mobility`. It is not weakened or skipped for the present intake.
+
+## Initial CI findings and correction
+
+On head `084bd36c68ee482a1d512b1879c929fd4ead0cce`, actual GitHub run `35325738614` passed real-file completeness, all 34 validator tests and exact 12-file/history checks. These results do not certify whole-repository CI.
+
+Foundation Guard run `35325738846` passed the guard itself, but its historical FROZEN self-test classified the newly added standalone Python test file as product source. Correct the new tooling to the existing shell-entry-point convention with explicit embedded Python and no generated `.py` files, preserving the same 34 test identities, assertions and all existing Foundation rules/tests. This correction changes only the new EXPATS tooling and its documentation/workflow.
+
+M05 S10 run `35325738633` failed because `scripts/ci/m06-admission-preparation.mjs` applies a closed preparation-only diff against the accepted M05 anchor to the current checkout. Its error is `Unauthorized changed path: .github/workflows/expat-architecture.yml`. The M06 preparation workflow also failed. This is a real merge/integration blocker, not an EXPATS product-test result. This change does not bypass that gate, alter its allowlist, merge #133, or claim a green full CI. Resolve via separately governed compatible integration scope, re-check all affected regression workflows, then obtain the explicit reviewed merge decision for #135. Latest exact-head results are recorded in PR #135 and issue #134, not guessed in this document.
