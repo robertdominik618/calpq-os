@@ -1,0 +1,65 @@
+name: EXPATS Architecture Integrity
+
+on:
+  push:
+    branches:
+      - architecture/calpq-expat-0001-global-mobility
+  pull_request:
+    paths:
+      - 'docs/**'
+      - scripts/check_expat_architecture.py
+      - tests/governance/test_expat_architecture.py
+      - .github/workflows/expat-architecture.yml
+
+permissions:
+  contents: read
+
+env:
+  PYTHONDONTWRITEBYTECODE: '1'
+
+jobs:
+  expat-architecture:
+    name: EXPATS architecture integrity
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - name: Checkout exact change head with history
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # existing repository pin
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Print exact evidence context
+        shell: bash
+        run: |
+          set -euo pipefail
+          git rev-parse HEAD
+          python3 --version
+      - name: Validate actual architecture files and complete source scope
+        shell: bash
+        run: python3 scripts/check_expat_architecture.py
+      - name: Run all 34 adversarial architecture-validator tests without skips
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          import re
+          import unittest
+          suite = unittest.defaultTestLoader.discover('tests/governance', pattern='test_expat_architecture.py')
+          def flatten(node):
+              for child in node:
+                  if isinstance(child, unittest.TestSuite):
+                      yield from flatten(child)
+                  else:
+                      yield child
+          names = [case.id() for case in flatten(suite)]
+          identities = [re.search(r'\.test_(\d{2})_', name) for name in names]
+          if len(names) != 34 or any(x is None for x in identities) or {x.group(1) for x in identities} != {f'{i:02d}' for i in range(1, 35)}:
+              raise SystemExit('FAIL: mandatory 34-test identity set changed')
+          result = unittest.TextTestRunner(verbosity=2).run(suite)
+          if not result.wasSuccessful() or result.testsRun != 34 or result.skipped or result.expectedFailures or result.unexpectedSuccesses:
+              raise SystemExit('FAIL: tests failed, skipped or incomplete')
+          print('PASS 34/34 architecture-validator tests; no skipped or expected-failure tests.')
+          PY
+      - name: Verify exact scope and architecture-before-tooling history
+        shell: bash
+        run: python3 scripts/check_expat_architecture.py --base 4a3c97e2314b2c8ccdf508123bb9ce5a04b499f0
