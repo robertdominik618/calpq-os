@@ -12,7 +12,8 @@
     "./security": "./src/security/index.ts",
     "./trust": "./src/trust/index.ts",
     "./verification": "./src/verification/index.ts",
-    "./test-support": "./test-support/index.ts"
+    "./test-support": "./test-support/index.ts",
+    "./lifecycle": "./src/lifecycle/index.ts"
   },
   "scripts": {
     "test:fv06": "node --test test/fv06-application-context.test.ts",
@@ -37,6 +38,7 @@
     "test:m05s07": "node --test test/m05-s07-verification-route-registry.test.ts",
     "test:m05s08": "node --test test/m05-s08-human-review.test.ts",
     "test:m05s09": "node --test test/m05-s09-archive-lifecycle.test.ts",
-    "typecheck": "npx --yes --package=typescript@7.0.2 -- tsc -p tsconfig.json"
+    "typecheck": "npx --yes --package=typescript@7.0.2 -- tsc -p tsconfig.json",
+    "test:m06s01": "node --test test/m06-s01-lifecycle-timeline.test.ts"
   }
 }
