@@ -76,7 +76,7 @@ export function predecessorPatch(original,slice){
   const end=original.indexOf('\nexport function validateIndex',start);
   assert(start>=0&&end>start,`S0${slice} validateConfig segment required`);
   let output=original.slice(0,start)+generatedConfig(slice)+original.slice(end);
-  if(!output.includes("existsSync} from 'node:fs'")){
+  if(output.includes("import {mkdtempSync,rmSync} from 'node:fs';")){
     output=output.replace("import {mkdtempSync,rmSync} from 'node:fs';","import {mkdtempSync,rmSync,existsSync} from 'node:fs';");
   }
   if(slice===8){
