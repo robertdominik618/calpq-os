@@ -1,0 +1,47 @@
+name: EXPATS Architecture Integrity
+
+on:
+  push:
+    branches:
+      - architecture/calpq-expat-0001-global-mobility
+  pull_request:
+    paths:
+      - 'docs/**'
+      - scripts/check_expat_architecture.sh
+      - tests/expat_architecture_test.sh
+      - .github/workflows/expat-architecture.yml
+
+permissions:
+  contents: read
+
+env:
+  PYTHONDONTWRITEBYTECODE: '1'
+
+jobs:
+  expat-architecture:
+    name: EXPATS architecture integrity
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - name: Checkout exact change head with history
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # existing repository pin
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Print exact evidence context
+        shell: bash
+        run: |
+          set -euo pipefail
+          git rev-parse HEAD
+          python3 --version
+      - name: Validate actual architecture files and complete source scope
+        shell: bash
+        run: bash scripts/check_expat_architecture.sh
+      - name: Run all 34 adversarial architecture-validator tests without skips
+        shell: bash
+        run: bash tests/expat_architecture_test.sh
+      - name: Verify this intake's exact scope and architecture-before-tooling history
+        if: ${{ github.head_ref == 'architecture/calpq-expat-0001-global-mobility' || github.ref == 'refs/heads/architecture/calpq-expat-0001-global-mobility' }}
+        shell: bash
+        run: bash scripts/check_expat_architecture.sh --base 4a3c97e2314b2c8ccdf508123bb9ce5a04b499f0
