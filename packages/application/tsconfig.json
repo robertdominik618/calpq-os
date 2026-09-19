@@ -42,6 +42,7 @@
     "test/m06-s02-types.compile.ts",
     "test/m06-s03-types.compile.ts",
     "test/m06-s04-types.compile.ts",
-    "test/m06-s05-types.compile.ts"
+    "test/m06-s05-types.compile.ts",
+    "test/m06-s06-types.compile.ts"
   ]
 }
