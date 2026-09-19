@@ -70,7 +70,9 @@ function generatedConfig(slice){
 
 export function predecessorPatch(original,slice){
   assert(Number.isSafeInteger(slice)&&slice>=4&&slice<=8,'Supported predecessor slice');
-  const start=original.indexOf('export function validateConfig(path,original,actual){');
+  const marker='\nexport function validateConfig(path,original,actual){';
+  const marked=original.lastIndexOf(marker);
+  const start=marked<0?-1:marked+1;
   const end=original.indexOf('\nexport function validateIndex',start);
   assert(start>=0&&end>start,`S0${slice} validateConfig segment required`);
   let output=original.slice(0,start)+generatedConfig(slice)+original.slice(end);
