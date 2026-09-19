@@ -184,16 +184,20 @@ export function validateConfig(path,original,actual){
   const expected=structuredClone(original);
   const s08=existsSync('docs/planning/m06-s08-execution.json');
   const s09=existsSync('docs/planning/m06-s09-execution.json');
+  const s10=existsSync('docs/planning/m06-s10-execution.json');
   if(s09&&!s08) throw new TypeError('S09 requires activated S08 predecessor');
+  if(s10&&!s09) throw new TypeError('S10 requires activated S09 predecessor');
   if(path==='packages/application/package.json'){
     assert(!Object.hasOwn(expected.scripts,'test:m06s07'));expected.scripts['test:m06s07']='node --test test/m06-s07-selective-reevaluation.test.ts';
     if(s08){assert(!Object.hasOwn(expected.scripts,'test:m06s08'));expected.scripts['test:m06s08']='node --test test/m06-s08-continuous-compliance.test.ts';}
     if(s09){assert(!Object.hasOwn(expected.scripts,'test:m06s09'));expected.scripts['test:m06s09']='node --test test/m06-s09-historical-replay.test.ts';}
+    if(s10){assert(!Object.hasOwn(expected.scripts,'test:m06s10'));expected.scripts['test:m06s10']='node --test test/m06-s10-integration-evidence.test.ts';}
   }
   else if(path==='packages/application/tsconfig.json'){
     assert(!expected.include.includes('test/m06-s07-types.compile.ts'));expected.include.push('test/m06-s07-types.compile.ts');
     if(s08){assert(!expected.include.includes('test/m06-s08-types.compile.ts'));expected.include.push('test/m06-s08-types.compile.ts');}
     if(s09){assert(!expected.include.includes('test/m06-s09-types.compile.ts'));expected.include.push('test/m06-s09-types.compile.ts');}
+    if(s10){assert(!expected.include.includes('test/m06-s10-types.compile.ts'));expected.include.push('test/m06-s10-types.compile.ts');}
   }
   else throw new TypeError('Unknown additive configuration');
   assert.deepEqual(actual,expected,'Only exact additive S07 through activated successor configuration');
