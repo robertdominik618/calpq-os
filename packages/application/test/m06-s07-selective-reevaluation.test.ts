@@ -162,7 +162,7 @@ test('M06S07-048 fact target version must match candidate',()=>{const {g,e,i}=ch
 test('M06S07-049 candidate dedup identity must match exactly',()=>{const {g,e,i}=chain(),c=i.toJSON().candidates[0]!,f=fact(c,{candidateDedupKey:c.dedupKey+':changed'});assert.throws(()=>run(g,e,i,[f]));});
 test('M06S07-050 required version bindings must match candidate exactly',()=>{const {g,e,i}=chain(),c=i.toJSON().candidates[0]!,f=fact(c,{versionBindings:[]});assert.throws(()=>run(g,e,i,[f]));});
 test('M06S07-051 fact cannot predate impact evaluation horizon',()=>{const {g,e,i}=chain(),c=i.toJSON().candidates[0]!,f=fact(c,{evaluatedAt:T2,asKnownAt:T2});assert.throws(()=>run(g,e,i,[f]));});
-test('M06S07-052 future fact beyond batch horizon rejected',()=>{const {g,e,i}=chain(),c=i.toJSON().candidates[0]!;assert.throws(()=>fact(c,{evaluatedAt:FUTURE,asKnownAt:FUTURE}));});
+test('M06S07-052 future fact beyond batch horizon rejected',()=>{const {g,e,i}=chain(),c=i.toJSON().candidates[0]!,f=fact(c,{evaluatedAt:FUTURE,asKnownAt:FUTURE});assert.throws(()=>run(g,e,i,[f]));});
 test('M06S07-053 mandatory current candidate consumes exact fact',()=>{const {g,e,i}=chain(),v=run(g,e,i).toJSON();assert.equal(v.reevaluationFactsApplied,1);});
 test('M06S07-054 advisory current candidate consumes exact fact',()=>{const {g,e,i}=chain(LifecycleDependencyImpactMode.ADVISORY),v=run(g,e,i).toJSON();assert.equal(v.reevaluationFactsApplied,1);});
 test('M06S07-055 review-only candidate produces review evidence',()=>{const {g,e,i}=chain(LifecycleDependencyImpactMode.REVIEW_ONLY),v=run(g,e,i,[]).toJSON();assert.equal(v.decisions[0]!.outcome,LifecycleReevaluationOutcome.REVIEW_REQUIRED);});
