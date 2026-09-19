@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
 import {execFileSync} from 'node:child_process';
-import {BASE,NEW_FILES,CHANGED_FILES,INDEX_APPEND,expectedRecord,validateExecution,validateDelta,dispatchPatch,validateDispatch,validateConfig,validateIndex,validateBarrel} from '../scripts/ci/m06-s06-scope.mjs';
+import {BASE,NEW_FILES,CHANGED_FILES,INDEX_APPEND,expectedRecord,validateExecution,validateDelta,dispatchPatch,validateDispatch,s04SuccessorPatch,validateS04Successor,validateConfig,validateIndex,validateBarrel} from '../scripts/ci/m06-s06-scope.mjs';
 
 const old=path=>execFileSync('git',['show',`${BASE}:${path}`],{encoding:'utf8'});
 const delta=()=>[...NEW_FILES.map(path=>({path,status:'A',mode:'100644'})),...CHANGED_FILES.map(path=>({path,status:'M',mode:'100644'}))];
@@ -15,12 +15,12 @@ test('M06S06G-04 missing or extra execution keys rejected',()=>{const a=expected
 test('M06S06G-05 expanded scope or release rejected',()=>{assert.throws(()=>validateExecution(mutate('authorized_slices',['S06','S07'])));assert.throws(()=>validateExecution(mutate('production_release_authorized',true)));});
 test('M06S06G-06 progress inflation rejected',()=>{assert.throws(()=>validateExecution(mutate('v1_completed_plan_units',66)));assert.throws(()=>validateExecution(mutate('m06_accepted_slices',6)));});
 test('M06S06G-07 invented post-merge evidence rejected',()=>{assert.throws(()=>validateExecution(mutate('post_merge_evidence_reference','https://example.invalid/proof')));});
-test('M06S06G-08 complete exact15-file scope accepted',()=>{validateDelta(delta());});
+test('M06S06G-08 complete exact16-file scope accepted',()=>{validateDelta(delta());});
 test('M06S06G-09 Core provider UI or historical edits rejected',()=>{for(const path of ['packages/core/src/new.ts','packages/application/test/m06-s05-notification-policy.test.ts','packages/provider/src/send.ts','packages/ui/src/graph.ts'])assert.throws(()=>validateDelta([...delta(),{path,status:'M',mode:'100644'}]));});
 test('M06S06G-10 rename delete executable and symlink rejected',()=>{for(const patch of [{status:'D'},{status:'R'},{mode:'100755'},{mode:'120000'}]){const d=delta();d[0]={...d[0],...patch};assert.throws(()=>validateDelta(d));}});
 test('M06S06G-11 duplicate or missing scope rejected',()=>{const d=delta();assert.throws(()=>validateDelta(d.slice(1)));assert.throws(()=>validateDelta([...d,d[0]]));});
-test('M06S06G-12 exact successor dispatch accepted',()=>{const original=old('scripts/ci/m06-s05-scope.mjs');validateDispatch(original,dispatchPatch(original));});
-test('M06S06G-13 old S05 scope edits beyond dispatch rejected',()=>{const original=old('scripts/ci/m06-s05-scope.mjs');assert.throws(()=>validateDispatch(original,dispatchPatch(original)+'\n// extra'));assert.throws(()=>dispatchPatch(original+original));});
+test('M06S06G-12 exact successor dispatch and S04 compatibility accepted',()=>{const s05=old('scripts/ci/m06-s05-scope.mjs');validateDispatch(s05,dispatchPatch(s05));const s04=old('scripts/ci/m06-s04-scope.mjs');validateS04Successor(s04,s04SuccessorPatch(s04));});
+test('M06S06G-13 predecessor scope edits beyond exact patches rejected',()=>{const s05=old('scripts/ci/m06-s05-scope.mjs');assert.throws(()=>validateDispatch(s05,dispatchPatch(s05)+'\n// extra'));assert.throws(()=>dispatchPatch(s05+s05));const s04=old('scripts/ci/m06-s04-scope.mjs');assert.throws(()=>validateS04Successor(s04,s04SuccessorPatch(s04)+'\n// extra'));});
 test('M06S06G-14 exact additive package and compile entries pass',()=>{for(const path of ['packages/application/package.json','packages/application/tsconfig.json'])validateConfig(path,JSON.parse(old(path)),JSON.parse(readFileSync(path,'utf8')));});
 test('M06S06G-15 historical config and export edits rejected',()=>{const path='packages/application/package.json',base=JSON.parse(old(path)),changed=JSON.parse(readFileSync(path,'utf8'));changed.name='other';assert.throws(()=>validateConfig(path,base,changed));const original=old('packages/application/src/lifecycle/index.ts');validateBarrel(original,original+INDEX_APPEND);assert.throws(()=>validateBarrel(original,INDEX_APPEND));});
 test('M06S06G-16 missing duplicate reordered scenario identities rejected',()=>{const index=readFileSync('docs/planning/M06_S06_TEST_INDEX.md','utf8');validateIndex(index);assert.throws(()=>validateIndex(index.replace('| M06S06-001 |','| M06S06-002 |')));assert.throws(()=>validateIndex(index.replace('| M06S06-104 |','| M06S06-105 |')));});
