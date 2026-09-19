@@ -21,7 +21,7 @@ assert.deepEqual(gids,Array.from({length:16},(_,i)=>`M06S10G-${String(i+1).padSt
 assert.equal([...governance.matchAll(/^test\(/gm)].length,16);
 assert(!/\btest\.(skip|todo|only)\s*\(/.test(governance));
 assert.equal([...readFileSync('packages/application/test/m06-s10-types.compile.ts','utf8').matchAll(/@ts-expect-error/g)].length,28);
-assert(readFileSync('docs/planning/M06_S10_IMPLEMENTATION_CONTRACT.md','utf8').includes('integration evidence != production release'));
+assert(readFileSync('docs/planning/M06_S10_IMPLEMENTATION_CONTRACT.md','utf8').includes('M06 does not become production-released merely because S10 passes.'));
 NODE
 
 npx --yes --package=typescript@7.0.2 -- tsc -p packages/application/tsconfig.json
