@@ -90,7 +90,7 @@ test('M06S05-41 actor kind denied',()=>{const p=policy(),a=ActorReference.create
 test('M06S05-42 purpose denied',()=>{const p=policy();assert.throws(()=>project(p,{context:context(NOTIFICATION_POLICY_OPERATION,NOW,{purpose:PurposeReference.from('purpose:other')})}),TenantAccessDeniedError);});
 test('M06S05-43 correlation denied',()=>{const p=policy();assert.throws(()=>project(p,{context:context(NOTIFICATION_POLICY_OPERATION,NOW,{correlationId:CorrelationId.from(uuid(99))})}),TenantAccessDeniedError);});
 test('M06S05-44 operation required',()=>{const p=policy();assert.throws(()=>project(p,{context:context('wrong.operation')}),TenantAccessDeniedError);});
-test('M06S05-45 field permission required',()=>{const p=policy();assert.throws(()=>project(p,{accessDecision:access(NOTIFICATION_POLICY_FIELD,{allowedFields:[]})}),TenantAccessDeniedError);});
+test('M06S05-45 field permission required',()=>{const p=policy();assert.throws(()=>project(p,{accessDecision:access(NOTIFICATION_POLICY_FIELD,{allowedFields:['credential:other-field']})}),TenantAccessDeniedError);});
 test('M06S05-46 access reference mismatch denied',()=>{const p=policy();assert.throws(()=>project(p,{context:context(NOTIFICATION_POLICY_OPERATION,NOW,{accessDecision:AccessDecisionReference.from('access:other')})}),TenantAccessDeniedError);});
 test('M06S05-47 calendar matches invocation',()=>{const p=policy();assert.throws(()=>project(p,{calendar:calendar(CASE_NOW)}));});
 test('M06S05-48 exact S02 basis accepted',()=>{const p=policy(),v=project(p);assert.equal(v.toJSON().basisSnapshotReference,p.basis.snapshotReference);});
