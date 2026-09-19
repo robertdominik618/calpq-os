@@ -76,9 +76,13 @@ export function predecessorPatch(original,slice){
   const end=original.indexOf('\nexport function validateIndex',start);
   assert(start>=0&&end>start,`S0${slice} validateConfig segment required`);
   let output=original.slice(0,start)+generatedConfig(slice)+original.slice(end);
-  if(output.includes("import {mkdtempSync,rmSync} from 'node:fs';")){
-    output=output.replace("import {mkdtempSync,rmSync} from 'node:fs';","import {mkdtempSync,rmSync,existsSync} from 'node:fs';");
-  }
+  const plainFsImport="import {mkdtempSync,rmSync} from 'node:fs';";
+  const governedFsImport="import {mkdtempSync,rmSync,existsSync} from 'node:fs';";
+  const lines=output.split('\n');
+  const importIndex=lines.findIndex(line=>line===plainFsImport||line===governedFsImport);
+  assert(importIndex>=0,`S0${slice} top-level fs import required`);
+  if(lines[importIndex]===plainFsImport) lines[importIndex]=governedFsImport;
+  output=lines.join('\n');
   if(slice===8){
     const tail="if(process.argv[1] && resolve(process.argv[1])===fileURLToPath(import.meta.url))main();\n";
     assert(output.endsWith(tail),'Exact S08 terminal CLI required');
