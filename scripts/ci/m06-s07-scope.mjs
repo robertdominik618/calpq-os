@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import {mkdtempSync,rmSync} from 'node:fs';
+import {mkdtempSync,rmSync,existsSync} from 'node:fs';
 import {execFileSync} from 'node:child_process';
 import {tmpdir} from 'node:os';
 import {resolve,join} from 'node:path';
@@ -182,10 +182,17 @@ export function validateS04Successor(original,actual){assert.equal(actual,s04Suc
 
 export function validateConfig(path,original,actual){
   const expected=structuredClone(original);
-  if(path==='packages/application/package.json'){assert(!Object.hasOwn(expected.scripts,'test:m06s07'));expected.scripts['test:m06s07']='node --test test/m06-s07-selective-reevaluation.test.ts';}
-  else if(path==='packages/application/tsconfig.json'){assert(!expected.include.includes('test/m06-s07-types.compile.ts'));expected.include.push('test/m06-s07-types.compile.ts');}
+  const successor=existsSync('docs/planning/m06-s08-execution.json');
+  if(path==='packages/application/package.json'){
+    assert(!Object.hasOwn(expected.scripts,'test:m06s07'));expected.scripts['test:m06s07']='node --test test/m06-s07-selective-reevaluation.test.ts';
+    if(successor){assert(!Object.hasOwn(expected.scripts,'test:m06s08'));expected.scripts['test:m06s08']='node --test test/m06-s08-continuous-compliance.test.ts';}
+  }
+  else if(path==='packages/application/tsconfig.json'){
+    assert(!expected.include.includes('test/m06-s07-types.compile.ts'));expected.include.push('test/m06-s07-types.compile.ts');
+    if(successor){assert(!expected.include.includes('test/m06-s08-types.compile.ts'));expected.include.push('test/m06-s08-types.compile.ts');}
+  }
   else throw new TypeError('Unknown additive configuration');
-  assert.deepEqual(actual,expected,'Only exact additive S07 configuration');
+  assert.deepEqual(actual,expected,successor?'Only exact additive S07 plus activated S08 configuration':'Only exact additive S07 configuration');
 }
 export function validateIndex(value){assert.deepEqual([...value.matchAll(/^\| (M06S07-\d{3}) \|/gm)].map(m=>m[1]),Array.from({length:112},(_,i)=>`M06S07-${String(i+1).padStart(3,'0')}`),'112 ordered mandatory scenarios required');}
 export function validateBarrel(original,actual){assert.equal(actual,original+INDEX_APPEND,'Only exact additive selective reevaluation exports');}
@@ -224,4 +231,8 @@ export function main(){
   assert.equal(git('rev-parse','HEAD').trim(),head);
   console.log(`M06 S07 SCOPE PASS head=${head} predecessor=${BASE} closed-history=original-s06-validator current-runtime=required release=false`);
 }
-if(process.argv[1] && resolve(process.argv[1])===fileURLToPath(import.meta.url))main();
+if(process.argv[1] && resolve(process.argv[1])===fileURLToPath(import.meta.url)){
+  if(existsSync('docs/planning/m06-s08-execution.json')){
+    execFileSync(process.execPath,[resolve('scripts/ci/m06-s08-scope.mjs')],{stdio:'inherit'});
+  }else main();
+}
