@@ -31,8 +31,31 @@ export function validateDelta(entries){
 }
 export function dispatchPatch(original){
   const marker="import {mkdtempSync,rmSync} from 'node:fs';",tail="if(process.argv[1] && resolve(process.argv[1])===fileURLToPath(import.meta.url))main();\n";
-  const oldConfig="export function validateConfig(path,original,actual){\\n  const expected=structuredClone(original);\\n  if(path==='packages/application/package.json'){assert(!Object.hasOwn(expected.scripts,'test:m06s04'));expected.scripts['test:m06s04']='node --test test/m06-s04-renewal-case.test.ts';}\\n  else if(path==='packages/application/tsconfig.json'){assert(!expected.include.includes('test/m06-s04-types.compile.ts'));expected.include.push('test/m06-s04-types.compile.ts');}\\n  else throw new TypeError('Unknown additive configuration');\\n  assert.deepEqual(actual,expected,'Only exact additive S04 configuration');\\n}";
-  const successorConfig="export function validateConfig(path,original,actual){\\n  const expected=structuredClone(original);\\n  const successor=existsSync('docs/planning/m06-s05-execution.json');\\n  if(path==='packages/application/package.json'){\\n    assert(!Object.hasOwn(expected.scripts,'test:m06s04'));expected.scripts['test:m06s04']='node --test test/m06-s04-renewal-case.test.ts';\\n    if(successor){assert(!Object.hasOwn(expected.scripts,'test:m06s05'));expected.scripts['test:m06s05']='node --test test/m06-s05-notification-policy.test.ts';}\\n  }\\n  else if(path==='packages/application/tsconfig.json'){\\n    assert(!expected.include.includes('test/m06-s04-types.compile.ts'));expected.include.push('test/m06-s04-types.compile.ts');\\n    if(successor){assert(!expected.include.includes('test/m06-s05-types.compile.ts'));expected.include.push('test/m06-s05-types.compile.ts');}\\n  }\\n  else throw new TypeError('Unknown additive configuration');\\n  assert.deepEqual(actual,expected,successor?'Only exact additive S04 plus activated S05 configuration':'Only exact additive S04 configuration');\\n}";
+  const oldConfig=[
+    "export function validateConfig(path,original,actual){",
+    "  const expected=structuredClone(original);",
+    "  if(path==='packages/application/package.json'){assert(!Object.hasOwn(expected.scripts,'test:m06s04'));expected.scripts['test:m06s04']='node --test test/m06-s04-renewal-case.test.ts';}",
+    "  else if(path==='packages/application/tsconfig.json'){assert(!expected.include.includes('test/m06-s04-types.compile.ts'));expected.include.push('test/m06-s04-types.compile.ts');}",
+    "  else throw new TypeError('Unknown additive configuration');",
+    "  assert.deepEqual(actual,expected,'Only exact additive S04 configuration');",
+    "}"
+  ].join('\n');
+  const successorConfig=[
+    "export function validateConfig(path,original,actual){",
+    "  const expected=structuredClone(original);",
+    "  const successor=existsSync('docs/planning/m06-s05-execution.json');",
+    "  if(path==='packages/application/package.json'){",
+    "    assert(!Object.hasOwn(expected.scripts,'test:m06s04'));expected.scripts['test:m06s04']='node --test test/m06-s04-renewal-case.test.ts';",
+    "    if(successor){assert(!Object.hasOwn(expected.scripts,'test:m06s05'));expected.scripts['test:m06s05']='node --test test/m06-s05-notification-policy.test.ts';}",
+    "  }",
+    "  else if(path==='packages/application/tsconfig.json'){",
+    "    assert(!expected.include.includes('test/m06-s04-types.compile.ts'));expected.include.push('test/m06-s04-types.compile.ts');",
+    "    if(successor){assert(!expected.include.includes('test/m06-s05-types.compile.ts'));expected.include.push('test/m06-s05-types.compile.ts');}",
+    "  }",
+    "  else throw new TypeError('Unknown additive configuration');",
+    "  assert.deepEqual(actual,expected,successor?'Only exact additive S04 plus activated S05 configuration':'Only exact additive S04 configuration');",
+    "}"
+  ].join('\n');
   assert.equal(original.split(marker).length,2);assert(original.endsWith(tail),'Exact S04 terminal CLI required');assert(original.includes(oldConfig),'Exact S04 config guard required');
   const prefix=original.slice(0,-tail.length).replace(marker,"import {mkdtempSync,rmSync,existsSync} from 'node:fs';").replace(oldConfig,successorConfig);
   return prefix+"if(process.argv[1] && resolve(process.argv[1])===fileURLToPath(import.meta.url)){\n  if(existsSync('docs/planning/m06-s05-execution.json')){\n    execFileSync(process.execPath,[resolve('scripts/ci/m06-s05-scope.mjs')],{stdio:'inherit'});\n  }else main();\n}\n";
