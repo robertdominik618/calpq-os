@@ -303,7 +303,12 @@ export class LifecycleReplaySnapshot{
   readonly evaluator:ActorReference;readonly provenanceReference:string;readonly correlationReference:string;readonly causationReference:string|null;readonly coreHistoricalReplayState:string|null;readonly s07DecisionReference:string|null;readonly s08ProjectionReference:string|null;readonly reasonCodes:readonly string[];
 
   private constructor(input:LifecycleReplaySnapshotInput,ruleRefs:readonly string[],sourceRefs:readonly string[],contractRefs:readonly string[],evidenceRefs:readonly string[],reasonCodes:readonly string[]){
-    Object.assign(this,input);this.ruleVersionReferences=ruleRefs;this.sourceVersionReferences=sourceRefs;this.contractVersionReferences=contractRefs;this.evidenceReferences=evidenceRefs;this.reasonCodes=reasonCodes;Object.freeze(this);
+    this.reference=input.reference;this.mode=input.mode;this.anchor=input.anchor;this.targetReference=input.targetReference;this.targetType=input.targetType;
+    this.jurisdictionReference=input.jurisdictionReference;this.subject=input.subject;this.availability=input.availability;this.semanticOutcome=input.semanticOutcome;
+    this.evaluatedAt=input.evaluatedAt;this.asKnownAt=input.asKnownAt;this.ruleVersionReferences=ruleRefs;this.sourceVersionReferences=sourceRefs;this.contractVersionReferences=contractRefs;this.evidenceReferences=evidenceRefs;
+    this.evaluator=input.evaluator;this.provenanceReference=input.provenanceReference;this.correlationReference=input.correlationReference;this.causationReference=input.causationReference;
+    this.coreHistoricalReplayState=input.coreHistoricalReplayState;this.s07DecisionReference=input.s07DecisionReference;this.s08ProjectionReference=input.s08ProjectionReference;this.reasonCodes=reasonCodes;
+    Object.freeze(this);
   }
 
   static create(input:LifecycleReplaySnapshotInput):LifecycleReplaySnapshot{
