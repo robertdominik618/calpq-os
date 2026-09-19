@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import {mkdtempSync,rmSync} from 'node:fs';
+import {mkdtempSync,rmSync,existsSync} from 'node:fs';
 import {execFileSync} from 'node:child_process';
 import {tmpdir} from 'node:os';
 import {resolve,join} from 'node:path';
@@ -120,7 +120,23 @@ function verifyClosedScope(){
 
 export function main(){
   process.chdir(fileURLToPath(new URL('../../',import.meta.url)));
-  const head=git('rev-parse','HEAD').trim();assert.equal(git('status','--porcelain','--untracked-files=no').trim(),'','Clean tracked checkout');
+  const currentHead=git('rev-parse','HEAD').trim();
+  if(existsSync('docs/planning/m07-admission-preparation.json')){
+    ancestor('f71bc084e6dc7778a13b0ad80b7637f6663005f8',currentHead);
+    execFileSync(process.execPath,[resolve('scripts/ci/m07-admission-preparation.mjs')],{stdio:'inherit'});
+    const folder=mkdtempSync(join(tmpdir(),'calpq-m06s10-m07-successor-')),worktree=join(folder,'closed-m06');let added=false;
+    try{
+      git('worktree','add','--detach','--quiet',worktree,'f71bc084e6dc7778a13b0ad80b7637f6663005f8');added=true;
+      const log=execFileSync(process.execPath,[join(worktree,'scripts/ci/m06-s10-scope.mjs')],{cwd:worktree,encoding:'utf8',maxBuffer:36*1024*1024});
+      assert(log.includes('M06 S10 SCOPE PASS head=f71bc084e6dc7778a13b0ad80b7637f6663005f8'),'Original accepted M06 S10 scope must pass');
+    }finally{
+      if(added)git('worktree','remove','--force',worktree);
+      rmSync(folder,{recursive:true,force:true});
+    }
+    console.log(`M06 S10 SCOPE PASS closed-head=f71bc084e6dc7778a13b0ad80b7637f6663005f8 successor=M07_PREPARATION current=${currentHead}`);
+    return currentHead;
+  }
+  const head=currentHead;assert.equal(git('status','--porcelain','--untracked-files=no').trim(),'','Clean tracked checkout');
   for(const ref of [BASE,REVIEWED,PREVIOUS,CONTRACT,TEST_INDEX,ACTIVATION,RUNTIME_SPECS,TYPE_SPECS])ancestor(ref,head);
   assert.equal(git('show','-s','--format=%P',BASE).trim(),`${PREVIOUS} ${REVIEWED}`,'Actual S09 merge parents required');
   for(const ref of [BASE,REVIEWED])assert.equal(git('rev-parse',`${ref}^{tree}`).trim(),TREE,'Reviewed/merged S09 tree equality required');

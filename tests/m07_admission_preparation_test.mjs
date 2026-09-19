@@ -7,7 +7,7 @@ import {
 } from '../scripts/ci/m07-admission-preparation.mjs';
 
 const record=()=>structuredClone(expectedRecord());
-const original='#!/usr/bin/env bash\nnode scripts/ci/m06-s10-scope.mjs\n\nruntime=x\nnode --test "$runtime"\n';
+const original="import {mkdtempSync,rmSync} from 'node:fs';\nexport function main(){\n  process.chdir(fileURLToPath(new URL('../../',import.meta.url)));\n  const head=git('rev-parse','HEAD').trim();assert.equal(git('status','--porcelain','--untracked-files=no').trim(),'','Clean tracked checkout');\n  console.log('runtime-marker');\n}\n";
 const matrix=Array.from({length:28},(_,i)=>`| M07PREP-${String(i+1).padStart(2,'0')} | requirement |`).join('\n');
 const pkg='PLANNING COMPLETE / IMPLEMENTATION BLOCKED\n'+Array.from({length:10},(_,i)=>`${i+1}. Slice`).join('\n');
 const governance='Status: `M00 FOUNDATION / NORMATIVE`\nID: `CALPQ-REG-0001`\nVERIFIED UNVERIFIED STALE/REVIEW_REQUIRED\nHistorical decisions retain the rule/source version used at the time.\nAI may help identify or explain a source, but does not by itself upgrade a rule to `VERIFIED`.';
@@ -29,9 +29,9 @@ test('M07PREPTEST-13 exact additive preparation scope accepted',()=>validateChan
 test('M07PREPTEST-14 product or unrelated paths rejected',()=>{for(const path of ['packages/core/src/regulatory/new.ts','packages/application/src/regulatory/new.ts','README.md','docs/planning/m07-admission-decision.json'])assert.throws(()=>validateChanges([{path,status:'A',mode:'100644'}]));});
 test('M07PREPTEST-15 deletion rename copy and wrong mode rejected',()=>{for(const status of ['D','R100','C100','M'])assert.throws(()=>validateChanges([{path:addedPaths[0],status,mode:'100644'}]));for(const mode of ['100755','120000','160000'])assert.throws(()=>validateChanges([{path:addedPaths[0],status:'A',mode}]));});
 test('M07PREPTEST-16 duplicate paths rejected',()=>assert.throws(()=>validateChanges(Array(2).fill({path:addedPaths[0],status:'A',mode:'100644'}))));
-test('M07PREPTEST-17 exact M06 successor adaptation preserves runtime suffix',()=>{const adapted=adaptS10(original);validateS10Patch(original,adapted);assert(adapted.endsWith('runtime=x\nnode --test "$runtime"\n'));});
-test('M07PREPTEST-18 removed runtime or bypass rejected',()=>{const adapted=adaptS10(original);assert.throws(()=>validateS10Patch(original,adapted.replace('node --test "$runtime"','true')));assert.throws(()=>validateS10Patch(original,'exit 0\n'+adapted));});
-test('M07PREPTEST-19 ambiguous M06 scope marker rejected',()=>{assert.throws(()=>adaptS10('no marker'));assert.throws(()=>adaptS10(original+original));});
+test('M07PREPTEST-17 exact final-scope successor adaptation preserves original tail',()=>{const adapted=adaptS10(original);validateS10Patch(original,adapted);assert(adapted.endsWith("  console.log('runtime-marker');\n}\n"));assert(adapted.includes('successor=M07_PREPARATION'));});
+test('M07PREPTEST-18 altered historical scope or successor bypass rejected',()=>{const adapted=adaptS10(original);assert.throws(()=>validateS10Patch(original,adapted.replace("console.log('runtime-marker');","console.log('changed');")));assert.throws(()=>validateS10Patch(original,'// bypass\n'+adapted));});
+test('M07PREPTEST-19 ambiguous final-scope markers rejected',()=>{assert.throws(()=>adaptS10('no marker'));assert.throws(()=>adaptS10(original+original));});
 test('M07PREPTEST-20 exact 28-row matrix accepted',()=>validateMatrix(matrix));
 test('M07PREPTEST-21 missing duplicate or reordered matrix rejected',()=>{assert.throws(()=>validateMatrix(matrix.split('\n').slice(1).join('\n')));assert.throws(()=>validateMatrix(matrix+'\n| M07PREP-28 | duplicate |'));assert.throws(()=>validateMatrix(matrix.split('\n').reverse().join('\n')));});
 test('M07PREPTEST-22 blocked ten-slice package enforced',()=>{validatePackage(pkg);assert.throws(()=>validatePackage(pkg.replace('IMPLEMENTATION BLOCKED','ADMITTED_FOR_IMPLEMENTATION')));assert.throws(()=>validatePackage(pkg+'\n11. Extra'));});

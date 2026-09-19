@@ -9,7 +9,8 @@ export const M04 = 'd2f04aa2bcc68edf1d20deb345faa8a8c239e23d';
 export const TREE = '6dab0106f388d36de35e9c2296b82ddd0ecc3b74';
 export const REVIEWED = 'df67a250c613a7ead56e2511ac13c63dd41348f3';
 export const CONTRACT = '7a77b2c3f2633646a1a05a41fe2891922c74aa60';
-export const S10 = 'tests/m06_s10_integration_evidence_test.sh';
+export const TRANSITION_CONTRACT = 'db1a7b5037c636c7f231b05dcce60203cd7c13a0';
+export const S10 = 'scripts/ci/m06-s10-scope.mjs';
 
 export const addedPaths = Object.freeze([
   'docs/planning/M06_TECHNICAL_ACCEPTANCE_RECORD.md',
@@ -68,7 +69,7 @@ export function validateChanges(entries) {
   for (const entry of entries) {
     assert.equal(entry.mode, '100644', 'Preparation requires regular non-executable repository files');
     if (entry.path === S10) {
-      assert.equal(entry.status, 'M', 'Only in-place closed-M06 runner adaptation is allowed');
+      assert.equal(entry.status, 'M', 'Only the final M06 scope guard may receive successor compatibility');
     } else {
       assert(addedPaths.includes(entry.path), `Unauthorized M07 preparation path: ${entry.path}`);
       assert.equal(entry.status, 'A', 'M07 preparation files must be additions relative to accepted M06');
@@ -77,31 +78,35 @@ export function validateChanges(entries) {
 }
 
 export function adaptS10(original) {
-  const marker = 'node scripts/ci/m06-s10-scope.mjs\n\nruntime=';
-  assert.equal(original.split(marker).length, 2, 'Expected exactly one M06 closed-scope invocation');
-  const block = `if git merge-base --is-ancestor ${M06} HEAD && [[ -f docs/planning/m07-admission-preparation.json ]]; then
-  node scripts/ci/m07-admission-preparation.mjs
-  closed_root=$(mktemp -d)
-  closed_tree="$closed_root/closed-m06"
-  cleanup_closed_scope() {
-    git worktree remove --force "$closed_tree" >/dev/null 2>&1 || true
-    rm -rf "$closed_root"
+  const oldImport = "import {mkdtempSync,rmSync} from 'node:fs';";
+  const newImport = "import {mkdtempSync,rmSync,existsSync} from 'node:fs';";
+  const marker = "export function main(){\n  process.chdir(fileURLToPath(new URL('../../',import.meta.url)));\n  const head=git('rev-parse','HEAD').trim();assert.equal(git('status','--porcelain','--untracked-files=no').trim(),'','Clean tracked checkout');";
+  assert.equal(original.split(oldImport).length, 2, 'Expected one original M06 S10 fs import');
+  assert.equal(original.split(marker).length, 2, 'Expected one original M06 S10 main marker');
+  const replacement = `export function main(){
+  process.chdir(fileURLToPath(new URL('../../',import.meta.url)));
+  const currentHead=git('rev-parse','HEAD').trim();
+  if(existsSync('docs/planning/m07-admission-preparation.json')){
+    ancestor('${M06}',currentHead);
+    execFileSync(process.execPath,[resolve('scripts/ci/m07-admission-preparation.mjs')],{stdio:'inherit'});
+    const folder=mkdtempSync(join(tmpdir(),'calpq-m06s10-m07-successor-')),worktree=join(folder,'closed-m06');let added=false;
+    try{
+      git('worktree','add','--detach','--quiet',worktree,'${M06}');added=true;
+      const log=execFileSync(process.execPath,[join(worktree,'scripts/ci/m06-s10-scope.mjs')],{cwd:worktree,encoding:'utf8',maxBuffer:36*1024*1024});
+      assert(log.includes('M06 S10 SCOPE PASS head=${M06}'),'Original accepted M06 S10 scope must pass');
+    }finally{
+      if(added)git('worktree','remove','--force',worktree);
+      rmSync(folder,{recursive:true,force:true});
+    }
+    console.log(\`M06 S10 SCOPE PASS closed-head=${M06} successor=M07_PREPARATION current=\${currentHead}\`);
+    return currentHead;
   }
-  trap cleanup_closed_scope EXIT
-  git worktree add --detach --quiet "$closed_tree" ${M06}
-  (cd "$closed_tree" && node scripts/ci/m06-s10-scope.mjs)
-  cleanup_closed_scope
-  trap - EXIT
-else
-  node scripts/ci/m06-s10-scope.mjs
-fi
-
-runtime=`;
-  return original.replace(marker, block);
+  const head=currentHead;assert.equal(git('status','--porcelain','--untracked-files=no').trim(),'','Clean tracked checkout');`;
+  return original.replace(oldImport,newImport).replace(marker,replacement);
 }
 
 export function validateS10Patch(original, actual) {
-  assert.equal(actual, adaptS10(original), 'M06 S10 runtime/types/predecessor chain or historical scope semantics were altered');
+  assert.equal(actual, adaptS10(original), 'M06 final scope authority was changed beyond exact M07 successor compatibility');
 }
 
 export function validateMatrix(text) {
@@ -142,7 +147,7 @@ export function main() {
   const head = git('rev-parse','HEAD').trim();
   assert.equal(git('status','--porcelain','--untracked-files=no').trim(), '', 'Tracked checkout must be clean');
 
-  for (const anchor of [M04, M06, REVIEWED, CONTRACT]) git('merge-base','--is-ancestor',anchor,head);
+  for (const anchor of [M04, M06, REVIEWED, CONTRACT, TRANSITION_CONTRACT]) git('merge-base','--is-ancestor',anchor,head);
   assert.equal(git('rev-parse',`${M06}^{tree}`).trim(), TREE, 'Accepted M06 tree mismatch');
   assert.equal(git('show','-s','--format=%P',M06).trim().split(' ')[1], REVIEWED, 'Accepted M06 merge must retain reviewed S10 parent');
 
@@ -168,6 +173,10 @@ export function main() {
     '.github/workflows/m07-admission-preparation.yml').trim().split('\n')[0];
   assert(firstExecutable, 'Missing executable M07 preparation history');
   git('merge-base','--is-ancestor',CONTRACT,`${firstExecutable}^`);
+
+  const firstTransition = git('rev-list','--reverse',`${M06}..${head}`,'--',S10).trim().split('\n')[0];
+  assert(firstTransition, 'Missing M06-to-M07 successor transition history');
+  git('merge-base','--is-ancestor',TRANSITION_CONTRACT,`${firstTransition}^`);
 
   validateS10Patch(git('show',`${M06}:${S10}`), readFileSync(S10,'utf8'));
   validateMatrix(readFileSync('docs/planning/M07_ADMISSION_READINESS_MATRIX.md','utf8'));
@@ -196,6 +205,7 @@ export function main() {
 
   assert.equal(git('diff','--name-only',`${M06}...${head}`,'--','packages/core/src','packages/application/src').trim(), '', 'Preparation may not modify Core/Application business source');
   assert.equal(git('diff','--name-only',`${M06}...${head}`,'--','docs/planning/M07_EXECUTION_PACKAGE.md','docs/planning/M07_REGULATORY_INTELLIGENCE_RADAR_BASELINE.md','docs/foundation/REGULATORY_SOURCE_GOVERNANCE.md').trim(), '', 'Authoritative M07/source-governance planning inputs must remain unchanged');
+  assert.equal(git('diff','--name-only',`${M06}...${head}`,'--','tests/m06_s10_integration_evidence_test.sh').trim(), '', 'M06 S10 runner must remain byte-identical to accepted M06');
 
   console.log(`M07 PREPARATION PASS head=${head} matrix=28 implementation_authorized=false entry=null legal_authority=false M06=10/10 M07=0/10 v1=70/130`);
   return head;
