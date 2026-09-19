@@ -34,10 +34,11 @@ The existing Application lifecycle package now adds a provider-neutral immutable
 `SUPERSEDES` remains lineage and is not silently treated as downstream invalidation. Unverified/review-required change material can only produce review-only treatment. S06 creates candidates/plans only; it performs no S07 reevaluation.
 
 ## Static pre-CI validation
-Fresh source-of-truth comparison from predecessor merge shows **17 commits ahead / 0 behind / exact 15 paths**: 11 additions and 4 constrained modifications, with no Core/provider/UI/database/scheduler path.
+Initial source-of-truth comparison from predecessor merge showed 15 paths. The first full PR matrix exposed one historical S04 successor-config compatibility requirement. The governed candidate therefore now uses **exact 16 paths**: the original 11 additions plus five constrained modifications, adding only `scripts/ci/m06-s04-scope.mjs` as a bounded predecessor-compatibility patch. No Core/provider/UI/database/scheduler path is changed.
 
 Connector-side structural reconstruction before PR opening confirms:
 - exact S05 successor-governance patch;
+- exact S04 successor-config compatibility patch for activated S05+S06 registrations;
 - exact additive Application package script and tsconfig entry;
 - exact additive lifecycle barrel exports;
 - 104 ordered runtime test IDs;
@@ -46,7 +47,9 @@ Connector-side structural reconstruction before PR opening confirms:
 - 104 ordered mandatory index IDs;
 - zero forbidden ambient-time/provider patterns in the new source.
 
-These are static pre-CI checks, not executed runtime evidence.
+The first dedicated S06 execution on head `37e237dcbea1835463e3939767e517aa8074f977` is now actual runtime evidence: workflow **35438233315**, job **105884467511**, completed SUCCESS with **104/104 S06 runtime**, **16/16 S06 governance**, **20 readonly assertions**, S05 **96/96**, S04 **88/88**, S03 **80/80**, S02 **72/72**, S01 **64/64**, and M05 runtime ledger **500/500**.
+
+The same initial full PR matrix exposed a separate historical S04 workflow failure in run **35438233359** / job **105884467715**. Its S04 product runtime passed; only its imported current `validateConfig()` rejected the newly activated S06 package/tsconfig registrations. Corrective commits **affcc9662a56c466283a48342457701e722e3e4d**, **26119c38c26dad196112cfa6702cc336e3290457**, and **7a4e942ac451081bb5c18bf34d4792a15848eb93** add and govern the exact compatibility patch. No mandatory product scenario or historical product test is weakened. Fresh exact-head CI remains mandatory.
 
 ## Required executed evidence
 Dedicated exact-head GitHub Actions must prove:
