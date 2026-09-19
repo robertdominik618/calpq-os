@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import {mkdtempSync,rmSync} from 'node:fs';
+import {mkdtempSync,rmSync,existsSync} from 'node:fs';
 import {execFileSync} from 'node:child_process';
 import {tmpdir} from 'node:os';
 import {resolve,join} from 'node:path';
@@ -70,4 +70,8 @@ export function main(){
   assert.equal(git('rev-parse','HEAD').trim(),head);
   console.log(`M06 S04 SCOPE PASS head=${head} predecessor=${BASE} closed-history=original-validator current-runtime=required release=false`);
 }
-if(process.argv[1] && resolve(process.argv[1])===fileURLToPath(import.meta.url))main();
+if(process.argv[1] && resolve(process.argv[1])===fileURLToPath(import.meta.url)){
+  if(existsSync('docs/planning/m06-s05-execution.json')){
+    execFileSync(process.execPath,[resolve('scripts/ci/m06-s05-scope.mjs')],{stdio:'inherit'});
+  }else main();
+}
