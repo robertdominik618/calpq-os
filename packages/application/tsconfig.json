@@ -5,7 +5,9 @@
     "module": "NodeNext",
     "moduleResolution": "NodeNext",
     "allowImportingTsExtensions": true,
-    "lib": ["ES2024"]
+    "lib": [
+      "ES2024"
+    ]
   },
   "include": [
     "src/**/*.ts",
@@ -39,6 +41,7 @@
     "test/m06-s01-types.compile.ts",
     "test/m06-s02-types.compile.ts",
     "test/m06-s03-types.compile.ts",
-    "test/m06-s04-types.compile.ts"
+    "test/m06-s04-types.compile.ts",
+    "test/m06-s05-types.compile.ts"
   ]
 }
