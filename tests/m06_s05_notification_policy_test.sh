@@ -16,8 +16,8 @@ import {readFileSync} from 'node:fs';
 function verifySource(path,prefix,count){
   const value=readFileSync(path,'utf8');
   const expected=Array.from({length:count},(_,i)=>prefix+'-'+String(i+1).padStart(2,'0'));
-  const pattern=new RegExp("^test\\\\\\('("+prefix+"-\\\\d{2})\\\\b",'gm');
-  assert.deepEqual([...value.matchAll(pattern)].map(m=>m[1]),expected);
+  const ids=[...value.matchAll(/^test\('([^']+)/gm)].map(m=>m[1].split(' ')[0]);
+  assert.deepEqual(ids,expected);
   assert.equal([...value.matchAll(/^test\(/gm)].length,count);
   assert(!/\btest\.(skip|todo|only)\s*\(/.test(value));
 }
@@ -42,11 +42,10 @@ import {readFileSync} from 'node:fs';
 function verifyTap(path,prefix,count){
   const value=readFileSync(path,'utf8');
   const expected=Array.from({length:count},(_,i)=>prefix+'-'+String(i+1).padStart(2,'0'));
-  const pattern=new RegExp('^ok \\d+ - ('+prefix+'-\\d{2})\\b','gm');
-  assert.deepEqual([...value.matchAll(pattern)].map(m=>m[1]),expected);
-  for(const [key,n] of Object.entries({tests:count,pass:count,fail:0,cancelled:0,skipped:0,todo:0})){
-    assert.deepEqual([...value.matchAll(new RegExp('^# '+key+' (\\d+)$','gm'))].map(m=>Number(m[1])),[n]);
-  }
+  const ids=[...value.matchAll(/^ok \d+ - ([A-Z0-9-]+)\b/gm)].map(m=>m[1]);
+  assert.deepEqual(ids,expected);
+  const summary=Object.fromEntries([...value.matchAll(/^# (tests|pass|fail|cancelled|skipped|todo) (\d+)$/gm)].map(m=>[m[1],Number(m[2])]));
+  assert.deepEqual(summary,{tests:count,pass:count,fail:0,cancelled:0,skipped:0,todo:0});
 }
 verifyTap(process.argv[2],'M06S05',96);
 verifyTap(process.argv[3],'M06S05G',16);
@@ -63,11 +62,10 @@ import {readFileSync} from 'node:fs';
 function verifyTap(path,prefix,count){
   const value=readFileSync(path,'utf8');
   const expected=Array.from({length:count},(_,i)=>prefix+'-'+String(i+1).padStart(2,'0'));
-  const pattern=new RegExp('^ok \\d+ - ('+prefix+'-\\d{2})\\b','gm');
-  assert.deepEqual([...value.matchAll(pattern)].map(m=>m[1]),expected);
-  for(const [key,n] of Object.entries({tests:count,pass:count,fail:0,cancelled:0,skipped:0,todo:0})){
-    assert.deepEqual([...value.matchAll(new RegExp('^# '+key+' (\\d+)$','gm'))].map(m=>Number(m[1])),[n]);
-  }
+  const ids=[...value.matchAll(/^ok \d+ - ([A-Z0-9-]+)\b/gm)].map(m=>m[1]);
+  assert.deepEqual(ids,expected);
+  const summary=Object.fromEntries([...value.matchAll(/^# (tests|pass|fail|cancelled|skipped|todo) (\d+)$/gm)].map(m=>[m[1],Number(m[2])]));
+  assert.deepEqual(summary,{tests:count,pass:count,fail:0,cancelled:0,skipped:0,todo:0});
 }
 verifyTap(process.argv[2],'M06S04',88);
 verifyTap(process.argv[3],'M06S03',80);
