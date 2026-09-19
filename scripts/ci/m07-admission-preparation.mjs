@@ -81,7 +81,7 @@ export function adaptS10(original) {
   const oldImport = "import {mkdtempSync,rmSync} from 'node:fs';";
   const newImport = "import {mkdtempSync,rmSync,existsSync} from 'node:fs';";
   const marker = "export function main(){\n  process.chdir(fileURLToPath(new URL('../../',import.meta.url)));\n  const head=git('rev-parse','HEAD').trim();assert.equal(git('status','--porcelain','--untracked-files=no').trim(),'','Clean tracked checkout');";
-  assert.equal(original.split(oldImport).length, 2, 'Expected one original M06 S10 fs import');
+  assert(original.startsWith(oldImport + '\n'), 'Expected exact top-level original M06 S10 fs import');
   assert.equal(original.split(marker).length, 2, 'Expected one original M06 S10 main marker');
   const replacement = `export function main(){
   process.chdir(fileURLToPath(new URL('../../',import.meta.url)));
@@ -102,7 +102,7 @@ export function adaptS10(original) {
     return currentHead;
   }
   const head=currentHead;assert.equal(git('status','--porcelain','--untracked-files=no').trim(),'','Clean tracked checkout');`;
-  return original.replace(oldImport,newImport).replace(marker,replacement);
+  return (newImport + original.slice(oldImport.length)).replace(marker,replacement);
 }
 
 export function validateS10Patch(original, actual) {
