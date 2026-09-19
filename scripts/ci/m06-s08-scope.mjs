@@ -83,7 +83,7 @@ export function s07SuccessorPatch(original){
     "  assert.deepEqual(actual,expected,successor?'Only exact additive S07 plus activated S08 configuration':'Only exact additive S07 configuration');",
     "}"
   ].join('\n');
-  assert(original.startsWith(marker));assert(original.endsWith(tail),'Exact S07 terminal CLI required');assert(original.includes(old),'Exact S07 config guard required');
+  assert(original.includes(marker),'Exact S07 fs import marker required');assert(original.endsWith(tail),'Exact S07 terminal CLI required');assert(original.includes(old),'Exact S07 config guard required');
   const prefix=original.slice(0,-tail.length).replace(marker,"import {mkdtempSync,rmSync,existsSync} from 'node:fs';").replace(old,next);
   return prefix+"if(process.argv[1] && resolve(process.argv[1])===fileURLToPath(import.meta.url)){\n  if(existsSync('docs/planning/m06-s08-execution.json')){\n    execFileSync(process.execPath,[resolve('scripts/ci/m06-s08-scope.mjs')],{stdio:'inherit'});\n  }else main();\n}\n";
 }
