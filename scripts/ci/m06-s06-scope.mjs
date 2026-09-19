@@ -20,7 +20,7 @@ export const NEW_FILES=Object.freeze([
   'packages/application/src/lifecycle/dependency-graph.ts','packages/application/test/m06-s06-dependency-graph.test.ts','packages/application/test/m06-s06-types.compile.ts',
   'scripts/ci/m06-s06-scope.mjs','tests/m06_s06_scope_test.mjs','tests/m06_s06_dependency_graph_test.sh','.github/workflows/m06-s06-dependency-graph.yml'
 ]);
-export const CHANGED_FILES=Object.freeze(['packages/application/src/lifecycle/index.ts','packages/application/package.json','packages/application/tsconfig.json','scripts/ci/m06-s05-scope.mjs']);
+export const CHANGED_FILES=Object.freeze(['packages/application/src/lifecycle/index.ts','packages/application/package.json','packages/application/tsconfig.json','scripts/ci/m06-s05-scope.mjs','scripts/ci/m06-s04-scope.mjs']);
 export const INDEX_APPEND="export { LifecycleDependencyNode, LifecycleDependencyEdge, LifecycleDependencyGraphSnapshot, LifecycleChangeEvent, LifecycleDependencyImpactTraversal, LifecycleDependencyNodeType, LifecycleDependencyEdgeKind, LifecycleDependencyImpactMode, LifecycleChangeType, LifecycleDependencyImpactOutcome, DEPENDENCY_GRAPH_OPERATION, DEPENDENCY_GRAPH_FIELD } from './dependency-graph.ts';\nexport type { LifecycleDependencyNodeInput, LifecycleDependencyEdgeInput, LifecycleDependencyGraphSnapshotInput, LifecycleChangeEventInput, DependencyImpactTraversalInput, DependencyImpactPathView, DependencyImpactVersionView, DependencyImpactCandidateView, DependencyCycleView, DependencyImpactTraversalView } from './dependency-graph.ts';\n";
 
 export function expectedRecord(){return {
@@ -50,7 +50,7 @@ export function validateExecution(value){assert.deepEqual(value,expectedRecord()
 export function validateDelta(entries){
   assert(Array.isArray(entries),'Delta array required');assert.equal(new Set(entries.map(e=>e.path)).size,entries.length,'Duplicate path');
   for(const e of entries){assert.equal(e.mode,'100644');assert(NEW_FILES.includes(e.path)||CHANGED_FILES.includes(e.path),'Unauthorized S06 path');assert.equal(e.status,NEW_FILES.includes(e.path)?'A':'M','No deletion rename or historical replacement');}
-  assert.deepEqual(entries.map(e=>e.path).sort(),[...NEW_FILES,...CHANGED_FILES].sort(),'Complete exact15-file S06 bundle required');
+  assert.deepEqual(entries.map(e=>e.path).sort(),[...NEW_FILES,...CHANGED_FILES].sort(),'Complete exact16-file S06 bundle required');
 }
 export function dispatchPatch(original){
   const marker="import {mkdtempSync,rmSync} from 'node:fs';",tail="if(process.argv[1] && resolve(process.argv[1])===fileURLToPath(import.meta.url))main();\n";
@@ -84,6 +84,47 @@ export function dispatchPatch(original){
   return prefix+"if(process.argv[1] && resolve(process.argv[1])===fileURLToPath(import.meta.url)){\n  if(existsSync('docs/planning/m06-s06-execution.json')){\n    execFileSync(process.execPath,[resolve('scripts/ci/m06-s06-scope.mjs')],{stdio:'inherit'});\n  }else main();\n}\n";
 }
 export function validateDispatch(original,actual){assert.equal(actual,dispatchPatch(original),'Only exact S06 successor dispatch permitted');}
+export function s04SuccessorPatch(original){
+  const old=[
+    "export function validateConfig(path,original,actual){",
+    "  const expected=structuredClone(original);",
+    "  const successor=existsSync('docs/planning/m06-s05-execution.json');",
+    "  if(path==='packages/application/package.json'){",
+    "    assert(!Object.hasOwn(expected.scripts,'test:m06s04'));expected.scripts['test:m06s04']='node --test test/m06-s04-renewal-case.test.ts';",
+    "    if(successor){assert(!Object.hasOwn(expected.scripts,'test:m06s05'));expected.scripts['test:m06s05']='node --test test/m06-s05-notification-policy.test.ts';}",
+    "  }",
+    "  else if(path==='packages/application/tsconfig.json'){",
+    "    assert(!expected.include.includes('test/m06-s04-types.compile.ts'));expected.include.push('test/m06-s04-types.compile.ts');",
+    "    if(successor){assert(!expected.include.includes('test/m06-s05-types.compile.ts'));expected.include.push('test/m06-s05-types.compile.ts');}",
+    "  }",
+    "  else throw new TypeError('Unknown additive configuration');",
+    "  assert.deepEqual(actual,expected,successor?'Only exact additive S04 plus activated S05 configuration':'Only exact additive S04 configuration');",
+    "}"
+  ].join('\n');
+  const next=[
+    "export function validateConfig(path,original,actual){",
+    "  const expected=structuredClone(original);",
+    "  const s05=existsSync('docs/planning/m06-s05-execution.json');",
+    "  const s06=existsSync('docs/planning/m06-s06-execution.json');",
+    "  if(s06&&!s05) throw new TypeError('S06 requires activated S05 predecessor');",
+    "  if(path==='packages/application/package.json'){",
+    "    assert(!Object.hasOwn(expected.scripts,'test:m06s04'));expected.scripts['test:m06s04']='node --test test/m06-s04-renewal-case.test.ts';",
+    "    if(s05){assert(!Object.hasOwn(expected.scripts,'test:m06s05'));expected.scripts['test:m06s05']='node --test test/m06-s05-notification-policy.test.ts';}",
+    "    if(s06){assert(!Object.hasOwn(expected.scripts,'test:m06s06'));expected.scripts['test:m06s06']='node --test test/m06-s06-dependency-graph.test.ts';}",
+    "  }",
+    "  else if(path==='packages/application/tsconfig.json'){",
+    "    assert(!expected.include.includes('test/m06-s04-types.compile.ts'));expected.include.push('test/m06-s04-types.compile.ts');",
+    "    if(s05){assert(!expected.include.includes('test/m06-s05-types.compile.ts'));expected.include.push('test/m06-s05-types.compile.ts');}",
+    "    if(s06){assert(!expected.include.includes('test/m06-s06-types.compile.ts'));expected.include.push('test/m06-s06-types.compile.ts');}",
+    "  }",
+    "  else throw new TypeError('Unknown additive configuration');",
+    "  assert.deepEqual(actual,expected,s06?'Only exact additive S04 plus activated S05/S06 configuration':s05?'Only exact additive S04 plus activated S05 configuration':'Only exact additive S04 configuration');",
+    "}"
+  ].join('\n');
+  assert(original.includes(old),'Exact activated S04 config guard required');
+  return original.replace(old,next);
+}
+export function validateS04Successor(original,actual){assert.equal(actual,s04SuccessorPatch(original),'Only exact S04 successor config compatibility patch permitted');}
 export function validateConfig(path,original,actual){
   const expected=structuredClone(original);
   if(path==='packages/application/package.json'){assert(!Object.hasOwn(expected.scripts,'test:m06s06'));expected.scripts['test:m06s06']='node --test test/m06-s06-dependency-graph.test.ts';}
@@ -113,6 +154,7 @@ export function main(){
   verifyClosedScope();validateDelta(changes(BASE,head));validateExecution(JSON.parse(at(head,RECORD)));
   assert.equal(git('rev-list',`${BASE}..${head}`,'--',RECORD).trim().split('\n').length,1,'S06 execution record immutable');
   validateDispatch(at(BASE,'scripts/ci/m06-s05-scope.mjs'),at(head,'scripts/ci/m06-s05-scope.mjs'));
+  validateS04Successor(at(BASE,'scripts/ci/m06-s04-scope.mjs'),at(head,'scripts/ci/m06-s04-scope.mjs'));
   for(const path of ['packages/application/package.json','packages/application/tsconfig.json'])validateConfig(path,JSON.parse(at(BASE,path)),JSON.parse(at(head,path)));
   validateBarrel(at(BASE,'packages/application/src/lifecycle/index.ts'),at(head,'packages/application/src/lifecycle/index.ts'));
   validateIndex(at(head,'docs/planning/M06_S06_TEST_INDEX.md'));
