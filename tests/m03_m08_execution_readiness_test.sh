@@ -87,9 +87,15 @@ else
     || fail 'M06 requires a valid separate admission decision'
 fi
 
-for f in docs/planning/M0{7,8}_EXECUTION_PACKAGE.md; do
-  grep -q 'IMPLEMENTATION BLOCKED' "$f" || fail "$f must remain implementation-blocked"
-done
+if [[ -f docs/planning/m07-admission-decision.json ]]; then
+  node scripts/ci/m07-admission.mjs
+else
+  grep -q 'IMPLEMENTATION BLOCKED' docs/planning/M07_EXECUTION_PACKAGE.md \
+    || fail 'M07 requires a valid separate admission decision'
+fi
+
+grep -q 'IMPLEMENTATION BLOCKED' docs/planning/M08_EXECUTION_PACKAGE.md \
+  || fail 'M08 must remain implementation-blocked'
 
 criteria_count="$(grep -Ec '^[0-9]+\.' docs/planning/M03_M08_EXECUTION_READINESS_MATRIX.md)"
 [[ "$criteria_count" -eq 72 ]] || fail "matrix must contain 72 criteria, got $criteria_count"
@@ -107,4 +113,4 @@ grep -qi 'review' docs/planning/M07_EXECUTION_PACKAGE.md || fail 'M07 review bou
 grep -qi 'legal' docs/planning/M07_EXECUTION_PACKAGE.md || fail 'M07 legal boundary missing'
 grep -q 'role/delegation never grants professional competence' docs/planning/M08_EXECUTION_PACKAGE.md || fail 'M08 competence boundary missing'
 
-printf 'M03-M08 EXECUTION READINESS: PASS / 72 OF 72 PLANNING CRITERIA / 60 DELIVERY SLICES / M03+M04+M05 MACHINE-ADMISSION AWARE / M06 SEPARATELY VALIDATED / M07-M08 BLOCKED / PHASE %s\n' "$phase"
+printf 'M03-M08 EXECUTION READINESS: PASS / 72 OF 72 PLANNING CRITERIA / 60 DELIVERY SLICES / M03+M04+M05 MACHINE-ADMISSION AWARE / M06 SEPARATELY VALIDATED / M07 SEPARATELY VALIDATED / M08 BLOCKED / PHASE %s\n' "$phase"

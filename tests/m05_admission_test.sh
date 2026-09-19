@@ -84,10 +84,15 @@ else
     || fail 'M06 requires a valid separate admission decision'
 fi
 
-for m in 07 08; do
-  grep -q 'IMPLEMENTATION BLOCKED' "docs/planning/M${m}_EXECUTION_PACKAGE.md" \
-    || fail "M${m} must remain implementation-blocked"
-done
+if [[ -f docs/planning/m07-admission-decision.json ]]; then
+  node scripts/ci/m07-admission.mjs
+else
+  grep -q 'IMPLEMENTATION BLOCKED' docs/planning/M07_EXECUTION_PACKAGE.md \
+    || fail 'M07 requires a valid separate admission decision'
+fi
+
+grep -q 'IMPLEMENTATION BLOCKED' docs/planning/M08_EXECUTION_PACKAGE.md \
+  || fail 'M08 must remain implementation-blocked'
 
 scope_boundary="$(jq -r '.scope_boundary' "$decision")"
 [[ "$scope_boundary" == *'transport does not grant trust'* ]] || fail 'transport/trust boundary missing'
@@ -100,4 +105,4 @@ scope_boundary="$(jq -r '.scope_boundary' "$decision")"
 bash tests/fv09_document_intake_test.sh
 bash tests/fv10_verification_test.sh
 
-printf 'M05 ADMISSION: PASS / M04 MERGE VERIFIED / M01 CONTRACTS + FV09/FV10 RUNTIME PRESENT / SLICE 01 CONDITIONALLY AUTHORIZED / M06 SEPARATELY VALIDATED / M07-M08 BLOCKED\n'
+printf 'M05 ADMISSION: PASS / M04 MERGE VERIFIED / M01 CONTRACTS + FV09/FV10 RUNTIME PRESENT / SLICE 01 CONDITIONALLY AUTHORIZED / M06 SEPARATELY VALIDATED / M07 SEPARATELY VALIDATED / M08 BLOCKED\n'
