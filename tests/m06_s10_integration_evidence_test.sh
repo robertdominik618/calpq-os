@@ -2,7 +2,22 @@
 set -euo pipefail
 cd "$(git rev-parse --show-toplevel)"
 [[ "$(bash scripts/governance_lifecycle_phase.sh)" == POST_FV00_IMPLEMENTATION ]]
-node scripts/ci/m06-s10-scope.mjs
+if git merge-base --is-ancestor f71bc084e6dc7778a13b0ad80b7637f6663005f8 HEAD && [[ -f docs/planning/m07-admission-preparation.json ]]; then
+  node scripts/ci/m07-admission-preparation.mjs
+  closed_root=$(mktemp -d)
+  closed_tree="$closed_root/closed-m06"
+  cleanup_closed_scope() {
+    git worktree remove --force "$closed_tree" >/dev/null 2>&1 || true
+    rm -rf "$closed_root"
+  }
+  trap cleanup_closed_scope EXIT
+  git worktree add --detach --quiet "$closed_tree" f71bc084e6dc7778a13b0ad80b7637f6663005f8
+  (cd "$closed_tree" && node scripts/ci/m06-s10-scope.mjs)
+  cleanup_closed_scope
+  trap - EXIT
+else
+  node scripts/ci/m06-s10-scope.mjs
+fi
 
 runtime=packages/application/test/m06-s10-integration-evidence.test.ts
 governance=tests/m06_s10_scope_test.mjs
