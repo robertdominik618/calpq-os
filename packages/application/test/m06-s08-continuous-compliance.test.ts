@@ -155,7 +155,7 @@ test('M06S08-016 unknown condition type rejected',()=>{assert.throws(()=>fact(sc
 test('M06S08-017 unknown condition state rejected',()=>{assert.throws(()=>fact(scopeFor(),{state:'MAGIC' as never}));});
 test('M06S08-018 unknown timing rejected',()=>{assert.throws(()=>fact(scopeFor(),{timing:'MAGIC' as never}));});
 test('M06S08-019 unknown source kind rejected',()=>{assert.throws(()=>fact(scopeFor(),{sourceKind:'MAGIC' as never}));});
-test('M06S08-020 condition fact requires exact scope',()=>{assert.throws(()=>ContinuousComplianceConditionFact.create({...fact(scopeFor()).toInput(),scope:{} as never}));});
+test('M06S08-020 condition fact requires exact scope',()=>{const base=fact(scopeFor());assert.throws(()=>ContinuousComplianceConditionFact.create({...base,scope:{} as never}));});
 test('M06S08-021 blocking flag must be boolean',()=>{assert.throws(()=>fact(scopeFor(),{blocking:'yes' as never}));});
 test('M06S08-022 action-required flag must be boolean',()=>{assert.throws(()=>fact(scopeFor(),{actionRequired:'yes' as never}));});
 test('M06S08-023 current fact effective time cannot be future',()=>{assert.throws(()=>fact(scopeFor(),{effectiveAt:FUTURE}));});
@@ -194,7 +194,7 @@ test('M06S08-055 evaluation instant matches request horizon',()=>{const s=scopeF
 test('M06S08-056 as-known horizon cannot exceed evaluation',()=>{const s=scopeFor(),f=fact(s);assert.throws(()=>project(s,[f],{asKnownAt:FUTURE}));});
 test('M06S08-057 max-facts budget explicit bounded',()=>{const s=scopeFor(),f=fact(s);assert.throws(()=>project(s,[f],{maxFacts:0}));assert.throws(()=>project(s,[f],{maxFacts:257}));});
 test('M06S08-058 fact scope must be exact projection scope',()=>{const a=scopeFor(),b=scopeFor(),f=fact(b);assert.throws(()=>project(a,[f]));});
-test('M06S08-059 future fact beyond projection horizon rejected',()=>{const s=scopeFor(),f=fact(s,{evaluatedAt:FUTURE,asKnownAt:FUTURE,effectiveAt:LATER,validUntil:null});assert.throws(()=>project(s,[f]));});
+test('M06S08-059 future fact beyond projection horizon rejected',()=>{const s=scopeFor(),f=fact(s,{evaluatedAt:FUTURE,asKnownAt:FUTURE,effectiveAt:T1,validUntil:null});assert.throws(()=>project(s,[f]));});
 test('M06S08-060 stale current fact is not optimistic compliance',()=>{const s=scopeFor(),f=fact(s,{evaluatedAt:T1,asKnownAt:T1,effectiveAt:T0,validUntil:T2}),v=project(s,[f]).toJSON();assert.equal(v.status,ContinuousComplianceStatus.INDETERMINATE);});
 test('M06S08-061 empty fact set yields indeterminate',()=>{const s=scopeFor();assert.equal(project(s,[]).toJSON().status,ContinuousComplianceStatus.INDETERMINATE);});
 test('M06S08-062 one verified current satisfied fact yields compliant',()=>{const s=scopeFor();assert.equal(project(s,[fact(s)]).toJSON().status,ContinuousComplianceStatus.COMPLIANT);});
