@@ -127,17 +127,21 @@ export function s04SuccessorPatch(original){
 export function validateS04Successor(original,actual){assert.equal(actual,s04SuccessorPatch(original),'Only exact S04 successor config compatibility patch permitted');}
 export function validateConfig(path,original,actual){
   const expected=structuredClone(original);
-  const successor=existsSync('docs/planning/m06-s07-execution.json');
+  const s07=existsSync('docs/planning/m06-s07-execution.json');
+  const s08=existsSync('docs/planning/m06-s08-execution.json');
+  if(s08&&!s07) throw new TypeError('S08 requires activated S07 predecessor');
   if(path==='packages/application/package.json'){
     assert(!Object.hasOwn(expected.scripts,'test:m06s06'));expected.scripts['test:m06s06']='node --test test/m06-s06-dependency-graph.test.ts';
-    if(successor){assert(!Object.hasOwn(expected.scripts,'test:m06s07'));expected.scripts['test:m06s07']='node --test test/m06-s07-selective-reevaluation.test.ts';}
+    if(s07){assert(!Object.hasOwn(expected.scripts,'test:m06s07'));expected.scripts['test:m06s07']='node --test test/m06-s07-selective-reevaluation.test.ts';}
+    if(s08){assert(!Object.hasOwn(expected.scripts,'test:m06s08'));expected.scripts['test:m06s08']='node --test test/m06-s08-continuous-compliance.test.ts';}
   }
   else if(path==='packages/application/tsconfig.json'){
     assert(!expected.include.includes('test/m06-s06-types.compile.ts'));expected.include.push('test/m06-s06-types.compile.ts');
-    if(successor){assert(!expected.include.includes('test/m06-s07-types.compile.ts'));expected.include.push('test/m06-s07-types.compile.ts');}
+    if(s07){assert(!expected.include.includes('test/m06-s07-types.compile.ts'));expected.include.push('test/m06-s07-types.compile.ts');}
+    if(s08){assert(!expected.include.includes('test/m06-s08-types.compile.ts'));expected.include.push('test/m06-s08-types.compile.ts');}
   }
   else throw new TypeError('Unknown additive configuration');
-  assert.deepEqual(actual,expected,successor?'Only exact additive S06 plus activated S07 configuration':'Only exact additive S06 configuration');
+  assert.deepEqual(actual,expected,s08?'Only exact additive S06 plus activated S07/S08 configuration':s07?'Only exact additive S06 plus activated S07 configuration':'Only exact additive S06 configuration');
 }
 export function validateIndex(value){assert.deepEqual([...value.matchAll(/^\| (M06S06-\d{3}) \|/gm)].map(m=>m[1]),Array.from({length:104},(_,i)=>`M06S06-${String(i+1).padStart(3,'0')}`),'104 ordered mandatory scenarios required');}
 export function validateBarrel(original,actual){assert.equal(actual,original+INDEX_APPEND,'Only exact additive dependency graph exports');}

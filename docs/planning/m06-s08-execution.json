@@ -1,0 +1,25 @@
+{
+  "schema_version": 1,
+  "decision_id": "CALPQ-M06-S08-EXEC-0001",
+  "milestone": "M06",
+  "slice": "S08",
+  "issue": 154,
+  "state": "ACTIVE_AFTER_VERIFIED_PREDECESSOR",
+  "approval_text": "SCHVALUJI MERGE PR #153 (Pull Request č. 153 – návrh na sloučení změn) A POKRAČOVÁNÍ NA M06 (milník 06) SLICE 08 (implementační část 08).",
+  "predecessor_pr": 153,
+  "predecessor_head": "7b74ff2f76ab924cca278e62ef25c5115a6b652e",
+  "predecessor_merge": "8608b3fbb1cfc5d443162e720cc73849eee91b91",
+  "owner_approval_reference": "https://github.com/robertdominik618/calpq-os/pull/153#issuecomment-5742239029",
+  "post_merge_evidence_reference": "https://github.com/robertdominik618/calpq-os/pull/153#issuecomment-5742334875",
+  "contract_commit": "9d13ca4e2d229cfe97add1eba8348c0654ac28c8",
+  "test_index_commit": "67f18a0157432faecfa1f1ae52e2fd71ce8d110c",
+  "authorized_execution_entry": "M06_SLICE_08_CONTINUOUS_COMPLIANCE",
+  "authorized_slices": [
+    "S08"
+  ],
+  "m06_accepted_slices": 7,
+  "v1_completed_plan_units": 67,
+  "v1_total_plan_units": 130,
+  "production_release_authorized": false,
+  "later_slices_authorized": false
+}

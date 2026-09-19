@@ -34,22 +34,26 @@ export function validateConfig(path,original,actual){
   const s05=existsSync('docs/planning/m06-s05-execution.json');
   const s06=existsSync('docs/planning/m06-s06-execution.json');
   const s07=existsSync('docs/planning/m06-s07-execution.json');
+  const s08=existsSync('docs/planning/m06-s08-execution.json');
   if(s06&&!s05) throw new TypeError('S06 requires activated S05 predecessor');
   if(s07&&!s06) throw new TypeError('S07 requires activated S06 predecessor');
+  if(s08&&!s07) throw new TypeError('S08 requires activated S07 predecessor');
   if(path==='packages/application/package.json'){
     assert(!Object.hasOwn(expected.scripts,'test:m06s04'));expected.scripts['test:m06s04']='node --test test/m06-s04-renewal-case.test.ts';
     if(s05){assert(!Object.hasOwn(expected.scripts,'test:m06s05'));expected.scripts['test:m06s05']='node --test test/m06-s05-notification-policy.test.ts';}
     if(s06){assert(!Object.hasOwn(expected.scripts,'test:m06s06'));expected.scripts['test:m06s06']='node --test test/m06-s06-dependency-graph.test.ts';}
     if(s07){assert(!Object.hasOwn(expected.scripts,'test:m06s07'));expected.scripts['test:m06s07']='node --test test/m06-s07-selective-reevaluation.test.ts';}
+    if(s08){assert(!Object.hasOwn(expected.scripts,'test:m06s08'));expected.scripts['test:m06s08']='node --test test/m06-s08-continuous-compliance.test.ts';}
   }
   else if(path==='packages/application/tsconfig.json'){
     assert(!expected.include.includes('test/m06-s04-types.compile.ts'));expected.include.push('test/m06-s04-types.compile.ts');
     if(s05){assert(!expected.include.includes('test/m06-s05-types.compile.ts'));expected.include.push('test/m06-s05-types.compile.ts');}
     if(s06){assert(!expected.include.includes('test/m06-s06-types.compile.ts'));expected.include.push('test/m06-s06-types.compile.ts');}
     if(s07){assert(!expected.include.includes('test/m06-s07-types.compile.ts'));expected.include.push('test/m06-s07-types.compile.ts');}
+    if(s08){assert(!expected.include.includes('test/m06-s08-types.compile.ts'));expected.include.push('test/m06-s08-types.compile.ts');}
   }
   else throw new TypeError('Unknown additive configuration');
-  assert.deepEqual(actual,expected,s07?'Only exact additive S04 plus activated S05/S06/S07 configuration':s06?'Only exact additive S04 plus activated S05/S06 configuration':s05?'Only exact additive S04 plus activated S05 configuration':'Only exact additive S04 configuration');
+  assert.deepEqual(actual,expected,s08?'Only exact additive S04 plus activated S05/S06/S07/S08 configuration':s07?'Only exact additive S04 plus activated S05/S06/S07 configuration':s06?'Only exact additive S04 plus activated S05/S06 configuration':s05?'Only exact additive S04 plus activated S05 configuration':'Only exact additive S04 configuration');
 }
 export function validateIndex(value){assert.deepEqual([...value.matchAll(/^\| (M06S04-\d{2}) \|/gm)].map(m=>m[1]),Array.from({length:88},(_,i)=>`M06S04-${String(i+1).padStart(2,'0')}`),'88 ordered mandatory scenarios required');}
 export function validateBarrel(original,actual){assert.equal(actual,original+INDEX_APPEND,'Only exact additive exports');}

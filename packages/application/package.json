@@ -45,6 +45,7 @@
     "test:m06s04": "node --test test/m06-s04-renewal-case.test.ts",
     "test:m06s05": "node --test test/m06-s05-notification-policy.test.ts",
     "test:m06s06": "node --test test/m06-s06-dependency-graph.test.ts",
-    "test:m06s07": "node --test test/m06-s07-selective-reevaluation.test.ts"
+    "test:m06s07": "node --test test/m06-s07-selective-reevaluation.test.ts",
+    "test:m06s08": "node --test test/m06-s08-continuous-compliance.test.ts"
   }
 }
