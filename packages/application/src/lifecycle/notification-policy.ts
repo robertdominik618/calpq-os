@@ -44,7 +44,7 @@ function opaque(value: string): string {
   if (typeof value !== 'string' || !/^[A-Za-z0-9][A-Za-z0-9._:-]{0,255}$/.test(value)) throw new TypeError('Bounded opaque reference required');
   return value;
 }
-function instant(value: UtcInstant): number {
+function boundedText(value: string, maximum = 2048): string {\n  if (typeof value !== 'string' || value.length === 0 || value.length > maximum) throw new TypeError('Bounded governed text reference required');\n  return value;\n}\nfunction instant(value: UtcInstant): number {
   if (!(value instanceof UtcInstant)) throw new TypeError('Explicit UtcInstant required');
   return value.toEpochMilliseconds();
 }
@@ -92,7 +92,7 @@ function stageTrigger(input: NotificationTrigger): NotificationTrigger {
   }
   if (input.kind === 'OBLIGATION_DUE') {
     exact(input, ['kind', 'occurrenceReference']);
-    return Object.freeze({ kind: input.kind, occurrenceReference: opaque(input.occurrenceReference) });
+    return Object.freeze({ kind: input.kind, occurrenceReference: boundedText(input.occurrenceReference) });
   }
   throw new TypeError('Unsupported notification trigger');
 }
@@ -167,7 +167,7 @@ export class LifecycleNotificationPolicy {
     if (selected === undefined) throw new TypeError('Unknown notification stage');
     const subject = this.basis.artifact.subject;
     if (subject === null) throw new TypeError('Notification basis requires subject');
-    if (typeof triggerIdentity !== 'string' || triggerIdentity.length === 0 || triggerIdentity.length > 1024) throw new TypeError('Bounded trigger identity required');
+    boundedText(triggerIdentity, 4096);
     return JSON.stringify([
       'calpq.notification.dedup.v1',
       this.basis.tenant.toString(),
@@ -225,7 +225,7 @@ export class NotificationObservation {
     if (instant(input.occurredAt) > instant(input.recordedAt)) throw new RangeError('Notification observation recording predates occurrence');
     const selected = input.policy.stages.find(value => value.id === input.stageId);
     if (selected === undefined) throw new TypeError('Notification observation uses foreign stage');
-    const triggerIdentity = typeof input.triggerIdentity === 'string' && input.triggerIdentity.length > 0 && input.triggerIdentity.length <= 1024 ? input.triggerIdentity : (() => { throw new TypeError('Bounded trigger identity required'); })();
+    const triggerIdentity = boundedText(input.triggerIdentity, 4096);
     if (opaque(input.audiencePurpose) !== selected.audiencePurpose) throw new TypeError('Notification audience mismatch');
     const expected = input.policy.deduplicationKey(selected.id, triggerIdentity);
     if (input.dedupKey !== expected) throw new TypeError('Notification deduplication identity mismatch');
