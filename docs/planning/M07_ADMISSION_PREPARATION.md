@@ -57,7 +57,7 @@ S01 begins only after a separate owner formal-admission/start approval, an appro
 
 ## CI transition review
 
-See `M07_CI_TRANSITION_REVIEW.md`. The closed M06 S10 scope remains validated at the accepted M06 anchor while every current-checkout M06 runtime/type/architecture regression continues to run on the M07 preparation head. No closed M06 evidence is widened to accept arbitrary successor paths.
+See `M07_CI_TRANSITION_REVIEW.md`. The final `scripts/ci/m06-s10-scope.mjs` guard is the single canonical successor-dispatch point already reached by the M06 admission and slice chains. Its M07 preparation wrapper validates the immutable closed M06 S10 scope in a detached worktree at the accepted M06 anchor, while each calling workflow continues its unchanged current-checkout runtime/type/architecture regressions on the M07 preparation head. No historical M06 allowlist is widened.
 
 ## Evidence and scope of validation
 

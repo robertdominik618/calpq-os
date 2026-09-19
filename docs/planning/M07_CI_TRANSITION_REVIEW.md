@@ -4,25 +4,27 @@ Status: `PREPARATION CONTRACT / FUTURE ADMISSION NOT ENABLED`
 Accepted M06 anchor: `f71bc084e6dc7778a13b0ad80b7637f6663005f8`.  
 Tracking #160.
 
-## Observed constraint
+## CI finding from the first preparation candidate
 
-`tests/m06_s10_integration_evidence_test.sh` invokes `scripts/ci/m06-s10-scope.mjs`. That historical scope validator intentionally proves the exact M06 S10 evidence delta from the accepted S09 predecessor through the current checkout. Any legitimate M07 preparation file added after M06 closure would therefore be rejected as an M06 S10 scope violation.
+The first executable preparation candidate wrapped only `tests/m06_s10_integration_evidence_test.sh`. The full PR matrix correctly demonstrated that this was too narrow: multiple historical M06 workflows reach `scripts/ci/m06-s10-scope.mjs` directly through their successor-dispatch chains. Those workflows therefore failed closed when they saw legitimate M07 preparation paths beyond the completed M06 S10 bundle.
 
-Weakening the M06 allowlist would destroy historical evidence. Skipping M06 S10 would drop current-checkout regression evidence. Neither is acceptable.
+This is retained as useful transition evidence. The failures do not justify weakening old scope allowlists or skipping predecessor workflows.
 
-## Narrow successor adaptation allowed by this preparation
+## Correct canonical successor boundary
 
-Only `tests/m06_s10_integration_evidence_test.sh` may receive the exact successor wrapper defined by the M07 preparation validator.
+`scripts/ci/m06-s10-scope.mjs` is the final M06 scope authority reached by the M06 admission and slice successor chain. Only that file may receive the exact successor wrapper defined by the M07 preparation validator.
 
-When the accepted M06 anchor is an ancestor and `m07-admission-preparation.json` exists, the wrapper must:
+When `m07-admission-preparation.json` exists on a descendant of the accepted M06 anchor, the wrapper must:
 
 1. run `scripts/ci/m07-admission-preparation.mjs` on the current checkout;
 2. create a detached temporary worktree at the immutable accepted M06 merge;
-3. execute the original closed `scripts/ci/m06-s10-scope.mjs` inside that worktree;
-4. remove the worktree;
-5. continue the unchanged M06 strict compilation, 136 integration scenarios, 16 governance scenarios, 28 readonly assertions and full predecessor regression chain on the current M07 preparation checkout.
+3. execute the original closed `scripts/ci/m06-s10-scope.mjs` from that accepted M06 checkout;
+4. require the original closed-scope PASS marker;
+5. remove the worktree and return success to the calling historical workflow.
 
-The historical M06 scope validator itself is not widened. No environment bypass, cached result, skipped runtime suite or alternate product checkout is introduced.
+Every M06 workflow then continues its own unchanged runtime, type, architecture and predecessor commands on the current M07 preparation checkout. The historical M06 S10 allowlist and execution record are never widened to include M07 files.
+
+The previously modified shell runner is restored byte-for-byte to its accepted M06 version. No environment bypass, cached result, skipped runtime suite or alternate product checkout is introduced.
 
 ## Required next transition before M07 implementation
 
