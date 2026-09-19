@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 set -euo pipefail
 fail(){ printf 'M01 REGULATORY RADAR: %s\n' "$1" >&2; exit 1; }
+phase="$(bash scripts/governance_lifecycle_phase.sh)"
+
 required=(
   docs/contracts/REGULATORY_RADAR_MODEL.md
   docs/contracts/ACTION_QUEUE_MODEL.md
@@ -19,6 +21,4 @@ grep -q 'MUST NOT automatically mean' docs/contracts/ACTION_QUEUE_MODEL.md || fa
 grep -q 'AI/OCR MAY' docs/contracts/HUMAN_REVIEW_CASE_MODEL.md || fail 'human review AI boundary missing'
 grep -q 'closed only after an auditable resolution basis exists' docs/prep/M01_REGULATORY_RADAR_BASELINE.md || fail 'closure evidence invariant missing'
 grep -q 'Historical decisions and resolutions are immutable' docs/prep/M01_REGULATORY_RADAR_BASELINE.md || fail 'history invariant missing'
-grep -q '"m00_release_status": "BLOCKED"' foundation/manifest.json || fail 'M00 unexpectedly released'
-grep -q '"feature_development": "FROZEN"' foundation/manifest.json || fail 'feature development unexpectedly enabled'
-printf 'M01 REGULATORY RADAR: PASS\n'
+printf 'M01 REGULATORY RADAR: PASS / PHASE %s\n' "$phase"

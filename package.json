@@ -12,8 +12,10 @@
     "check:foundation": "bash scripts/foundation_guard.sh",
     "check:m00": "bash scripts/m00_release_gate.sh",
     "audit:m00": "bash scripts/m00_readiness_audit.sh",
+    "status:governance": "bash scripts/post_ruleset_orchestrator.sh",
     "test:architecture": "bash tests/architecture_boundaries_test.sh",
     "test:governance": "bash tests/repository_governance_test.sh",
-    "test:foundation": "bash tests/foundation_guard_test.sh && bash tests/m00_release_gate_test.sh && bash tests/architecture_boundaries_test.sh && bash tests/m00_readiness_test.sh && bash tests/repository_governance_test.sh"
+    "test:orchestrator": "bash tests/post_ruleset_orchestrator_test.sh",
+    "test:foundation": "bash tests/foundation_guard_test.sh && bash tests/m00_release_gate_test.sh && bash tests/architecture_boundaries_test.sh && bash tests/m00_readiness_test.sh && bash tests/repository_governance_test.sh && bash tests/post_ruleset_orchestrator_test.sh"
   }
 }

@@ -1,6 +1,6 @@
 # CALPQ M05 Execution Package — Evidence & Verification Fabric
 
-Status: `PLANNING COMPLETE / IMPLEMENTATION BLOCKED`
+Status: `ADMITTED / IMPLEMENTATION AUTHORIZED AFTER MERGE + POST-MERGE GREEN`
 
 ## Objective
 Expand the M02 evidence pipeline into a production-grade universal intake, archive and verification fabric while preserving immutable originals and non-authoritative extraction.

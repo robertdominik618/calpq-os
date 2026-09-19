@@ -2,5 +2,13 @@
   "name": "@calpq/adapters",
   "version": "0.0.0",
   "private": true,
-  "type": "module"
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts",
+    "./test-support": "./test-support/index.ts"
+  },
+  "scripts": {
+    "test:fv08": "node --test test/fv08-migrations-delivery.test.ts",
+    "typecheck": "npx --yes --package=typescript@7.0.2 -- tsc -p tsconfig.json"
+  }
 }

@@ -3,6 +3,8 @@ set -euo pipefail
 
 fail() { printf 'M01 PASSPORT GAP: %s\n' "$1" >&2; exit 1; }
 
+phase="$(bash scripts/governance_lifecycle_phase.sh)"
+
 required=(
   docs/contracts/SUBJECT_PROFILE_PROFESSIONAL_PASSPORT.md
   docs/contracts/PASSPORT_EVIDENCE_PROJECTION.md
@@ -57,9 +59,6 @@ grep -q 'MUST NOT be silently transferred' docs/contracts/IDENTITY_MERGE_SPLIT_G
 grep -q 'AI/OCR may propose matches but cannot independently approve' docs/prep/M01_SUBJECT_IDENTITY_BASELINE.md || fail 'AI merge boundary missing'
 grep -q 'NOT_ADMITTED_FOR_IMPLEMENTATION' docs/prep/M01_SUBJECT_IDENTITY_TEST_MATRIX.md || fail 'subject identity admission boundary missing'
 
-grep -q '"m00_release_status": "BLOCKED"' foundation/manifest.json || fail 'M00 unexpectedly released'
-grep -q '"feature_development": "FROZEN"' foundation/manifest.json || fail 'feature development unexpectedly enabled'
-
 printf 'M01 SUBJECT IDENTITY: PASS\n'
 printf 'M01 DOCUMENT INTAKE: PASS\n'
-printf 'M01 PASSPORT GAP: PASS\n'
+printf 'M01 PASSPORT GAP: PASS / PHASE %s\n' "$phase"

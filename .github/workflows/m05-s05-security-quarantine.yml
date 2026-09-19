@@ -1,0 +1,62 @@
+name: M05 Slice 05 Security Quarantine
+
+on:
+  push:
+    paths:
+      - 'packages/application/src/security/**'
+      - 'packages/application/test/m05-s05-*'
+      - 'packages/application/package.json'
+      - 'packages/application/tsconfig.json'
+      - 'docs/planning/M05_S05_*.md'
+      - 'docs/contracts/DOCUMENT_INTAKE_SECURITY_PRIVACY_MODEL.md'
+      - 'docs/contracts/UNTRUSTED_CONTENT_AI_SECURITY_BOUNDARY.md'
+      - 'docs/contracts/SECURITY_MISUSE_CONTROLS.md'
+      - 'tests/m05_s05_security_quarantine_test.sh'
+      - 'tests/m05_s04_extraction_review_test.sh'
+      - 'tests/m05_s03_derived_extraction_test.sh'
+      - 'tests/m05_s02_original_archive_test.sh'
+      - 'tests/m05_s01_multi_channel_intake_test.sh'
+      - 'tests/fv09_document_intake_test.sh'
+      - 'tests/fv10_verification_test.sh'
+      - 'tests/m05_admission_test.sh'
+      - '.github/workflows/m05-s05-security-quarantine.yml'
+  pull_request:
+    paths:
+      - 'packages/application/src/security/**'
+      - 'packages/application/test/m05-s05-*'
+      - 'packages/application/package.json'
+      - 'packages/application/tsconfig.json'
+      - 'docs/planning/M05_S05_*.md'
+      - 'docs/contracts/DOCUMENT_INTAKE_SECURITY_PRIVACY_MODEL.md'
+      - 'docs/contracts/UNTRUSTED_CONTENT_AI_SECURITY_BOUNDARY.md'
+      - 'docs/contracts/SECURITY_MISUSE_CONTROLS.md'
+      - 'tests/m05_s05_security_quarantine_test.sh'
+      - 'tests/m05_s04_extraction_review_test.sh'
+      - 'tests/m05_s03_derived_extraction_test.sh'
+      - 'tests/m05_s02_original_archive_test.sh'
+      - 'tests/m05_s01_multi_channel_intake_test.sh'
+      - 'tests/fv09_document_intake_test.sh'
+      - 'tests/fv10_verification_test.sh'
+      - 'tests/m05_admission_test.sh'
+      - '.github/workflows/m05-s05-security-quarantine.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  m05-s05-security-quarantine:
+    name: M05 S05 security quarantine evidence
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+      - name: Set up Node.js 24 LTS
+        uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version-file: .node-version
+      - name: Run M05 Slice 05 evidence
+        shell: bash
+        run: bash tests/m05_s05_security_quarantine_test.sh

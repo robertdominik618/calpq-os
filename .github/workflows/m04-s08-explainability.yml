@@ -1,0 +1,60 @@
+name: M04 Slice 08 Explainability
+
+on:
+  push:
+    paths:
+      - 'packages/core/src/catalog/**'
+      - 'packages/core/src/provenance/**'
+      - 'packages/core/src/ids.ts'
+      - 'packages/core/src/index.ts'
+      - 'packages/core/package.json'
+      - 'packages/core/tsconfig.json'
+      - 'packages/core/test/m04-s08-*'
+      - 'docs/contracts/CATALOG_QUERY_EXPLAINABILITY.md'
+      - 'docs/contracts/GAP_NAVIGATOR_MODEL.md'
+      - 'docs/planning/M04_S08_*.md'
+      - 'docs/planning/M04_EXECUTION_PACKAGE.md'
+      - 'docs/planning/M04_ADMISSION_RECORD.md'
+      - 'docs/planning/m04-admission-decision.json'
+      - 'tests/m04_s08_explainability_test.sh'
+      - '.github/workflows/m04-s08-explainability.yml'
+      - 'scripts/governance_lifecycle_phase.sh'
+  pull_request:
+    paths:
+      - 'packages/core/src/catalog/**'
+      - 'packages/core/src/provenance/**'
+      - 'packages/core/src/ids.ts'
+      - 'packages/core/src/index.ts'
+      - 'packages/core/package.json'
+      - 'packages/core/tsconfig.json'
+      - 'packages/core/test/m04-s08-*'
+      - 'docs/contracts/CATALOG_QUERY_EXPLAINABILITY.md'
+      - 'docs/contracts/GAP_NAVIGATOR_MODEL.md'
+      - 'docs/planning/M04_S08_*.md'
+      - 'docs/planning/M04_EXECUTION_PACKAGE.md'
+      - 'docs/planning/M04_ADMISSION_RECORD.md'
+      - 'docs/planning/m04-admission-decision.json'
+      - 'tests/m04_s08_explainability_test.sh'
+      - '.github/workflows/m04-s08-explainability.yml'
+      - 'scripts/governance_lifecycle_phase.sh'
+
+permissions:
+  contents: read
+
+jobs:
+  m04-s08-explainability:
+    name: M04 S08 deterministic Explainability
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+      - name: Set up Node.js 24 LTS
+        uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version-file: .node-version
+      - name: Run M04 Slice 08 explainability evidence
+        shell: bash
+        run: bash tests/m04_s08_explainability_test.sh

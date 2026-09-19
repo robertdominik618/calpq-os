@@ -3,6 +3,8 @@ set -euo pipefail
 
 fail(){ printf 'M01 B2B ASSIGNMENT: %s\n' "$1" >&2; exit 1; }
 
+phase="$(bash scripts/governance_lifecycle_phase.sh)"
+
 required=(
   docs/contracts/ORGANIZATION_ROLE_DELEGATION_MODEL.md
   docs/contracts/ASSIGNMENT_REQUIREMENT_PROFILE.md
@@ -24,9 +26,6 @@ grep -q 'ASSIGNABLE_WITH_CONDITIONS' docs/contracts/B2B_ASSIGNMENT_GUARD.md || f
 grep -q 'MUST NOT be silently rewritten' docs/contracts/ASSIGNMENT_DECISION_EVIDENCE.md || fail 'immutable decision invariant missing'
 grep -q 'minimum-necessary disclosure' docs/prep/M01_B2B_ASSIGNMENT_BASELINE.md || fail 'privacy boundary missing'
 
-grep -q '"m00_release_status": "BLOCKED"' foundation/manifest.json || fail 'M00 unexpectedly released'
-grep -q '"feature_development": "FROZEN"' foundation/manifest.json || fail 'feature development unexpectedly enabled'
-
 bash tests/m01_continuous_compliance_test.sh
 
-printf 'M01 B2B ASSIGNMENT: PASS\n'
+printf 'M01 B2B ASSIGNMENT: PASS / PHASE %s\n' "$phase"

@@ -2,6 +2,8 @@
 set -euo pipefail
 fail(){ printf 'M03-M05 PLANNING READINESS: %s\n' "$1" >&2; exit 1; }
 
+phase="$(bash scripts/governance_lifecycle_phase.sh)"
+
 required=(
   docs/architecture/CALPQ_MILESTONE_ARCHITECTURE_M01_M12.md
   docs/planning/M03_PRODUCT_SURFACE_BASELINE.md
@@ -28,6 +30,4 @@ grep -q 'Trust Registry' docs/planning/M05_EVIDENCE_VERIFICATION_FABRIC_BASELINE
 grep -q 'M03 must not implement hidden eligibility logic' docs/planning/M03_M05_INTEGRATION_SEQUENCE.md || fail 'cross-milestone ownership rule missing'
 grep -q 'implementation remains blocked' docs/planning/M03_M05_READINESS_MATRIX.md || fail 'readiness matrix governance boundary missing'
 
-grep -q '"state": "LOCKED"' foundation/feature-development-gate.json || fail 'feature development gate must remain locked'
-
-printf 'M03-M05 PLANNING READINESS: PASS / 30 OF 30 CRITERIA / IMPLEMENTATION BLOCKED\n'
+printf 'M03-M05 PLANNING READINESS: PASS / 30 OF 30 CRITERIA / PHASE %s\n' "$phase"

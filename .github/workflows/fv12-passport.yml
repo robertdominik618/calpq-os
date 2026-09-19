@@ -1,0 +1,45 @@
+name: FV-12 Professional Passport
+
+on:
+  push:
+    paths:
+      - 'packages/application/src/passport/**'
+      - 'packages/application/test/fv12-*'
+      - 'packages/application/tsconfig.json'
+      - 'packages/core/**'
+      - 'tests/fv11_eligibility_test.sh'
+      - 'tests/fv12_professional_passport_test.sh'
+      - '.github/workflows/fv11-eligibility.yml'
+      - '.github/workflows/fv12-passport.yml'
+      - 'scripts/governance_lifecycle_phase.sh'
+  pull_request:
+    paths:
+      - 'packages/application/src/passport/**'
+      - 'packages/application/test/fv12-*'
+      - 'packages/application/tsconfig.json'
+      - 'packages/core/**'
+      - 'tests/fv11_eligibility_test.sh'
+      - 'tests/fv12_professional_passport_test.sh'
+      - '.github/workflows/fv11-eligibility.yml'
+      - '.github/workflows/fv12-passport.yml'
+      - 'scripts/governance_lifecycle_phase.sh'
+
+permissions:
+  contents: read
+
+jobs:
+  fv12-passport:
+    name: FV-12 Professional Passport projection
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Set up Node.js 24 LTS
+        uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version-file: .node-version
+      - name: Run FV-12 Professional Passport evidence
+        shell: bash
+        run: bash tests/fv12_professional_passport_test.sh

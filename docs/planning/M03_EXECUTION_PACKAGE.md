@@ -1,6 +1,6 @@
 # CALPQ M03 Execution Package — Professional Passport Product Surface
 
-Status: `PLANNING COMPLETE / IMPLEMENTATION BLOCKED`
+Status: `ADMITTED / IMPLEMENTATION AUTHORIZED`
 
 ## Objective
 Turn stable M02 read models into the first coherent CALPQ user experience without moving domain truth into UI code.
@@ -30,3 +30,14 @@ M03 owns presentation, interaction, read-model composition and user-facing expla
 
 ## Stop conditions
 Stop implementation if UI introduces hidden eligibility rules, infers legal validity from visual state, bypasses access/purpose controls, or depends directly on provider-specific payloads.
+
+## Formal admission
+- Transition: `CALPQ-M03-ADMIT-0001`.
+- Admission basis: reviewed/merged/post-merge-verified M02 commit `387dbfa0246d36e576ff15a6e5bb1016e051093c`.
+- Approved by: `robertdominik618`.
+- Approval text: `Schváleno další krok povolen` in the immediately preceding M03 admission context.
+- Approved at: `2026-09-15T10:57:00Z`.
+- Authorized execution entry: `M03_SLICE_01_DASHBOARD_READ_MODELS`.
+- Scope is limited to this M03 execution package. M04–M08 remain separately blocked and no AuthorizationGrant authority is introduced.
+
+The machine-readable companion is `docs/planning/m03-admission-decision.json`; the durable governance record is `docs/planning/M03_ADMISSION_RECORD.md`.

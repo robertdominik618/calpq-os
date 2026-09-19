@@ -1,0 +1,30 @@
+name: M06 Slice 09 Historical Replay
+
+on:
+  pull_request:
+    branches:
+      - planning/program-execution-m09-m12
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  m06-s09-historical-replay:
+    name: M06 S09 historical replay and predecessor evidence
+    runs-on: ubuntu-24.04
+    timeout-minutes: 35
+    steps:
+      - name: Checkout exact implementation head
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+          fetch-depth: 0
+      - name: Set up Node.js 24 LTS
+        uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38
+        with:
+          node-version-file: .node-version
+          check-latest: false
+      - name: Run M06 Slice 09 evidence
+        run: bash tests/m06_s09_historical_replay_test.sh

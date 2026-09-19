@@ -1,0 +1,30 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "target": "ES2024",
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "allowImportingTsExtensions": true,
+    "lib": ["ES2024"]
+  },
+  "include": [
+    "src/**/*.ts",
+    "test-support/**/*.ts",
+    "test/fv01-types.compile.ts",
+    "test/fv02-types.compile.ts",
+    "test/fv03-types.compile.ts",
+    "test/fv04-types.compile.ts",
+    "test/fv05-types.compile.ts",
+    "test/fv11-types.compile.ts",
+    "test/m04-s01-types.compile.ts",
+    "test/m04-s02-types.compile.ts",
+    "test/m04-s03-types.compile.ts",
+    "test/m04-s04-types.compile.ts",
+    "test/m04-s05-types.compile.ts",
+    "test/m04-s06-types.compile.ts",
+    "test/m04-s07-types.compile.ts",
+    "test/m04-s08-types.compile.ts",
+    "test/m04-s09-types.compile.ts",
+    "test/m04-s10-types.compile.ts"
+  ]
+}

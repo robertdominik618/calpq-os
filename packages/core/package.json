@@ -2,5 +2,27 @@
   "name": "@calpq/core",
   "version": "0.0.0",
   "private": true,
-  "type": "module"
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts",
+    "./test-support": "./test-support/index.ts"
+  },
+  "scripts": {
+    "test:fv01": "node --test test/fv01-primitives.test.ts",
+    "test:fv02": "node --test test/fv02-ports.test.ts",
+    "test:fv03": "node --test test/fv03-provenance.test.ts",
+    "test:fv04": "node --test test/fv04-transition-kernel.test.ts",
+    "test:fv05": "node --test test/fv05-credential-artifact.test.ts",
+    "test:m04s01": "node --test test/m04-s01-activity-profession-catalog.test.ts",
+    "test:m04s02": "node --test test/m04-s02-credential-requirement-catalog.test.ts",
+    "test:m04s03": "node --test test/m04-s03-requirement-set-versioning.test.ts",
+    "test:m04s04": "node --test test/m04-s04-qualification-path.test.ts",
+    "test:m04s05": "node --test test/m04-s05-catalog-provenance-binding.test.ts",
+    "test:m04s06": "node --test test/m04-s06-equivalence-recognition-review.test.ts",
+    "test:m04s07": "node --test test/m04-s07-gap-navigator.test.ts",
+    "test:m04s08": "node --test test/m04-s08-catalog-query-explainability.test.ts",
+    "test:m04s09": "node --test test/m04-s09-historical-version-replay.test.ts",
+    "test:m04s10": "node --test test/m04-s10-integration-evidence.test.ts",
+    "typecheck": "npx --yes --package=typescript@7.0.2 -- tsc -p tsconfig.json"
+  }
 }

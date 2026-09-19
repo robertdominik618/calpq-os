@@ -2,6 +2,7 @@
 set -euo pipefail
 
 fail(){ printf 'M01 SECURITY ARCHITECTURE: %s\n' "$1" >&2; exit 1; }
+phase="$(bash scripts/governance_lifecycle_phase.sh)"
 
 required=(
   docs/security/SECURITY_ARCHITECTURE_THREAT_MODEL.md
@@ -28,7 +29,4 @@ grep -q 'no permanent role elevation by break-glass' docs/contracts/PRIVILEGED_A
 grep -q 'security signals may trigger protective restrictions/review but do not directly rewrite credential/legal truth' docs/prep/M01_SECURITY_BASELINE.md || fail 'security signal boundary missing'
 grep -q 'PREP-0016 remains design-only' docs/prep/M01_SECURITY_TEST_MATRIX.md || fail 'admission boundary missing'
 
-grep -q '"m00_release_status": "BLOCKED"' foundation/manifest.json || fail 'M00 unexpectedly released'
-grep -q '"feature_development": "FROZEN"' foundation/manifest.json || fail 'feature development unexpectedly enabled'
-
-printf 'M01 SECURITY ARCHITECTURE: PASS\n'
+printf 'M01 SECURITY ARCHITECTURE: PASS / PHASE %s\n' "$phase"

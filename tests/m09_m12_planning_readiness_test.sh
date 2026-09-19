@@ -2,6 +2,8 @@
 set -euo pipefail
 fail(){ printf 'M09-M12 PLANNING READINESS: %s\n' "$1" >&2; exit 1; }
 
+phase="$(bash scripts/governance_lifecycle_phase.sh)"
+
 required=(
   docs/architecture/CALPQ_MILESTONE_ARCHITECTURE_M01_M12.md
   docs/planning/M09_TRUST_SHARING_INTEROPERABILITY_BASELINE.md
@@ -30,6 +32,5 @@ grep -q 'General Availability' docs/planning/M12_PRODUCTION_HARDENING_GA_BASELIN
 grep -q 'backup/restore' docs/planning/M12_PRODUCTION_HARDENING_GA_BASELINE.md || fail 'M12 recovery baseline missing'
 grep -q 'M09 owns disclosure' docs/planning/M09_M12_INTEGRATION_SEQUENCE.md || fail 'M09-M12 ownership rules missing'
 grep -q 'implementation remains blocked' docs/planning/M09_M12_READINESS_MATRIX.md || fail 'readiness governance boundary missing'
-grep -q '"state": "LOCKED"' foundation/feature-development-gate.json || fail 'feature development gate must remain locked'
 
-printf 'M09-M12 PLANNING READINESS: PASS / 40 OF 40 CRITERIA / IMPLEMENTATION BLOCKED\n'
+printf 'M09-M12 PLANNING READINESS: PASS / 40 OF 40 CRITERIA / PHASE %s\n' "$phase"

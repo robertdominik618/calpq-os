@@ -1,0 +1,22 @@
+{
+  "schema_version": 1,
+  "decision_id": "CALPQ-M06-S03-EXEC-0001",
+  "milestone": "M06",
+  "slice": "S03",
+  "issue": 143,
+  "state": "ACTIVE_AFTER_VERIFIED_PREDECESSOR",
+  "approval_text": "SCHVALUJI MERGE PR #142 A POKRAČOVÁNÍ NA M06 SLICE 03",
+  "predecessor_pr": 142,
+  "predecessor_head": "adfa67aa3f413060df0192be9e41e37f167c08f8",
+  "predecessor_merge": "06859ccf345c116457c917766488111449551394",
+  "predecessor_tree": "d72cf2eb05dbee0ce79de4b3e23183e7b3303e4d",
+  "owner_approval_reference": "https://github.com/robertdominik618/calpq-os/pull/142#issuecomment-5730619433",
+  "post_merge_evidence_reference": "https://github.com/robertdominik618/calpq-os/pull/142#issuecomment-5730814396",
+  "authorized_execution_entry": "M06_SLICE_03_RECURRING_OBLIGATION_MODEL",
+  "authorized_slices": ["S03"],
+  "m06_accepted_slices": 2,
+  "v1_completed_plan_units": 62,
+  "v1_total_plan_units": 130,
+  "production_release_authorized": false,
+  "later_slices_authorized": false
+}

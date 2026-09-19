@@ -1,6 +1,6 @@
 # CALPQ FV-01 Implementation Contract
 
-Status: `PLANNING ONLY / BLOCKED`
+Status: `IMPLEMENTED / VERIFIED`
 ID: `CALPQ-M02-FV01-IMPL-0001`
 
 ## Purpose
@@ -43,3 +43,18 @@ When coding becomes permitted, create the smallest coherent `packages/core/src/`
 - dependency checks prove Core remains framework/provider independent;
 - no later-phase capability enters the change;
 - all active Foundation, M01 and M02 guards remain green.
+
+## Implementation evidence
+FV-01 was implemented under formal FV-00 admission on `impl/m02-batch-a-core-kernel` / Draft PR #56.
+
+- A1 implementation: `d2357bf16b0e1b45ff548dd7ded82e6134beece0` — `feat(core): implement FV-01 semantic primitives`.
+- A2 executable proof: `7677c06b205c2842e8a9f8ec0a78a92587045fb3` — `test(core): add FV-01 executable contract evidence`.
+- Governance fixture forward-fix: `bfc0ecbe6ad15936d3e0445f4da1ad9ee610f654` — historical FROZEN self-tests remain source-empty without changing admitted source.
+- Dedicated CI: `FV-01 Core Primitives #3` — SUCCESS.
+- Foundation Guard #811 — SUCCESS.
+- M00 Readiness #690 — SUCCESS.
+- M02 Batch A Manifest #42 and M02 Batch Readiness #99 — SUCCESS.
+- Program Execution Readiness #113, M03-M08 #70, M09-M12 #59 and CALPQ v1 Execution Index #50 — SUCCESS.
+- No FV-01 mandatory test was waived and no scope exception was used.
+
+Result: all FV-01 Definition-of-Done conditions are satisfied. The next planned Batch A step is A3 / FV-02, provider-neutral `Clock` and `IdGenerator` ports with deterministic fakes.

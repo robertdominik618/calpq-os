@@ -1,6 +1,6 @@
 # FV-08 Test Index
 
-Status: `PLANNING ONLY / BLOCKED`
+Status: `16 OF 16 EXECUTABLE / VERIFIED`
 
 Mandatory count: 16.
 
@@ -20,3 +20,9 @@ Mandatory count: 16.
 14. poison-message-review
 15. no-global-order-assumption
 16. architecture-boundary
+
+## Verified evidence
+
+`packages/adapters/test/fv08-migrations-delivery.test.ts` maps one-to-one to FV08-01..FV08-16. `tests/fv08_migration_delivery_test.sh` independently verifies SHA-256 checksums from the migration manifest before running runtime and TypeScript evidence. `packages/adapters/test/fv08-types.compile.ts` proves migration and event identity immutability at compile time.
+
+Evidence head `93e0ba98f0497b67e8e5d0128055d4529c7b5ee3`; dedicated `FV-08 Migration Delivery #2` SUCCESS. No mandatory test was waived or deferred.

@@ -1,0 +1,13 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import { manifest, validateManifest, validateTap } from '../scripts/ci/m05-runtime-ledger.mjs';
+const ids = ['M05S10-01', 'M05S10-02'];
+const good = 'TAP version 13\nok 1 - M05S10-01 first\nok 2 - M05S10-02 second\n1..2\n# tests 2\n# pass 2\n# fail 0\n# cancelled 0\n# skipped 0\n# todo 0\n';
+test('ledger-01 exact ten-file manifest', () => { validateManifest(manifest); assert.equal(manifest.length, 10); });
+test('ledger-02 duplicate or invalid files fail', () => { assert.throws(() => validateManifest([manifest[0], manifest[0]])); assert.throws(() => validateManifest(['../untrusted.sh'])); assert.throws(() => validateManifest([])); });
+test('ledger-03 valid identities and complete TAP summaries pass', () => { assert.equal(validateTap(good, ids).pass, 2); });
+test('ledger-04 skipped and todo scenarios fail', () => { assert.throws(() => validateTap(good.replace('# skipped 0', '# skipped 1'), ids)); assert.throws(() => validateTap(good.replace('# todo 0', '# todo 1'), ids)); });
+test('ledger-05 failed or cancelled scenarios fail', () => { assert.throws(() => validateTap(good.replace('# fail 0', '# fail 1'), ids)); assert.throws(() => validateTap(good.replace('# cancelled 0', '# cancelled 1'), ids)); });
+test('ledger-06 incomplete or ambiguous summary fails', () => { assert.throws(() => validateTap(good.replace('# cancelled 0\n', ''), ids)); assert.throws(() => validateTap(good + '# pass 2\n', ids)); });
+test('ledger-07 count or identity substitution fails', () => { assert.throws(() => validateTap(good.replace('M05S10-02 second', 'M05S10-99 second'), ids)); assert.throws(() => validateTap(good.replace('# tests 2', '# tests 3'), ids)); });
+test('ledger-08 duplicate or missing expected identities fail', () => { assert.throws(() => validateTap(good, [ids[0], ids[0]])); assert.throws(() => validateTap(good, [])); });
