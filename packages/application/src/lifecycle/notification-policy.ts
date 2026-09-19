@@ -44,7 +44,11 @@ function opaque(value: string): string {
   if (typeof value !== 'string' || !/^[A-Za-z0-9][A-Za-z0-9._:-]{0,255}$/.test(value)) throw new TypeError('Bounded opaque reference required');
   return value;
 }
-function boundedText(value: string, maximum = 2048): string {\n  if (typeof value !== 'string' || value.length === 0 || value.length > maximum) throw new TypeError('Bounded governed text reference required');\n  return value;\n}\nfunction instant(value: UtcInstant): number {
+function boundedText(value: string, maximum = 2048): string {
+  if (typeof value !== 'string' || value.length === 0 || value.length > maximum) throw new TypeError('Bounded governed text reference required');
+  return value;
+}
+function instant(value: UtcInstant): number {
   if (!(value instanceof UtcInstant)) throw new TypeError('Explicit UtcInstant required');
   return value.toEpochMilliseconds();
 }
