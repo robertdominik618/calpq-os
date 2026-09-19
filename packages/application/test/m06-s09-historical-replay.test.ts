@@ -39,7 +39,7 @@ function anchor(overrides:Partial<LifecycleHistoricalDecisionAnchorInput>={}){
   return LifecycleHistoricalDecisionAnchor.create({
     reference:'anchor:1',targetType:LifecycleHistoricalReplayTargetType.CONTINUOUS_COMPLIANCE,targetReference:'target:1',originalDecisionReference:'decision:original',
     tenant:TENANT,organization:ORG,subject:SUBJECT,jurisdictionReference:'CZ',originalOutcome:'COMPLIANT',
-    evaluatedAt:ORIGINAL_EVAL,asKnownAt:ORIGINAL_KN,
+    evaluatedAt:ORIGINAL_EVAL,asKnownAt:ORIGINAL_KNOWN,
     ruleVersionReferences:['rule:v1'],sourceVersionReferences:['source:v1'],contractVersionReferences:['contract:v1'],evidenceReferences:['evidence:1'],
     provenanceReference:'prov:anchor',correlationReference:'corr:anchor',causationReference:'cause:anchor',implementationContractReference:'contract:impl:v1',inputComplete:true,
     ...overrides,
