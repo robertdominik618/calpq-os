@@ -224,7 +224,13 @@ export class LifecycleDependencyEdge {
   readonly knownAt: UtcInstant;
 
   private constructor(input: LifecycleDependencyEdgeInput) {
-    Object.assign(this, input);
+    this.id = input.id;
+    this.sourceReference = input.sourceReference;
+    this.targetReference = input.targetReference;
+    this.kind = input.kind;
+    this.impactMode = input.impactMode;
+    this.provenanceReference = input.provenanceReference;
+    this.knownAt = input.knownAt;
     Object.freeze(this);
   }
 
@@ -393,7 +399,21 @@ export class LifecycleChangeEvent {
   readonly causationReference: string | null;
 
   private constructor(input: LifecycleChangeEventInput) {
-    Object.assign(this, input);
+    this.id = input.id;
+    this.type = input.type;
+    this.graph = input.graph;
+    this.rootNodeReference = input.rootNodeReference;
+    this.tenant = input.tenant;
+    this.organization = input.organization;
+    this.subject = input.subject;
+    this.occurredAt = input.occurredAt;
+    this.observedAt = input.observedAt;
+    this.effectiveFrom = input.effectiveFrom;
+    this.verificationState = input.verificationState;
+    this.jurisdictionReference = input.jurisdictionReference;
+    this.provenanceReference = input.provenanceReference;
+    this.correlationReference = input.correlationReference;
+    this.causationReference = input.causationReference;
     Object.freeze(this);
   }
 
