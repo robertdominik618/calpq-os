@@ -31,7 +31,13 @@ index_count="$(grep -Ec '^\| M05S07-[0-9]{2} \|' "$index")"
 node --test "$runtime"
 npx --yes --package=typescript@7.0.2 -- tsc -p packages/application/tsconfig.json
 
-changed="$(git diff --name-only "$base"...HEAD)"
+scope_tip=HEAD
+if [[ -f docs/planning/m07-s01-activation.json ]]; then
+  node scripts/ci/m07-admission.mjs
+  scope_tip=1c379ba6a488d7a2dea5eb13ed987ebfb5e51b8b
+  git merge-base --is-ancestor "$scope_tip" HEAD || fail 'reviewed S07 merge must remain an ancestor of M07 successor'
+fi
+changed="$(git diff --name-only "$base"... "$scope_tip")"
 if grep -E '^packages/core/src/' <<<"$changed" >/dev/null; then fail 'S07 must not change production Core source'; fi
 if grep -E '^packages/adapters/src/' <<<"$changed" >/dev/null; then fail 'S07 must not implement concrete provider adapters'; fi
 
