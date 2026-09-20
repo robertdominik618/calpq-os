@@ -35,7 +35,7 @@ if [[ -f docs/planning/m07-s01-activation.json ]]; then
   scope_tip=7f479f9e5807ab3493b9183a6e1169d48bceda13
   git merge-base --is-ancestor "$scope_tip" HEAD || fail 'reviewed S06 merge must remain an ancestor of M07 successor'
 fi
-changed="$(git diff --name-only "$base"... "$scope_tip")"
+changed="$(git diff --name-only "${base}...${scope_tip}")"
 if grep -E '^packages/core/src/' <<<"$changed" >/dev/null; then fail 'S06 must not change production Core source'; fi
 if grep -E '^packages/adapters/src/' <<<"$changed" >/dev/null; then fail 'S06 must not implement concrete provider adapters'; fi
 
