@@ -39,7 +39,7 @@ Entry: `M07_SLICE_01_AUTHORITATIVE_SOURCE_REGISTRY`
 | M07S01-32 | No network/provider/persistence dependency is imported by S01 Core |
 | M07S01-33 | Regulatory barrel exports only approved S01 symbols |
 | M07S01-34 | S01 activation record validates against M07 admission identities |
-| M07S01-35 | S01 changed-path gate rejects Application, adapters, UI and arbitrary files |
+| M07S01-35 | S01 changed-path gate permits only product paths plus the explicitly approved successor-compatibility governance paths, rejecting Application, adapters, UI and arbitrary/unapproved historical files |
 | M07S01-36 | M07 admission regression remains PASS in S01 mode |
 | M07S01-37 | M08 remains implementation-blocked |
 | M07S01-38 | Architecture boundaries remain PASS |
