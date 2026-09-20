@@ -12,7 +12,13 @@ for ref in "$base" "$contract_commit" "$index_commit" "$tests_commit"; do git me
 first=$(git rev-list --reverse "$base"..HEAD -- "$source" | sed -n '1p')
 [[ -n "$first" ]]
 git merge-base --is-ancestor "$tests_commit" "${first}^"
-if git diff --name-only "$base"...HEAD | grep -Eq '^packages/(core/src/|adapters/)'; then echo 'S09 changes Core/provider adapters' >&2; exit 1; fi
+scope_tip=HEAD
+if [[ -f docs/planning/m07-s01-activation.json ]]; then
+  node scripts/ci/m07-admission.mjs
+  scope_tip=59a6f8df2a45f580f100aa6d8961187ca0af6c1e
+  git merge-base --is-ancestor "$scope_tip" HEAD
+fi
+if git diff --name-only "$base"... "$scope_tip" | grep -Eq '^packages/(core/src/|adapters/)'; then echo 'S09 changes Core/provider adapters' >&2; exit 1; fi
 if grep -En 'Date\.now\(|new Date\(|Math\.random\(|randomUUID\(|setTimeout\(|fetch\(|https?://|AuthorizationGrant|EligibilityAssessment|RecognitionDecision|from .(react|expo|fastify|openai|axios|node-fetch|@aws-sdk|@azure/)' "$source"; then echo 'S09 external-I/O or truth boundary violation' >&2; exit 1; fi
 node --input-type=module <<'NODE'
 import assert from 'node:assert/strict';
