@@ -38,6 +38,17 @@ export const S01_MODIFIED=Object.freeze([
   'tests/m05_s09_archive_lifecycle_test.sh',
   'tests/m06_s01_lifecycle_timeline_test.sh'
 ]);
+export const S01_EXECUTABLE_MODIFIED=Object.freeze([
+  'tests/m04_s10_integration_evidence_test.sh',
+  'tests/m05_s06_trust_registry_test.sh',
+  'tests/m05_s07_verification_route_registry_test.sh',
+  'tests/m05_s08_human_review_test.sh',
+  'tests/m05_s09_archive_lifecycle_test.sh',
+  'tests/m06_s01_lifecycle_timeline_test.sh'
+]);
+function expectedMode(stage,path){
+  return stage==='S01'&&S01_EXECUTABLE_MODIFIED.includes(path)?'100755':'100644';
+}
 
 export function expectedDecision(){return {
   schema_version:1,decision_id:'CALPQ-M07-ADM-DEC-0001',admission_record_id:'CALPQ-M07-ADM-0001',
@@ -102,7 +113,7 @@ export function validateScope(entries,stage='ADMISSION'){
   const added=stage==='ADMISSION'?ADDED:S01_ADDED;const modified=stage==='ADMISSION'?MODIFIED:S01_MODIFIED;
   assert.equal(new Set(entries.map(e=>e.path)).size,entries.length,'Duplicate changed path');
   for(const e of entries){
-    assert.equal(e.mode,'100644','Only regular non-executable files permitted');
+    assert.equal(e.mode,expectedMode(stage,e.path),'Unexpected file mode for authorized path: '+e.path);
     assert(added.includes(e.path)||modified.includes(e.path),'Unauthorized path: '+e.path);
     assert.equal(e.status,added.includes(e.path)?'A':'M','Deletion/rename/copy or historical mutation prohibited');
   }
