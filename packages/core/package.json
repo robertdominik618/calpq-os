@@ -5,6 +5,7 @@
   "type": "module",
   "exports": {
     ".": "./src/index.ts",
+    "./regulatory": "./src/regulatory/index.ts",
     "./test-support": "./test-support/index.ts"
   },
   "scripts": {
@@ -23,6 +24,7 @@
     "test:m04s08": "node --test test/m04-s08-catalog-query-explainability.test.ts",
     "test:m04s09": "node --test test/m04-s09-historical-version-replay.test.ts",
     "test:m04s10": "node --test test/m04-s10-integration-evidence.test.ts",
+    "test:m07s01": "node --test test/m07-s01-authoritative-source-registry.test.ts",
     "typecheck": "npx --yes --package=typescript@7.0.2 -- tsc -p tsconfig.json"
   }
 }
