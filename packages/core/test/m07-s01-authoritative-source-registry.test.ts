@@ -14,6 +14,7 @@ import {
   AuthoritativeSourceRegistry,
   AuthoritativeSourceRegistryStatus,
 } from '../src/regulatory/authoritative-source-registry.ts';
+import { validateScope } from '../../../scripts/ci/m07-admission.mjs';
 
 const SOURCE_A = '018f6f4c-4b9a-7a11-8a11-111111111111';
 const SOURCE_B = '018f6f4c-4b9a-7a11-8a11-222222222222';
@@ -272,11 +273,23 @@ test('M07S01-34 activation record binds exact M07 admission identities', () => {
   assert.equal(activation.admission_tree, '49ce26c80bd30e6bd5b3e66897f13bb17ad7d883');
 });
 
-test('M07S01-35 admission scope validator contains fail-closed S01 path set', () => {
-  const validator = readFileSync('scripts/ci/m07-admission.mjs', 'utf8');
-  assert(validator.includes('packages/core/src/regulatory/authoritative-source-registry.ts'));
-  assert(validator.includes("packages/application/src/regulatory/x.ts"));
-  assert(validator.includes('Unauthorized path:'));
+test('M07S01-35 admission scope validator accepts only authorized S01 paths', () => {
+  assert.doesNotThrow(() => validateScope([
+    {
+      path: 'packages/core/src/regulatory/authoritative-source-registry.ts',
+      status: 'A',
+      mode: '100644',
+    },
+  ], 'S01'));
+
+  for (const path of [
+    'packages/application/src/regulatory/x.ts',
+    'packages/adapters/src/regulatory/x.ts',
+    'apps/web/src/regulatory/x.ts',
+    'README.md',
+  ]) {
+    assert.throws(() => validateScope([{ path, status: 'M', mode: '100644' }], 'S01'));
+  }
 });
 
 test('M07S01-36 M07 admission validator supports S01 mode', () => {
