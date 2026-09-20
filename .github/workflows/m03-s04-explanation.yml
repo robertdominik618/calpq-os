@@ -1,0 +1,60 @@
+name: M03 Slice 04 Evidence Source Explanation
+
+on:
+  push:
+    paths:
+      - 'packages/application/src/explanation/**'
+      - 'packages/application/src/credential-card/**'
+      - 'packages/application/src/passport/**'
+      - 'packages/application/src/index.ts'
+      - 'packages/application/test/m03-s04-*'
+      - 'packages/application/tsconfig.json'
+      - 'packages/application/package.json'
+      - 'docs/planning/M03_S04_*.md'
+      - 'docs/planning/M03_S03_EXIT_EVIDENCE.md'
+      - 'docs/planning/m03-admission-decision.json'
+      - 'tests/m03_s04_explanation_test.sh'
+      - 'tests/m03_s03_credential_card_test.sh'
+      - 'tests/m03_s02_passport_summary_test.sh'
+      - 'tests/m03_s01_dashboard_read_models_test.sh'
+      - '.github/workflows/m03-s04-explanation.yml'
+      - 'scripts/governance_lifecycle_phase.sh'
+  pull_request:
+    paths:
+      - 'packages/application/src/explanation/**'
+      - 'packages/application/src/credential-card/**'
+      - 'packages/application/src/passport/**'
+      - 'packages/application/src/index.ts'
+      - 'packages/application/test/m03-s04-*'
+      - 'packages/application/tsconfig.json'
+      - 'packages/application/package.json'
+      - 'docs/planning/M03_S04_*.md'
+      - 'docs/planning/M03_S03_EXIT_EVIDENCE.md'
+      - 'docs/planning/m03-admission-decision.json'
+      - 'tests/m03_s04_explanation_test.sh'
+      - 'tests/m03_s03_credential_card_test.sh'
+      - 'tests/m03_s02_passport_summary_test.sh'
+      - 'tests/m03_s01_dashboard_read_models_test.sh'
+      - '.github/workflows/m03-s04-explanation.yml'
+      - 'scripts/governance_lifecycle_phase.sh'
+
+permissions:
+  contents: read
+
+jobs:
+  m03-s04-explanation:
+    name: M03 S04 evidence and source explanation / Why affordance
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+      - name: Set up Node.js 24 LTS
+        uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version-file: .node-version
+      - name: Run M03 Slice 04 explanation evidence
+        shell: bash
+        run: bash tests/m03_s04_explanation_test.sh

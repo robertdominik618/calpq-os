@@ -2,6 +2,7 @@
 set -euo pipefail
 
 fail(){ printf 'M01 PRIVACY LIFECYCLE: %s\n' "$1" >&2; exit 1; }
+phase="$(bash scripts/governance_lifecycle_phase.sh)"
 
 required=(
   docs/contracts/PRIVACY_LIFECYCLE_MODEL.md
@@ -20,7 +21,4 @@ grep -q 'Derived data' docs/contracts/PRIVACY_LIFECYCLE_MODEL.md || fail 'derive
 grep -q 'reapply current lifecycle restrictions' docs/contracts/PRIVACY_LIFECYCLE_MODEL.md || fail 'restore safety missing'
 grep -q 'Pseudonymised data is not treated as anonymous' docs/prep/M01_PRIVACY_LIFECYCLE_TEST_MATRIX.md || fail 'pseudonymisation boundary missing'
 
-grep -q '"m00_release_status": "BLOCKED"' foundation/manifest.json || fail 'M00 unexpectedly released'
-grep -q '"feature_development": "FROZEN"' foundation/manifest.json || fail 'feature development unexpectedly enabled'
-
-printf 'M01 PRIVACY LIFECYCLE: PASS\n'
+printf 'M01 PRIVACY LIFECYCLE: PASS / PHASE %s\n' "$phase"

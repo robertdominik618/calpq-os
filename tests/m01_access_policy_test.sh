@@ -2,6 +2,7 @@
 set -euo pipefail
 
 fail(){ printf 'M01 ACCESS GOVERNANCE: %s\n' "$1" >&2; exit 1; }
+phase="$(bash scripts/governance_lifecycle_phase.sh)"
 
 required=(
   docs/contracts/ACCESS_POLICY_MODEL.md
@@ -25,10 +26,7 @@ grep -q 'prefer a derived claim' docs/contracts/SELECTIVE_DISCLOSURE_GOVERNANCE.
 grep -q 'Extension: `CALPQ-M01-PREP-0012`' docs/contracts/PASSPORT_SELECTIVE_SHARING.md || fail 'PREP-0012 extension missing'
 grep -q 'Audit evidence does not grant future access' docs/prep/M01_ACCESS_POLICY_TEST_MATRIX.md || fail 'history boundary missing'
 
-grep -q '"m00_release_status": "BLOCKED"' foundation/manifest.json || fail 'M00 unexpectedly released'
-grep -q '"feature_development": "FROZEN"' foundation/manifest.json || fail 'feature development unexpectedly enabled'
-
 bash tests/m01_privacy_lifecycle_test.sh
 bash tests/m01_security_architecture_test.sh
 
-printf 'M01 ACCESS GOVERNANCE: PASS\n'
+printf 'M01 ACCESS GOVERNANCE: PASS / PHASE %s\n' "$phase"

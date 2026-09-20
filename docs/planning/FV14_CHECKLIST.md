@@ -1,6 +1,6 @@
 # FV-14 Readiness Checklist
 
-Status: `PLANNING ONLY / BLOCKED`
+Status: `20 OF 20 EXECUTABLE / VERIFIED`
 
 Required checks: 20.
 
@@ -24,3 +24,9 @@ Required checks: 20.
 18. Core independence
 19. Application mapping
 20. architecture boundary
+
+## Verified evidence
+
+`apps/api/test/fv14-rest-openapi.test.ts` maps one-to-one to FV14-01..FV14-20. `apps/api/test/fv14-types.compile.ts` proves immutable transport identity and response/request boundaries. `tests/fv14_rest_openapi_test.sh` enforces the admitted lifecycle, exact mandatory test count, strict TypeScript compilation, no database/provider/framework leakage, no transport-owned business policy and FV-13 regression safety.
+
+Dedicated workflow `FV-14 REST OpenAPI #6` completed SUCCESS with all 20 runtime checks and compile-time proof. No mandatory check was waived or deferred.

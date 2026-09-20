@@ -1,0 +1,37 @@
+name: FV-06 Application Layer
+
+on:
+  push:
+    paths:
+      - 'packages/application/**'
+      - 'packages/core/**'
+      - 'tests/fv06_application_layer_test.sh'
+      - '.github/workflows/fv06-application.yml'
+      - 'scripts/governance_lifecycle_phase.sh'
+  pull_request:
+    paths:
+      - 'packages/application/**'
+      - 'packages/core/**'
+      - 'tests/fv06_application_layer_test.sh'
+      - '.github/workflows/fv06-application.yml'
+      - 'scripts/governance_lifecycle_phase.sh'
+
+permissions:
+  contents: read
+
+jobs:
+  fv06-application:
+    name: FV-06 application context and use cases
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Set up Node.js 24 LTS
+        uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version-file: .node-version
+      - name: Run FV-06 Application evidence
+        shell: bash
+        run: bash tests/fv06_application_layer_test.sh

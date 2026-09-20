@@ -2,5 +2,12 @@
   "name": "@calpq/api",
   "version": "0.0.0",
   "private": true,
-  "type": "module"
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "test:fv14": "node --test test/fv14-rest-openapi.test.ts",
+    "typecheck": "npx --yes --package=typescript@7.0.2 -- tsc -p tsconfig.json"
+  }
 }

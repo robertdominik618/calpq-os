@@ -1,0 +1,30 @@
+name: M06 Slice 06 Dependency Graph
+
+on:
+  pull_request:
+    branches:
+      - planning/program-execution-m09-m12
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  m06-s06-dependency-graph:
+    name: M06 S06 dependency graph and predecessor evidence
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    steps:
+      - name: Checkout exact implementation head
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+          fetch-depth: 0
+      - name: Set up Node.js 24 LTS
+        uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38
+        with:
+          node-version-file: .node-version
+          check-latest: false
+      - name: Run M06 Slice 06 evidence
+        run: bash tests/m06_s06_dependency_graph_test.sh

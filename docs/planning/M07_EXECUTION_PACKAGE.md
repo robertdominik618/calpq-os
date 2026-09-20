@@ -1,6 +1,8 @@
 # CALPQ M07 Execution Package — Regulatory Intelligence & Radar
 
-Status: `PLANNING COMPLETE / IMPLEMENTATION BLOCKED`
+Status: `FORMALLY ADMITTED / S01 IMPLEMENTATION AUTHORIZED ONLY AFTER ADMISSION MERGE + POST-MERGE GREEN`
+
+Admission: `M07_ADMISSION_RECORD.md` and `m07-admission-decision.json`. Only S01 (Slice 01 – implementační část 01, registr autoritativních regulatorních zdrojů) is conditionally authorized; S02–S10 remain separately governed.
 
 ## Objective
 Convert authoritative regulatory/source changes into governed impact analysis without allowing parsers or AI to decide legal applicability by themselves.

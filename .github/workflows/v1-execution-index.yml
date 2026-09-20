@@ -1,0 +1,21 @@
+name: CALPQ v1 Execution Index
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  execution-index:
+    name: CALPQ v1 execution index readiness
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Validate CALPQ v1 execution index
+        shell: bash
+        run: bash tests/v1_execution_index_test.sh

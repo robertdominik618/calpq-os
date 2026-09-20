@@ -1,0 +1,30 @@
+name: M05 Slice 09 Archive Lifecycle
+
+on:
+  pull_request:
+    branches:
+      - planning/program-execution-m09-m12
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  m05-s09-archive-lifecycle:
+    name: M05 S09 archive retention linking snapshots and S08 regression
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - name: Checkout exact implementation head
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+          fetch-depth: 0
+      - name: Set up pinned Node.js
+        uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38
+        with:
+          node-version-file: .node-version
+          check-latest: false
+      - name: Run M05 Slice 09 and predecessor evidence
+        run: bash tests/m05_s09_archive_lifecycle_test.sh
