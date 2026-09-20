@@ -20,9 +20,9 @@ done
 
 first_source="$(git rev-list --reverse "$base"..HEAD -- packages/core/src/regulatory | sed -n '1p')"
 [[ -n "$first_source" ]]
-git show "\${first_source}^:$activation" >/dev/null
-git show "\${first_source}^:$contract" >/dev/null
-git show "\${first_source}^:$index" >/dev/null
+git show "${first_source}^:$activation" >/dev/null
+git show "${first_source}^:$contract" >/dev/null
+git show "${first_source}^:$index" >/dev/null
 
 node scripts/ci/m07-admission.mjs
 
