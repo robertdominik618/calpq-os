@@ -13,9 +13,16 @@ reviewed_s09_merge='160ed37e6e1e7264d1dd9843906c098758dbc7bb'
 git cat-file -e "${reviewed_s09_merge}^{commit}" 2>/dev/null || fail 'reviewed Slice 09 merge is unavailable'
 git merge-base --is-ancestor "$reviewed_s09_merge" HEAD || fail 'Slice 10 does not descend from reviewed Slice 09 merge'
 
-# S10 is deliberately evidence-only. Any new production Core logic belongs to a
-# separately admitted slice/milestone, not to the M04 integration closure.
-git diff --quiet "${reviewed_s09_merge}...HEAD" -- packages/core/src \
+scope_tip=HEAD
+if [[ -f docs/planning/m07-s01-activation.json ]]; then
+  node scripts/ci/m07-admission.mjs
+  scope_tip=d2f04aa2bcc68edf1d20deb345faa8a8c239e23d
+  git merge-base --is-ancestor "$scope_tip" HEAD || fail 'reviewed M04 closure must remain an ancestor of M07 successor'
+fi
+
+# S10 is deliberately evidence-only. Validate the immutable M04 closure itself;
+# a separately admitted successor is validated independently above.
+git diff --quiet "${reviewed_s09_merge}...${scope_tip}" -- packages/core/src \
   || fail 'S10 must not modify production Core source'
 
 command -v node >/dev/null 2>&1 || fail 'node is required'
