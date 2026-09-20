@@ -21,7 +21,7 @@ if [[ -f docs/planning/m07-s01-activation.json ]]; then
   scope_tip=6fe20885770ddaea879c666304f90c407b5a34eb
   git merge-base --is-ancestor "$scope_tip" HEAD
 fi
-if git diff --name-only "$base"... "$scope_tip" -- packages/core/src packages/adapters | grep -q .; then
+if git diff --name-only "${base}...${scope_tip}" -- packages/core/src packages/adapters | grep -q .; then
   echo 'M06 S01 cannot change Core or provider adapters' >&2; exit 1
 fi
 if grep -En 'Date\.now\(|new Date\(|Math\.random\(|randomUUID\(|setTimeout\(|fetch\(|from .node:|from .*(react|openai|anthropic|axios)|AuthorizationGrant|EligibilityAssessment' "$source"; then
