@@ -28,7 +28,16 @@ export const S01_ADDED=Object.freeze([
   'packages/core/test/m07-s01-authoritative-source-registry.test.ts','packages/core/test/m07-s01-types.compile.ts',
   'tests/m07_s01_authoritative_source_registry_test.sh','.github/workflows/m07-s01-authoritative-source-registry.yml'
 ]);
-export const S01_MODIFIED=Object.freeze(['packages/core/package.json','packages/core/tsconfig.json']);
+export const S01_MODIFIED=Object.freeze([
+  'packages/core/package.json','packages/core/tsconfig.json',
+  'scripts/ci/m07-admission.mjs','tests/m07_admission_test.mjs',
+  'tests/m04_s10_integration_evidence_test.sh',
+  'tests/m05_s06_trust_registry_test.sh',
+  'tests/m05_s07_verification_route_registry_test.sh',
+  'tests/m05_s08_human_review_test.sh',
+  'tests/m05_s09_archive_lifecycle_test.sh',
+  'tests/m06_s01_lifecycle_timeline_test.sh'
+]);
 
 export function expectedDecision(){return {
   schema_version:1,decision_id:'CALPQ-M07-ADM-DEC-0001',admission_record_id:'CALPQ-M07-ADM-0001',
