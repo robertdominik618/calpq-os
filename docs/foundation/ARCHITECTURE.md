@@ -46,3 +46,11 @@ Security, privacy, accessibility, observability, auditability, localization and 
 ## 7. Technology neutrality
 
 No concrete stack is approved by this document. Language, frameworks, storage engines and deployment model require a dedicated ADR and explicit approval.
+
+## 8. Accepted domain extension — CALPQ-EXPAT-0001 (2026-09-18)
+
+[Expat & Global Mobility](../architecture/CALPQ_EXPAT_0001_GLOBAL_MOBILITY.md) is the owner-approved complete target architecture for Život a práce v Česku / Living & Working in Czechia. [ADR-0004](../adr/ADR-0004-expat-global-mobility.md) binds its 24 functional areas, shared localization, reference-based MobilityCase, existing deterministic Core, evidence, recognition, Family, B2B, lifecycle and selective sharing boundaries.
+
+Normative extension contracts: [Mobility context](../contracts/EXPAT_MOBILITY_CONTEXT.md), [shared localization](../contracts/LOCALIZATION_SEMANTIC_PARITY.md), [privacy/safeguards](../security/EXPAT_PRIVACY_SAFEGUARD_MODEL.md). [Intake and delivery](../planning/CALPQ_EXPAT_0001_INTAKE_AND_DELIVERY.md) records complete scope, phase/milestone dependencies, separate implementation admission and [acceptance traceability](../planning/expat_scope.json).
+
+This dated addition does not change the original Foundation text, the accepted technology ADR, milestone admission, AuthorizationGrant semantics or production readiness. Historical status prose must be read with current governance records; documentation drift is separately tracked in #129. This extension is repository architecture, not a deployed feature or a legal-rule publication.
