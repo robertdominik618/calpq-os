@@ -67,6 +67,25 @@ Only these implementation paths are authorized by S01:
 - `.github/workflows/m07-s01-authoritative-source-registry.yml`
 - `docs/planning/M07_S01_EXIT_EVIDENCE.md`
 
+### Owner-approved successor-compatibility governance extension
+
+Authority: `CALPQ-PROMPT-0015`.
+
+The following pre-existing governance/test paths may be modified **only** to make their closed historical scope checks successor-aware while preserving their original evidence and runtime assertions:
+
+- `scripts/ci/m07-admission.mjs`;
+- `tests/m07_admission_test.mjs`;
+- `tests/m04_s10_integration_evidence_test.sh`;
+- `tests/m05_s06_trust_registry_test.sh`;
+- `tests/m05_s07_verification_route_registry_test.sh`;
+- `tests/m05_s08_human_review_test.sh`;
+- `tests/m05_s09_archive_lifecycle_test.sh`;
+- `tests/m06_s01_lifecycle_timeline_test.sh`.
+
+Successor compatibility is fail-closed: an active M07/S01 checkout must first pass the exact current `m07-admission.mjs` validator; each historical guard then evaluates its own immutable historical slice interval ending at its reviewed successor/closure merge. Historical decisions, artifacts, tests and source remain unchanged.
+
+No other historical governance path is authorized by `CALPQ-PROMPT-0015`.
+
 Different paths require a separate reviewed scope change.
 
 ## Explicit exclusions
