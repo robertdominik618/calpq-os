@@ -26,7 +26,7 @@ if [[ -f docs/planning/m07-s01-activation.json ]]; then
   scope_tip=a65975f7d5bf277da8e0018f436d3c9745bdadbf
   git merge-base --is-ancestor "$scope_tip" HEAD
 fi
-if git diff --name-only "$base"... "$scope_tip" | grep -Eq '^packages/(core/src/|adapters/)'; then
+if git diff --name-only "${base}...${scope_tip}" | grep -Eq '^packages/(core/src/|adapters/)'; then
   echo 'S08 must not change production Core or provider adapters' >&2; exit 1
 fi
 if grep -En 'Date\.now\(|new Date\(|Math\.random\(|randomUUID\(|setTimeout\(|fetch\(|from .(react|react-native|expo|fastify|openai|@anthropic-ai|axios|node-fetch|@aws-sdk|@google-cloud|@azure/)|https?://|api[_-]?key|access[_-]?token|client[_-]?secret|AuthorizationGrant|EligibilityAssessment|RecognitionDecision' "$source"; then
