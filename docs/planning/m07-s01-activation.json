@@ -1,0 +1,16 @@
+{
+  "schema_version": 1,
+  "milestone": "M07",
+  "slice": "S01",
+  "state": "ACTIVE_AFTER_VERIFIED_ADMISSION",
+  "decision_id": "CALPQ-M07-ADM-DEC-0001",
+  "authorized_execution_entry": "M07_SLICE_01_AUTHORITATIVE_SOURCE_REGISTRY",
+  "admission_pr": 163,
+  "admission_head": "35e461e6e6c095c7cfea5a7bb5fa922ac0488c4c",
+  "admission_merge": "3882c146634869a817509f4bc8441738185ce257",
+  "admission_tree": "49ce26c80bd30e6bd5b3e66897f13bb17ad7d883",
+  "owner_merge_approval_reference": "https://github.com/robertdominik618/calpq-os/pull/163#issuecomment-5748427897",
+  "post_merge_evidence_reference": "https://github.com/robertdominik618/calpq-os/pull/163#issuecomment-5748442304",
+  "production_release_authorized": false,
+  "legal_interpretation_authorized": false
+}
