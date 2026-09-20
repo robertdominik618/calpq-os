@@ -21,21 +21,21 @@ Each source record MUST preserve, at minimum:
 4. jurisdiction;
 5. affected domain;
 6. source type/classification;
-7. source version identity where known;
+7. source version identity;
 8. publication date where known;
-9. retrieval instant where known;
+9. explicit retrieval instant from the existing `SourceReference` primitive;
 10. effective-from and effective-to bounds where known;
 11. verification/review state;
 12. provenance back to the source material;
 13. explicit review reason where status is stale or review-required.
 
-Supported verification semantics are closed to:
+Supported registry verification semantics are closed to:
 
 - `VERIFIED`;
 - `UNVERIFIED`;
 - `STALE_REVIEW_REQUIRED`.
 
-The public label `STALE/REVIEW_REQUIRED` from `CALPQ-REG-0001` maps to the machine-safe enum member `STALE_REVIEW_REQUIRED`.
+The public label `STALE/REVIEW_REQUIRED` from `CALPQ-REG-0001` maps to the machine-safe registry status `STALE_REVIEW_REQUIRED`. The existing Core `VerificationState` remains the underlying source-state primitive.
 
 ## Deterministic invariants
 
@@ -43,13 +43,14 @@ The public label `STALE/REVIEW_REQUIRED` from `CALPQ-REG-0001` maps to the machi
 - A VERIFIED source is not automatically an applicable legal rule.
 - Parser, OCR, AI summary, classifier confidence or candidate mapping cannot upgrade a source to VERIFIED.
 - Effective dates are distinct from publication, retrieval, verification and evaluation instants.
+- Retrieval time is never invented: a registry source must carry the explicit `SourceReference.retrievedAt` already required by Core.
 - Historical evaluations retain their historical source/version references.
-- Unknown dates remain unknown; no date is invented.
+- Unknown optional dates remain unknown; no optional date is invented.
 - Canonical references are preserved as supplied after deterministic validation; the Core does not dereference URLs.
 - Source identity and source version identity are separate concepts.
 - Duplicate source identities are rejected by registry construction.
-- Duplicate canonical references are allowed only when source identities are distinct and the caller explicitly models distinct versions/records.
-- `effective_to` earlier than `effective_from` is invalid.
+- Duplicate canonical references are allowed when source identities are distinct, allowing explicit versioned records.
+- `effectiveTo` earlier than `effectiveFrom` is invalid.
 - No mutable singleton, network access, filesystem access, clock access or provider dependency is permitted in Core.
 
 ## Allowed product paths
