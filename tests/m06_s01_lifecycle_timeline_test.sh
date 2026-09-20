@@ -15,7 +15,13 @@ first_source=$(git rev-list --reverse "$base"..HEAD -- packages/application/src/
 [[ -n "$first_source" ]]
 git merge-base --is-ancestor "$contract" "${first_source}^"
 for file in "$source" "$runtime" "$compile" "$index" docs/planning/M06_S01_IMPLEMENTATION_CONTRACT.md docs/planning/M06_S01_EXIT_EVIDENCE.md; do [[ -s "$file" ]]; done
-if git diff --name-only "$base"...HEAD -- packages/core/src packages/adapters | grep -q .; then
+scope_tip=HEAD
+if [[ -f docs/planning/m07-s01-activation.json ]]; then
+  node scripts/ci/m07-admission.mjs
+  scope_tip=6fe20885770ddaea879c666304f90c407b5a34eb
+  git merge-base --is-ancestor "$scope_tip" HEAD
+fi
+if git diff --name-only "$base"... "$scope_tip" -- packages/core/src packages/adapters | grep -q .; then
   echo 'M06 S01 cannot change Core or provider adapters' >&2; exit 1
 fi
 if grep -En 'Date\.now\(|new Date\(|Math\.random\(|randomUUID\(|setTimeout\(|fetch\(|from .node:|from .*(react|openai|anthropic|axios)|AuthorizationGrant|EligibilityAssessment' "$source"; then
