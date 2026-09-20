@@ -14,9 +14,9 @@ const tap=readFileSync(process.argv[2],'utf8');
 const expected=Array.from({length:24},(_,i)=>`M07PREPTEST-${String(i+1).padStart(2,'0')}`);
 assert.deepEqual([...tap.matchAll(/^ok \d+ - (M07PREPTEST-\d{2})\b/gm)].map(m=>m[1]),expected);
 NODE
-printf 'M07 PREPARATION: 24/24 governance validator tests PASS; formal admission remains separate.\n'
+printf 'M07 PREPARATION: 24/24 historical preparation-validator tests PASS; successor admission is checked separately.\n'
 printf 'Run unchanged M04 final integration evidence on current preparation checkout.\n'
 bash tests/m04_s10_integration_evidence_test.sh
 printf 'Run M06 final integration evidence with immutable closed-scope proof and current-checkout regressions.\n'
 bash tests/m06_s10_integration_evidence_test.sh
-printf 'M07 PREPARATION REGRESSION PASS / SOURCE GOVERNANCE + M04 + M06 PREREQUISITES / IMPLEMENTATION STILL BLOCKED / FULL PR MATRIX REQUIRED\n'
+printf 'M07 PREPARATION REGRESSION PASS / SOURCE GOVERNANCE + M04 + M06 PREREQUISITES / SUCCESSOR CHECKED SEPARATELY / FULL PR MATRIX REQUIRED\n'

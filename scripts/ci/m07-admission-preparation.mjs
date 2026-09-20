@@ -145,6 +145,10 @@ function git(...args) {
 
 export function main() {
   process.chdir(fileURLToPath(new URL('../../', import.meta.url)));
+  if (existsSync('docs/planning/m07-admission-decision.json')) {
+    execFileSync(process.execPath, [resolve('scripts/ci/m07-admission.mjs')], {stdio:'inherit'});
+    return git('rev-parse','HEAD').trim();
+  }
   const head = git('rev-parse','HEAD').trim();
   assert.equal(git('status','--porcelain','--untracked-files=no').trim(), '', 'Tracked checkout must be clean');
 
