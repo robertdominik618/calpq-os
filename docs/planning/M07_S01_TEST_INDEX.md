@@ -9,12 +9,12 @@ Entry: `M07_SLICE_01_AUTHORITATIVE_SOURCE_REGISTRY`
 | M07S01-02 | Accept a fully populated VERIFIED authoritative-source record |
 | M07S01-03 | Accept STALE_REVIEW_REQUIRED with explicit review reason |
 | M07S01-04 | Reject unknown verification state |
-| M07S01-05 | Reject empty stable source identity |
-| M07S01-06 | Reject empty issuer identity |
+| M07S01-05 | Reject invalid stable source identity |
+| M07S01-06 | Reject invalid issuer identity |
 | M07S01-07 | Reject empty canonical reference |
-| M07S01-08 | Reject empty jurisdiction |
+| M07S01-08 | Reject unknown jurisdiction |
 | M07S01-09 | Reject empty affected domain |
-| M07S01-10 | Reject empty source classification |
+| M07S01-10 | Reject unknown source classification |
 | M07S01-11 | Preserve source version identity separately from source identity |
 | M07S01-12 | Preserve publication date without treating it as effective date |
 | M07S01-13 | Preserve retrieval instant without treating it as verification instant |
@@ -22,12 +22,12 @@ Entry: `M07_SLICE_01_AUTHORITATIVE_SOURCE_REGISTRY`
 | M07S01-15 | Preserve effective-to independently |
 | M07S01-16 | Reject effective-to earlier than effective-from |
 | M07S01-17 | Allow unknown publication date |
-| M07S01-18 | Allow unknown retrieval instant |
+| M07S01-18 | Reject missing retrieval instant instead of inventing one |
 | M07S01-19 | Allow unknown effective bounds |
 | M07S01-20 | Require review reason for STALE_REVIEW_REQUIRED |
 | M07S01-21 | Do not require review reason for VERIFIED |
 | M07S01-22 | Do not require review reason for UNVERIFIED |
-| M07S01-23 | Preserve provenance reference |
+| M07S01-23 | Preserve provenance through the underlying SourceReference |
 | M07S01-24 | Reject duplicate source identities when building a registry |
 | M07S01-25 | Resolve an existing source deterministically by source identity |
 | M07S01-26 | Return explicit absence for an unknown source identity |
