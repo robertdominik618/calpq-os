@@ -19,7 +19,13 @@ const requiredDocs = [
   "docs/contracts/ai/AI_TASK_CONTRACT.schema.json",
   "docs/contracts/ai/PROVIDER_RATE_CARD.schema.json",
   "docs/contracts/ai/AI_USAGE_RECORD.schema.json",
-  "docs/planning/AI_ECONOMY_COST_GOVERNANCE_TRACEABILITY.md"
+  "docs/planning/AI_ECONOMY_COST_GOVERNANCE_TRACEABILITY.md",
+  "docs/foundation/CONSTITUTION.md",
+  "docs/foundation/ARCHITECTURE.md",
+  "docs/foundation/BOOK.md",
+  "docs/planning/M10_INTELLIGENCE_GUIDED_DECISIONS_BASELINE.md",
+  "docs/planning/M10_EXECUTION_PACKAGE.md",
+  "docs/architecture/CALPQ_MILESTONE_ARCHITECTURE_M01_M12.md"
 ];
 
 const requiredTokens = new Map([
@@ -36,7 +42,11 @@ const requiredTokens = new Map([
   ["docs/contracts/AI_COST_BUDGET_RESERVATION_SETTLEMENT.md", ["PROJECT_PROMOTIONAL_BUDGET", "Subscription/premium never means unlimited external AI", "MINIMUM_CONTRIBUTION_MARGIN"]],
   ["docs/contracts/AI_USAGE_LEDGER_RATE_CARD.md", ["unfundedCost = 0", "AI Cost Attribution Rate = 100%", "never hard-coded"]],
   ["docs/contracts/AI_ROUTING_CACHE_EVALUATION.md", ["PUBLIC_SHARED", "PRIVATE_USER", "Single-flight", "RAG/context minimization"]],
-  ["docs/contracts/AI_OPERATIONAL_CONTROLS_FINOPS.md", ["Spend anomaly guard", "all external AI", "Unfunded External AI Spend = 0"]]
+  ["docs/contracts/AI_OPERATIONAL_CONTROLS_FINOPS.md", ["Spend anomaly guard", "all external AI", "Unfunded External AI Spend = 0"]],
+  ["docs/foundation/CONSTITUTION.md", ["DETERMINISTIC BEFORE GENERATIVE AI", "UNFUNDED EXTERNAL AI SPEND = 0", "AI consumption budget"]],
+  ["docs/foundation/ARCHITECTURE.md", ["AI economic control plane", "AI Cost Governor", "Budget Reservation"]],
+  ["docs/planning/M10_INTELLIGENCE_GUIDED_DECISIONS_BASELINE.md", ["Economic execution boundary", "UNFUNDED EXTERNAL AI SPEND = 0"]],
+  ["docs/planning/M10_EXECUTION_PACKAGE.md", ["central AI Gateway", "successful budget reservation"]]
 ]);
 
 const fundingSources = new Set(["USER", "ORGANIZATION", "PARTNER", "PROJECT_PROMOTIONAL_BUDGET"]);
