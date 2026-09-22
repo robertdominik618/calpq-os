@@ -1,0 +1,143 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://calpq.local/schemas/ai/AI_USAGE_RECORD.schema.json",
+  "title": "CALPQ AI Usage Record",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "usageId",
+    "requestId",
+    "featureId",
+    "taskType",
+    "fundingSource",
+    "payerId",
+    "provider",
+    "model",
+    "executionTier",
+    "inputUnits",
+    "cachedInputUnits",
+    "outputUnits",
+    "toolUnits",
+    "providerCost",
+    "variableInfrastructureCost",
+    "chargedAmount",
+    "revenue",
+    "currency",
+    "rateCardVersion",
+    "budgetReservationId",
+    "cacheHit",
+    "createdAt",
+    "unfundedCost"
+  ],
+  "properties": {
+    "usageId": {
+      "type": "string",
+      "minLength": 1
+    },
+    "requestId": {
+      "type": "string",
+      "minLength": 1
+    },
+    "userId": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "organizationId": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "featureId": {
+      "type": "string",
+      "minLength": 1
+    },
+    "taskType": {
+      "type": "string",
+      "minLength": 1
+    },
+    "fundingSource": {
+      "enum": [
+        "USER",
+        "ORGANIZATION",
+        "PARTNER",
+        "PROJECT_PROMOTIONAL_BUDGET"
+      ]
+    },
+    "payerId": {
+      "type": "string",
+      "minLength": 1
+    },
+    "provider": {
+      "type": "string",
+      "minLength": 1
+    },
+    "model": {
+      "type": "string",
+      "minLength": 1
+    },
+    "executionTier": {
+      "enum": [
+        "L5",
+        "L6",
+        "L7"
+      ]
+    },
+    "inputUnits": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "cachedInputUnits": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "outputUnits": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "toolUnits": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "providerCost": {
+      "type": "number",
+      "minimum": 0
+    },
+    "variableInfrastructureCost": {
+      "type": "number",
+      "minimum": 0
+    },
+    "chargedAmount": {
+      "type": "number",
+      "minimum": 0
+    },
+    "revenue": {
+      "type": "number",
+      "minimum": 0
+    },
+    "currency": {
+      "type": "string",
+      "pattern": "^[A-Z]{3}$"
+    },
+    "rateCardVersion": {
+      "type": "string",
+      "minLength": 1
+    },
+    "budgetReservationId": {
+      "type": "string",
+      "minLength": 1
+    },
+    "cacheHit": {
+      "type": "boolean"
+    },
+    "createdAt": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "unfundedCost": {
+      "const": 0
+    }
+  }
+}

@@ -1,0 +1,40 @@
+{
+  "taskId": "ai-task-001",
+  "requestId": "req-001",
+  "taskType": "RECOMMENDATION_EXPLANATION",
+  "featureId": "CALPQ-M10-DEMO",
+  "userId": "user-demo",
+  "organizationId": null,
+  "externalExecution": true,
+  "fundingSource": "USER",
+  "payerId": "user-demo",
+  "privacyScope": "PRIVATE_USER",
+  "rightsScope": "USER_CONTENT_ALLOWED",
+  "cacheScope": "PRIVATE_USER",
+  "qualityThreshold": 0.9,
+  "maxInputUnits": 4000,
+  "maxOutputUnits": 800,
+  "maxModelCalls": 1,
+  "maxToolCalls": 0,
+  "maxRetries": 1,
+  "maxAgentSteps": null,
+  "maxDurationMs": 15000,
+  "maxCost": {
+    "amount": 0.25,
+    "currency": "EUR"
+  },
+  "budgetReservationRequired": true,
+  "promptTemplateId": "explain-v1",
+  "promptVersion": "1.0.0",
+  "allowedExecutionTiers": [
+    "L0",
+    "L1",
+    "L2",
+    "L3",
+    "L4",
+    "L5"
+  ],
+  "allowedProviders": [
+    "provider-adapter-a"
+  ]
+}

@@ -1,0 +1,20 @@
+{
+  "expectedFailure": "NO_MAX_COST",
+  "taskId": "ai-task-neg-002",
+  "requestId": "req-neg-002",
+  "taskType": "RESEARCH",
+  "featureId": "CALPQ-M10-DEMO",
+  "externalExecution": true,
+  "fundingSource": "USER",
+  "payerId": "user-demo",
+  "privacyScope": "PRIVATE_USER",
+  "rightsScope": "USER_CONTENT_ALLOWED",
+  "cacheScope": "PRIVATE_USER",
+  "maxInputUnits": 4000,
+  "maxOutputUnits": 800,
+  "maxModelCalls": 1,
+  "maxToolCalls": 1,
+  "maxRetries": 1,
+  "maxDurationMs": 15000,
+  "budgetReservationRequired": true
+}

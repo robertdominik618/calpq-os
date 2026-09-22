@@ -50,6 +50,24 @@ Authoritative deterministic rules must remain separate from probabilistic AI ass
 
 OCR and extraction provide evidence and proposed structured data; they are not legal verification.
 
+## AI economy and cost invariant
+
+CALPQ applies **DETERMINISTIC BEFORE GENERATIVE AI**. A higher-cost or more probabilistic execution tier may be used only when cheaper validated mechanisms do not satisfy the defined quality, privacy, latency, rights and safety contract.
+
+No production feature may call a concrete AI provider directly. Variable-cost AI execution must pass a provider-neutral AI Task Contract, central AI Gateway, AI Cost Governor and bounded-execution path.
+
+The non-negotiable economic invariant is:
+
+**UNFUNDED EXTERNAL AI SPEND = 0**
+
+No variable-cost external AI call may start unless the system can identify exactly one funding source/payer, determine a finite maximum cost, verify policy and margin constraints, and atomically reserve sufficient budget before provider execution.
+
+Entitlement to use a feature is distinct from AI consumption budget. Subscription or premium access never implies unlimited external AI spend.
+
+Retries, tool calls, model calls, background jobs and agent steps are finite and included in the same bounded cost envelope. Provider pricing is versioned configuration, never feature/UI hard-coded truth.
+
+AI cost controls never grant AI authority over legal, credential, eligibility, security or payment truth.
+
 ## Evidence
 
 Material decisions must be traceable to their inputs, rule or contract version, provenance, processing time, actor/process, result and any required human confirmation or correction.

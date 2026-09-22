@@ -1,0 +1,20 @@
+{
+  "rateCardId": "rate-provider-a-model-small",
+  "version": "2026-09-23.1",
+  "provider": "provider-adapter-a",
+  "model": "model-small",
+  "currency": "EUR",
+  "validFrom": "2026-09-23T00:00:00Z",
+  "validTo": null,
+  "verifiedAt": "2026-09-23T00:00:00Z",
+  "source": "fixture://provider-rate-card",
+  "status": "ACTIVE",
+  "prices": {
+    "input": 0.001,
+    "cachedInput": 0.0002,
+    "output": 0.003,
+    "image": null,
+    "audio": null,
+    "tool": 0.002
+  }
+}

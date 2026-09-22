@@ -16,6 +16,7 @@
     "test:architecture": "bash tests/architecture_boundaries_test.sh",
     "test:governance": "bash tests/repository_governance_test.sh",
     "test:orchestrator": "bash tests/post_ruleset_orchestrator_test.sh",
-    "test:foundation": "bash tests/foundation_guard_test.sh && bash tests/m00_release_gate_test.sh && bash tests/architecture_boundaries_test.sh && bash tests/m00_readiness_test.sh && bash tests/repository_governance_test.sh && bash tests/post_ruleset_orchestrator_test.sh"
+    "test:foundation": "bash tests/foundation_guard_test.sh && bash tests/m00_release_gate_test.sh && bash tests/architecture_boundaries_test.sh && bash tests/m00_readiness_test.sh && bash tests/repository_governance_test.sh && bash tests/post_ruleset_orchestrator_test.sh",
+    "test:ai-economy": "node tests/ai_economy_architecture_test.mjs"
   }
 }

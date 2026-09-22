@@ -1,0 +1,24 @@
+{
+  "expectedFailure": "PRIVATE_DATA_PUBLIC_CACHE",
+  "taskId": "ai-task-neg-004",
+  "requestId": "req-neg-004",
+  "taskType": "DOCUMENT_CLASSIFICATION",
+  "featureId": "CALPQ-M05-M10",
+  "externalExecution": true,
+  "fundingSource": "ORGANIZATION",
+  "payerId": "org-demo",
+  "privacyScope": "PRIVATE_ORGANIZATION",
+  "rightsScope": "ORG_CONTENT_ALLOWED",
+  "cacheScope": "PUBLIC_SHARED",
+  "maxInputUnits": 2000,
+  "maxOutputUnits": 200,
+  "maxModelCalls": 1,
+  "maxToolCalls": 0,
+  "maxRetries": 0,
+  "maxDurationMs": 10000,
+  "maxCost": {
+    "amount": 0.1,
+    "currency": "EUR"
+  },
+  "budgetReservationRequired": true
+}
