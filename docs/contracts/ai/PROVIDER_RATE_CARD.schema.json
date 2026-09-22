@@ -1,0 +1,112 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://calpq.local/schemas/ai/PROVIDER_RATE_CARD.schema.json",
+  "title": "CALPQ Provider Rate Card",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "rateCardId",
+    "version",
+    "provider",
+    "model",
+    "currency",
+    "validFrom",
+    "verifiedAt",
+    "source",
+    "prices"
+  ],
+  "properties": {
+    "rateCardId": {
+      "type": "string",
+      "minLength": 1
+    },
+    "version": {
+      "type": "string",
+      "minLength": 1
+    },
+    "provider": {
+      "type": "string",
+      "minLength": 1
+    },
+    "model": {
+      "type": "string",
+      "minLength": 1
+    },
+    "currency": {
+      "type": "string",
+      "pattern": "^[A-Z]{3}$"
+    },
+    "validFrom": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "validTo": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "date-time"
+    },
+    "verifiedAt": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "source": {
+      "type": "string",
+      "minLength": 1
+    },
+    "status": {
+      "enum": [
+        "ACTIVE",
+        "SCHEDULED",
+        "RETIRED"
+      ]
+    },
+    "prices": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "input",
+        "output"
+      ],
+      "properties": {
+        "input": {
+          "type": "number",
+          "minimum": 0
+        },
+        "cachedInput": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "minimum": 0
+        },
+        "output": {
+          "type": "number",
+          "minimum": 0
+        },
+        "image": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "minimum": 0
+        },
+        "audio": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "minimum": 0
+        },
+        "tool": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "minimum": 0
+        }
+      }
+    }
+  }
+}
