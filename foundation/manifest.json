@@ -99,7 +99,29 @@
     "tests/m02_preimplementation_integrity_test.sh",
     ".github/workflows/foundation-guard.yml",
     ".github/workflows/m00-readiness.yml",
-    ".github/workflows/governance-next-action.yml"
+    ".github/workflows/governance-next-action.yml",
+    "docs/architecture/CALPQ_AI_ECONOMY_COST_GOVERNANCE.md",
+    "docs/adr/ADR-0006-ai-economy-cost-governance.md",
+    "docs/contracts/AI_TASK_GATEWAY_PROVIDER_ABSTRACTION.md",
+    "docs/contracts/AI_COST_BUDGET_RESERVATION_SETTLEMENT.md",
+    "docs/contracts/AI_USAGE_LEDGER_RATE_CARD.md",
+    "docs/contracts/AI_ROUTING_CACHE_EVALUATION.md",
+    "docs/contracts/AI_OPERATIONAL_CONTROLS_FINOPS.md",
+    "docs/contracts/ai/AI_TASK_CONTRACT.schema.json",
+    "docs/contracts/ai/PROVIDER_RATE_CARD.schema.json",
+    "docs/contracts/ai/AI_USAGE_RECORD.schema.json",
+    "docs/planning/AI_ECONOMY_COST_GOVERNANCE_TRACEABILITY.md",
+    "scripts/ci/ai-economy-architecture-gate.mjs",
+    "tests/ai_economy_architecture_test.mjs",
+    "tests/fixtures/ai-economy/valid-user-funded-task.json",
+    "tests/fixtures/ai-economy/invalid-no-payer-task.json",
+    "tests/fixtures/ai-economy/invalid-no-max-cost-task.json",
+    "tests/fixtures/ai-economy/invalid-no-reservation-task.json",
+    "tests/fixtures/ai-economy/invalid-private-public-cache-task.json",
+    "tests/fixtures/ai-economy/valid-provider-rate-card.json",
+    "tests/fixtures/ai-economy/valid-usage-record.json",
+    "tests/fixtures/ai-economy/invalid-unfunded-usage-record.json",
+    ".github/workflows/ai-economy-architecture.yml"
   ],
   "principles": [
     "architecture_before_implementation",
@@ -133,8 +155,9 @@
     "m00_release_authorization": "REQUIRED",
     "m00_release_decision": "APPROVED",
     "m00_release_gate": "REQUIRED",
-    "feature_development_gate": "OPEN"
+    "feature_development_gate": "OPEN",
+    "ai_economy_cost_governance": "REQUIRED"
   },
   "change_intake": "CALPQ-PRIPOJ",
-  "last_updated": "2026-09-14T21:45:33Z"
+  "last_updated": "2026-09-23T00:00:00Z"
 }
