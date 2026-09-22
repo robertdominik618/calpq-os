@@ -69,7 +69,7 @@ Exit: users and organizations can disclose minimum necessary verified claims wit
 Status: `REPOSITORY-BACKED PLANNING / IMPLEMENTATION NOT ADMITTED`
 Purpose: add useful AI assistance without granting AI authority over regulated truth.
 Scope: Next Best Action Engine, What-if simulator, conversational guidance, explanation generation, semantic/intent search, document assistance and human-review support.
-Boundary: deterministic Core remains authoritative; AI may assist, summarize, search, classify and explain but cannot self-verify evidence, change eligibility or issue authorization.
+Boundary: deterministic Core remains authoritative; AI may assist, summarize, search, classify and explain but cannot self-verify evidence, change eligibility or issue authorization. Variable-cost external AI additionally requires the horizontal `CALPQ-AI-ECO-0001` Gateway/Cost-Governor/budget-reservation/usage-ledger controls; M10 may not treat premium access as unlimited provider spend.
 Planning evidence: `docs/planning/M10_INTELLIGENCE_GUIDED_DECISIONS_BASELINE.md` and shared M09-M12 readiness guard.
 Exit: users get proactive guidance while every material conclusion remains source/evidence/rule backed.
 
