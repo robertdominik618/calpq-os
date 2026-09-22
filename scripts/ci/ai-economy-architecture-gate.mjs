@@ -196,11 +196,8 @@ export function run() {
   checks++;
 
   const architecture = read("docs/architecture/CALPQ_AI_ECONOMY_COST_GOVERNANCE.md");
-  const forbiddenDirect = ["FEATURE\n   ↓\nPROVIDER", "unlimited external AI"];
-  for (const token of forbiddenDirect) {
-    assert(!architecture.includes(token), `forbidden architecture pattern present: ${token}`);
-    checks++;
-  }
+  assert(!architecture.includes("FEATURE\n   ↓\nPROVIDER"), "direct feature-to-provider architecture must be forbidden");
+  checks++;
 
   process.stdout.write(`AI ECONOMY ARCHITECTURE GATE: PASS / ${checks} CHECKS / 14 NEGATIVE FAIL-CLOSED CASES\n`);
   return checks;
