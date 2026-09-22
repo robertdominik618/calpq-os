@@ -1,0 +1,259 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://calpq.local/schemas/ai/AI_TASK_CONTRACT.schema.json",
+  "title": "CALPQ AI Task Contract",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "taskId",
+    "requestId",
+    "taskType",
+    "featureId",
+    "externalExecution",
+    "privacyScope",
+    "rightsScope",
+    "cacheScope",
+    "maxInputUnits",
+    "maxOutputUnits",
+    "maxModelCalls",
+    "maxToolCalls",
+    "maxRetries",
+    "maxDurationMs",
+    "maxCost"
+  ],
+  "properties": {
+    "taskId": {
+      "type": "string",
+      "minLength": 1
+    },
+    "requestId": {
+      "type": "string",
+      "minLength": 1
+    },
+    "taskType": {
+      "type": "string",
+      "minLength": 1
+    },
+    "featureId": {
+      "type": "string",
+      "minLength": 1
+    },
+    "userId": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "organizationId": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "externalExecution": {
+      "type": "boolean"
+    },
+    "fundingSource": {
+      "enum": [
+        "USER",
+        "ORGANIZATION",
+        "PARTNER",
+        "PROJECT_PROMOTIONAL_BUDGET",
+        null
+      ]
+    },
+    "payerId": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "privacyScope": {
+      "enum": [
+        "PUBLIC",
+        "PRIVATE_USER",
+        "PRIVATE_ORGANIZATION",
+        "RESTRICTED"
+      ]
+    },
+    "rightsScope": {
+      "type": "string",
+      "minLength": 1
+    },
+    "cacheScope": {
+      "enum": [
+        "NONE",
+        "EXACT",
+        "SEMANTIC",
+        "PUBLIC_SHARED",
+        "PRIVATE_USER",
+        "PRIVATE_ORGANIZATION"
+      ]
+    },
+    "qualityThreshold": {
+      "type": [
+        "number",
+        "null"
+      ],
+      "minimum": 0,
+      "maximum": 1
+    },
+    "maxInputUnits": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "maxOutputUnits": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "maxModelCalls": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "maxToolCalls": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "maxRetries": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "maxAgentSteps": {
+      "type": [
+        "integer",
+        "null"
+      ],
+      "minimum": 0
+    },
+    "maxDurationMs": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "maxCost": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "amount",
+        "currency"
+      ],
+      "properties": {
+        "amount": {
+          "type": "number",
+          "minimum": 0
+        },
+        "currency": {
+          "type": "string",
+          "pattern": "^[A-Z]{3}$"
+        }
+      }
+    },
+    "budgetReservationRequired": {
+      "type": "boolean"
+    },
+    "promptTemplateId": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "promptVersion": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "allowedExecutionTiers": {
+      "type": "array",
+      "items": {
+        "enum": [
+          "L0",
+          "L1",
+          "L2",
+          "L3",
+          "L4",
+          "L5",
+          "L6",
+          "L7"
+        ]
+      },
+      "uniqueItems": true
+    },
+    "allowedProviders": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "uniqueItems": true
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "externalExecution": {
+            "const": true
+          }
+        },
+        "required": [
+          "externalExecution"
+        ]
+      },
+      "then": {
+        "required": [
+          "fundingSource",
+          "payerId",
+          "budgetReservationRequired"
+        ],
+        "properties": {
+          "fundingSource": {
+            "enum": [
+              "USER",
+              "ORGANIZATION",
+              "PARTNER",
+              "PROJECT_PROMOTIONAL_BUDGET"
+            ]
+          },
+          "payerId": {
+            "type": "string",
+            "minLength": 1
+          },
+          "budgetReservationRequired": {
+            "const": true
+          },
+          "maxCost": {
+            "properties": {
+              "amount": {
+                "type": "number",
+                "exclusiveMinimum": 0
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "privacyScope": {
+            "not": {
+              "const": "PUBLIC"
+            }
+          }
+        },
+        "required": [
+          "privacyScope"
+        ]
+      },
+      "then": {
+        "properties": {
+          "cacheScope": {
+            "not": {
+              "const": "PUBLIC_SHARED"
+            }
+          }
+        }
+      }
+    }
+  ]
+}
