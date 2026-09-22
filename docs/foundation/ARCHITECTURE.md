@@ -43,6 +43,20 @@ Material state transitions must support provenance, time, rule/contract version 
 
 Security, privacy, accessibility, observability, auditability, localization and legal/regulatory source versioning are architecture concerns, not optional UI features.
 
-## 7. Technology neutrality
+## 7. AI economic control plane
+
+Any feature that may use variable-cost AI follows this logical path:
+
+`Feature / Use Case -> AI Task Contract -> AI Gateway -> Deterministic Resolver -> Cache -> Local/On-device AI -> Quality/Cost Router -> AI Cost Governor -> Budget Reservation -> Provider Adapter -> Bounded Execution -> Usage Settlement -> AI Usage Ledger -> Cache/Versioned Artifact`.
+
+The path is fail-closed. Provider execution is denied before the provider call when payer, finite maximum cost, usable rate card, budget reservation, policy, rights/privacy or required margin conditions are missing.
+
+Provider SDKs remain adapter concerns. Core and UI do not import concrete AI providers or AI pricing.
+
+The control plane is horizontal: it is mandatory for M10 intelligence capabilities and for any earlier/later feature that would otherwise invoke variable-cost external AI.
+
+Detailed architecture is defined by `CALPQ-AI-ECO-0001`, ADR-0006 and its contracts.
+
+## 8. Technology neutrality
 
 No concrete stack is approved by this document. Language, frameworks, storage engines and deployment model require a dedicated ADR and explicit approval.
