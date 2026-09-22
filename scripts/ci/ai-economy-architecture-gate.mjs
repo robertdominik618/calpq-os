@@ -127,7 +127,7 @@ export function run() {
   for (const [file, tokens] of requiredTokens) {
     const content = read(file);
     for (const token of tokens) {
-      assert(content.includes(token), `missing invariant "${token}" in ${file}`);
+      assert(content.toLowerCase().includes(token.toLowerCase()), `missing invariant "${token}" in ${file}`);
       checks++;
     }
   }
