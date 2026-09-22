@@ -28,6 +28,14 @@ ID: `CALPQ-BOOK-0001`
 | Accepted technology | `docs/adr/ADR-0002-technology-stack-selection.md` |
 | Technology evaluation | `docs/architecture/TECHNOLOGY_STACK_EVALUATION_2026-09-13.md` |
 | Monorepo bootstrap | `docs/architecture/MONOREPO_BOOTSTRAP.md` |
+| AI economy architecture | `docs/architecture/CALPQ_AI_ECONOMY_COST_GOVERNANCE.md` |
+| AI economy decision | `docs/adr/ADR-0006-ai-economy-cost-governance.md` |
+| AI task gateway/provider contract | `docs/contracts/AI_TASK_GATEWAY_PROVIDER_ABSTRACTION.md` |
+| AI budget/reservation contract | `docs/contracts/AI_COST_BUDGET_RESERVATION_SETTLEMENT.md` |
+| AI usage ledger/rate card contract | `docs/contracts/AI_USAGE_LEDGER_RATE_CARD.md` |
+| AI routing/cache/evaluation contract | `docs/contracts/AI_ROUTING_CACHE_EVALUATION.md` |
+| AI operational/FinOps contract | `docs/contracts/AI_OPERATIONAL_CONTROLS_FINOPS.md` |
+| AI economy traceability | `docs/planning/AI_ECONOMY_COST_GOVERNANCE_TRACEABILITY.md` |
 
 ## Current milestone
 
@@ -36,3 +44,5 @@ Technology selection is approved, M00 remains blocked and product feature develo
 ## Change intake
 
 New product ideas enter through `CALPQ-PRIPOJ`. Material architecture changes require impact analysis and an ADR before implementation.
+
+Variable-cost external AI additionally requires the `CALPQ-AI-ECO-0001` economic control plane before any provider call. Architecture adoption does not itself authorize runtime provider integration or production AI spend.
