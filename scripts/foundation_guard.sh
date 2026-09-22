@@ -56,4 +56,6 @@ case "$feature_state" in
     ;;
 esac
 
+node scripts/ci/ai-economy-architecture-gate.mjs >/dev/null
+
 printf 'FOUNDATION GUARD: PASS\n'
