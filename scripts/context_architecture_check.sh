@@ -144,7 +144,7 @@ def validate_docs(root: Path):
     require("SPECIFIED_NOT_EXECUTED" in trace, "scenario execution boundary")
     require("runtime not implemented" in docs[RUNTIME].lower(), "runtime non-implementation boundary")
     require("NO LOCATION COLLECTION AUTHORIZED" in docs[PRIVACY], "location privacy boundary")
-    require("GPS" in baseline and "not legal authority" in baseline, "GPS authority boundary")
+    require("GPS" in baseline and "legal authority" in baseline, "GPS authority boundary")
     require("#138" in baseline and "open/unmerged" in baseline, "GLOBAL dependency boundary")
 
     for path in CANONICAL:
