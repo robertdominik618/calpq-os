@@ -15,6 +15,8 @@ on:
       - 'docs/security/CONTEXTUAL_LOCATION_PRIVACY_SAFETY.md'
       - 'docs/planning/CALPQ_CONTEXT_0001_TRACEABILITY.md'
       - 'docs/planning/context_scope.json'
+      - 'docs/planning/context-successor-compatibility.json'
+      - 'scripts/ci/m07-admission.mjs'
       - 'docs/foundation/ARCHITECTURE.md'
       - 'docs/foundation/BOOK.md'
       - 'docs/foundation/REGULATORY_SOURCE_GOVERNANCE.md'
@@ -53,7 +55,7 @@ jobs:
       - name: Validate architecture content
         run: bash scripts/context_architecture_check.sh
 
-      - name: Execute 24 architecture guard tests
+      - name: Execute 34 architecture and successor-compatibility guard tests
         run: bash tests/context_architecture_test.sh
 
       - name: Verify exact bounded intake and architecture-before-tooling history
