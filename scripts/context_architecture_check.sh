@@ -148,7 +148,7 @@ def validate_docs(root: Path):
     require("#138" in baseline and "open/unmerged" in baseline, "GLOBAL dependency boundary")
 
     for path in CANONICAL:
-        require("CALPQ_CONTEXT_0001" in docs[path], "canonical Context link " + path)
+        require(("CALPQ_CONTEXT_0001" in docs[path]) or ("CALPQ-CONTEXT-0001" in docs[path]), "canonical Context link " + path)
     return len(docs)
 
 def git(root: Path, *args):
