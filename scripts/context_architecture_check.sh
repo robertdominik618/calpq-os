@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Architecture-only integrity gate for CALPQ-CONTEXT-0001.
 set -euo pipefail
-cd "$(cd "$(dirname "\${BASH_SOURCE[0]}")/.." && pwd)"
+cd "$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 
 python3 - "$@" <<'CTX_ARCH_PY'
 from __future__ import annotations
