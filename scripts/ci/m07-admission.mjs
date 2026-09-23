@@ -13,6 +13,30 @@ export const CONTRACT='c108686c26531b66b7680ac13c8ab16669f7565f';
 export const DECISION='docs/planning/m07-admission-decision.json';
 export const ACTIVATION='docs/planning/m07-s01-activation.json';
 export const ENTRY='M07_SLICE_01_AUTHORITATIVE_SOURCE_REGISTRY';
+export const CONTEXT_BASE='3882c146634869a817509f4bc8441738185ce257';
+export const CONTEXT_ARCH_HEAD='9fce445e93a3e8d4d9e105a0e3765adfcf63faa9';
+export const CONTEXT_AUTH='docs/planning/context-successor-compatibility.json';
+export const CONTEXT_ARCH_ADDED=Object.freeze([
+  '.github/workflows/context-architecture.yml',
+  'docs/adr/ADR-0007-contextual-spatiotemporal-compliance.md',
+  'docs/architecture/CALPQ_CONTEXT_0001_SPATIOTEMPORAL_COMPLIANCE.md',
+  'docs/contracts/CONTEXTUAL_JURISDICTION_RUNTIME.md',
+  'docs/contracts/CONTEXTUAL_RULE_DELTA_BRIEFING.md',
+  'docs/contracts/DYNAMIC_OPERATIONAL_SOURCE_MODEL.md',
+  'docs/contracts/SPATIOTEMPORAL_TRIGGER_MODEL.md',
+  'docs/planning/CALPQ_CONTEXT_0001_TRACEABILITY.md',
+  'docs/planning/context_scope.json',
+  'docs/security/CONTEXTUAL_LOCATION_PRIVACY_SAFETY.md',
+  'scripts/context_architecture_check.sh',
+  'tests/context_architecture_test.sh'
+]);
+export const CONTEXT_ARCH_MODIFIED=Object.freeze([
+  'docs/foundation/ARCHITECTURE.md',
+  'docs/foundation/BOOK.md',
+  'docs/foundation/REGULATORY_SOURCE_GOVERNANCE.md'
+]);
+export const CONTEXT_COMPAT_ADDED=Object.freeze([CONTEXT_AUTH]);
+export const CONTEXT_COMPAT_MODIFIED=Object.freeze(['scripts/ci/m07-admission.mjs']);
 
 export const ADDED=Object.freeze([
   'docs/planning/M07_ADMISSION_RECORD.md',DECISION,'docs/planning/M07_S01_SCOPE_CONTRACT.md','docs/planning/M07_ADMISSION_TEST_INDEX.md',
@@ -100,6 +124,66 @@ export function validateScope(entries,stage='ADMISSION'){
   if(stage==='ADMISSION') assert.deepEqual(entries.map(e=>e.path).sort(),[...added,...modified].sort(),'Formal-admission bundle incomplete');
 }
 
+export function expectedContextSuccessorAuthorization(){return {
+  schema_version:1,
+  decision_id:'CALPQ-CONTEXT-SC-0001',
+  state:'AUTHORIZED_BOUNDED_SUCCESSOR_COMPATIBILITY',
+  owner_issue:170,
+  context_issue:168,
+  context_pr:169,
+  approved_by:'robertdominik618',
+  approved_at:null,
+  approval_time_precision:'NOT_INDEPENDENTLY_CAPTURED',
+  approval_text:"SCHVALUJI OMEZENÉ ROZŠÍŘENÍ GOVERNANCE SCOPE PRO CALPQ-CONTEXT-0001 (kontextový engine jurisdikce, polohy a času) O BOUNDED SUCCESSOR-COMPATIBILITY OPRAVU HISTORICKÝCH M05/M06/M07 GUARDŮ DLE ISSUE #170, VÝHRADNĚ PRO PŘIJETÍ PŘESNĚ VYMEZENÝCH ARCHITEKTONICKÝCH CEST PR #169, BEZ ROZŠÍŘENÍ HISTORICKÉHO PRODUKTOVÉHO SCOPE, BEZ ZMĚNY HISTORICKÝCH DŮKAZŮ, BEZ AUTORIZACE RUNTIME IMPLEMENTACE, GPS/BACKGROUND LOCATION, PRODUKČNÍCH RULE-PACKŮ, LIVE NOTIFIKACÍ, PROVIDERŮ, DEPLOYMENTU NEBO RELEASE, S POVINNÝM FAIL-CLOSED OVĚŘENÍM A NEGATIVNÍMI TESTY, ŽE VŠECHNY OSTATNÍ NEPOVOLENÉ CESTY ZŮSTÁVAJÍ ODMÍTÁNY.",
+  context_base:CONTEXT_BASE,
+  architecture_evidence_head:CONTEXT_ARCH_HEAD,
+  architecture_guard_run:35892780163,
+  architecture_guard_job:107289106989,
+  authorized_architecture_added_paths:[...CONTEXT_ARCH_ADDED],
+  authorized_architecture_modified_paths:[...CONTEXT_ARCH_MODIFIED],
+  authorized_compatibility_added_paths:[...CONTEXT_COMPAT_ADDED],
+  authorized_compatibility_modified_paths:[...CONTEXT_COMPAT_MODIFIED],
+  historical_product_scope_expanded:false,
+  historical_evidence_mutation_authorized:false,
+  runtime_implementation_authorized:false,
+  gps_background_location_authorized:false,
+  production_rule_packs_authorized:false,
+  live_notifications_authorized:false,
+  providers_authorized:false,
+  deployment_authorized:false,
+  release_authorized:false,
+  negative_tests_required:true,
+  fail_closed_required:true
+};}
+export function validateContextSuccessorAuthorization(value){
+  assert.deepEqual(value,expectedContextSuccessorAuthorization(),'Invalid or expanded CONTEXT successor-compatibility authorization');
+}
+export function validateContextSuccessorScope(entries){
+  assert(Array.isArray(entries),'CONTEXT successor scope array required');
+  const added=[...CONTEXT_ARCH_ADDED,...CONTEXT_COMPAT_ADDED];
+  const modified=[...CONTEXT_ARCH_MODIFIED,...CONTEXT_COMPAT_MODIFIED];
+  const allowed=[...added,...modified];
+  assert.equal(new Set(entries.map(e=>e.path)).size,entries.length,'Duplicate CONTEXT successor path');
+  for(const e of entries){
+    assert.equal(e.mode,'100644','CONTEXT successor allows only regular non-executable files');
+    assert(allowed.includes(e.path),'Unauthorized CONTEXT successor path: '+e.path);
+    assert.equal(e.status,added.includes(e.path)?'A':'M','CONTEXT successor forbids deletion/rename/copy or historical replacement');
+  }
+  assert.deepEqual(entries.map(e=>e.path).sort(),allowed.sort(),'CONTEXT successor bundle incomplete or expanded');
+}
+export function validateContextSuccessorHead(head){
+  ancestor(CONTEXT_BASE,head);
+  ancestor(CONTEXT_ARCH_HEAD,head);
+  validateContextSuccessorAuthorization(JSON.parse(readFileSync(CONTEXT_AUTH,'utf8')));
+  validateAdmissionTip(CONTEXT_BASE);
+  validateContextSuccessorScope(changes(CONTEXT_BASE,head));
+  assert.equal(git('diff','--name-only',`${CONTEXT_BASE}...${head}`,'--','packages/core/src','packages/application/src','packages/adapters/src','apps','workers').trim(),'','CONTEXT successor contains no runtime/product source');
+  for(const path of [DECISION,'docs/planning/m07-admission-preparation.json','docs/planning/m06-s10-execution.json','docs/planning/m06-s09-execution.json','docs/planning/m06-s08-execution.json','docs/planning/m06-s07-execution.json','docs/planning/m06-s06-execution.json','docs/planning/m06-s05-execution.json','docs/planning/m06-s04-execution.json','docs/planning/m06-s03-execution.json','docs/planning/m06-s02-execution.json','docs/planning/m06-s01-activation.json']){
+    assert.equal(at(head,path),at(CONTEXT_BASE,path),'Historical decision/evidence mutated by CONTEXT successor: '+path);
+  }
+  return 'CONTEXT_SUCCESSOR_COMPATIBILITY';
+}
+
 export function validateActivation(value){
   assert(value&&typeof value==='object'&&!Array.isArray(value),'Activation must be object');
   const keys=['schema_version','milestone','slice','state','decision_id','authorized_execution_entry','admission_pr','admission_head','admission_merge','admission_tree','owner_merge_approval_reference','post_merge_evidence_reference','production_release_authorized','legal_interpretation_authorized'];
@@ -143,6 +227,12 @@ function validateAdmissionTip(tip){
 export function main(){
   process.chdir(fileURLToPath(new URL('../../',import.meta.url)));
   const head=git('rev-parse','HEAD').trim();assert.equal(git('status','--porcelain','--untracked-files=no').trim(),'','Tracked checkout must be clean');
+  if(existsSync(CONTEXT_AUTH)){
+    const mode=validateContextSuccessorHead(head);
+    assert(at(head,'docs/planning/M08_EXECUTION_PACKAGE.md').includes('IMPLEMENTATION BLOCKED'),'M08 must remain blocked');
+    console.log(`M07 CONTEXT SUCCESSOR COMPATIBILITY PASS head=${head} architecture_paths=15 compatibility_paths=2 historical_scope_unchanged=true runtime=false location=false rule_packs=false notifications=false providers=false release=false`);
+    return mode;
+  }
   for(const ref of [M04,M06,PREP,PREP_HEAD,CONTRACT])ancestor(ref,head);
   assert.equal(git('rev-parse',`${PREP}^{tree}`).trim(),PREP_TREE,'Preparation merge tree mismatch');
   assert.equal(git('rev-parse',`${PREP_HEAD}^{tree}`).trim(),PREP_TREE,'Preparation reviewed tree mismatch');
