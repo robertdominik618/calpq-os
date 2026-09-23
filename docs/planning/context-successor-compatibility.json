@@ -1,0 +1,52 @@
+{
+  "schema_version": 1,
+  "decision_id": "CALPQ-CONTEXT-SC-0001",
+  "state": "AUTHORIZED_BOUNDED_SUCCESSOR_COMPATIBILITY",
+  "owner_issue": 170,
+  "context_issue": 168,
+  "context_pr": 169,
+  "approved_by": "robertdominik618",
+  "approved_at": null,
+  "approval_time_precision": "NOT_INDEPENDENTLY_CAPTURED",
+  "approval_text": "SCHVALUJI OMEZENÉ ROZŠÍŘENÍ GOVERNANCE SCOPE PRO CALPQ-CONTEXT-0001 (kontextový engine jurisdikce, polohy a času) O BOUNDED SUCCESSOR-COMPATIBILITY OPRAVU HISTORICKÝCH M05/M06/M07 GUARDŮ DLE ISSUE #170, VÝHRADNĚ PRO PŘIJETÍ PŘESNĚ VYMEZENÝCH ARCHITEKTONICKÝCH CEST PR #169, BEZ ROZŠÍŘENÍ HISTORICKÉHO PRODUKTOVÉHO SCOPE, BEZ ZMĚNY HISTORICKÝCH DŮKAZŮ, BEZ AUTORIZACE RUNTIME IMPLEMENTACE, GPS/BACKGROUND LOCATION, PRODUKČNÍCH RULE-PACKŮ, LIVE NOTIFIKACÍ, PROVIDERŮ, DEPLOYMENTU NEBO RELEASE, S POVINNÝM FAIL-CLOSED OVĚŘENÍM A NEGATIVNÍMI TESTY, ŽE VŠECHNY OSTATNÍ NEPOVOLENÉ CESTY ZŮSTÁVAJÍ ODMÍTÁNY.",
+  "context_base": "3882c146634869a817509f4bc8441738185ce257",
+  "architecture_evidence_head": "9fce445e93a3e8d4d9e105a0e3765adfcf63faa9",
+  "architecture_guard_run": 35892780163,
+  "architecture_guard_job": 107289106989,
+  "authorized_architecture_added_paths": [
+    ".github/workflows/context-architecture.yml",
+    "docs/adr/ADR-0007-contextual-spatiotemporal-compliance.md",
+    "docs/architecture/CALPQ_CONTEXT_0001_SPATIOTEMPORAL_COMPLIANCE.md",
+    "docs/contracts/CONTEXTUAL_JURISDICTION_RUNTIME.md",
+    "docs/contracts/CONTEXTUAL_RULE_DELTA_BRIEFING.md",
+    "docs/contracts/DYNAMIC_OPERATIONAL_SOURCE_MODEL.md",
+    "docs/contracts/SPATIOTEMPORAL_TRIGGER_MODEL.md",
+    "docs/planning/CALPQ_CONTEXT_0001_TRACEABILITY.md",
+    "docs/planning/context_scope.json",
+    "docs/security/CONTEXTUAL_LOCATION_PRIVACY_SAFETY.md",
+    "scripts/context_architecture_check.sh",
+    "tests/context_architecture_test.sh"
+  ],
+  "authorized_architecture_modified_paths": [
+    "docs/foundation/ARCHITECTURE.md",
+    "docs/foundation/BOOK.md",
+    "docs/foundation/REGULATORY_SOURCE_GOVERNANCE.md"
+  ],
+  "authorized_compatibility_added_paths": [
+    "docs/planning/context-successor-compatibility.json"
+  ],
+  "authorized_compatibility_modified_paths": [
+    "scripts/ci/m07-admission.mjs"
+  ],
+  "historical_product_scope_expanded": false,
+  "historical_evidence_mutation_authorized": false,
+  "runtime_implementation_authorized": false,
+  "gps_background_location_authorized": false,
+  "production_rule_packs_authorized": false,
+  "live_notifications_authorized": false,
+  "providers_authorized": false,
+  "deployment_authorized": false,
+  "release_authorized": false,
+  "negative_tests_required": true,
+  "fail_closed_required": true
+}

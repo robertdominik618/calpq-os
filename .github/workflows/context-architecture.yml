@@ -1,0 +1,62 @@
+name: CONTEXT Architecture Integrity
+
+on:
+  push:
+    branches:
+      - architecture/calpq-context-0001-spatiotemporal-compliance
+  pull_request:
+    paths:
+      - 'docs/architecture/CALPQ_CONTEXT_0001_SPATIOTEMPORAL_COMPLIANCE.md'
+      - 'docs/adr/ADR-0007-contextual-spatiotemporal-compliance.md'
+      - 'docs/contracts/CONTEXTUAL_JURISDICTION_RUNTIME.md'
+      - 'docs/contracts/SPATIOTEMPORAL_TRIGGER_MODEL.md'
+      - 'docs/contracts/CONTEXTUAL_RULE_DELTA_BRIEFING.md'
+      - 'docs/contracts/DYNAMIC_OPERATIONAL_SOURCE_MODEL.md'
+      - 'docs/security/CONTEXTUAL_LOCATION_PRIVACY_SAFETY.md'
+      - 'docs/planning/CALPQ_CONTEXT_0001_TRACEABILITY.md'
+      - 'docs/planning/context_scope.json'
+      - 'docs/planning/context-successor-compatibility.json'
+      - 'scripts/ci/m07-admission.mjs'
+      - 'docs/foundation/ARCHITECTURE.md'
+      - 'docs/foundation/BOOK.md'
+      - 'docs/foundation/REGULATORY_SOURCE_GOVERNANCE.md'
+      - 'scripts/context_architecture_check.sh'
+      - 'tests/context_architecture_test.sh'
+      - '.github/workflows/context-architecture.yml'
+
+permissions:
+  contents: read
+
+env:
+  PYTHONDONTWRITEBYTECODE: '1'
+
+concurrency:
+  group: context-architecture-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  context-architecture:
+    name: CONTEXT architecture integrity
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - name: Checkout exact proposed head
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Print evidence identity
+        run: |
+          git rev-parse HEAD
+          python3 --version
+
+      - name: Validate architecture content
+        run: bash scripts/context_architecture_check.sh
+
+      - name: Execute 34 architecture and successor-compatibility guard tests
+        run: bash tests/context_architecture_test.sh
+
+      - name: Verify exact bounded intake and architecture-before-tooling history
+        run: bash scripts/context_architecture_check.sh --base 3882c146634869a817509f4bc8441738185ce257

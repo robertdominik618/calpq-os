@@ -1,0 +1,274 @@
+{
+  "schema_version": 1,
+  "id": "CALPQ-CONTEXT-0001-SCOPE",
+  "status": "OWNER_REQUESTED_TARGET_ARCHITECTURE",
+  "owner_issue": 168,
+  "runtime_authorized": false,
+  "production_location_collection_authorized": false,
+  "authoritative_rules_published": 0,
+  "base_branch": "planning/program-execution-m09-m12",
+  "base_commit": "3882c146634869a817509f4bc8441738185ce257",
+  "dependencies": {
+    "global_pr": 138,
+    "expats_pr": 135,
+    "m07_s01_pr": 165,
+    "ai_economy_architecture_pr": 167,
+    "global_dependency_state": "OPEN_UNMERGED_REQUIRED_BEFORE_CONTEXT_GLOBAL_RUNTIME_ADMISSION"
+  },
+  "v1_progress": {
+    "completed_units": 70,
+    "total_units": 130,
+    "percentage": 53.85,
+    "expanded_scope_percentage": null
+  },
+  "domain_families": [
+    "CTX-D01",
+    "CTX-D02",
+    "CTX-D03",
+    "CTX-D04",
+    "CTX-D05",
+    "CTX-D06",
+    "CTX-D07",
+    "CTX-D08",
+    "CTX-D09",
+    "CTX-D10",
+    "CTX-D11",
+    "CTX-D12",
+    "CTX-D13",
+    "CTX-D14",
+    "CTX-D15",
+    "CTX-D16",
+    "CTX-D17",
+    "CTX-D18",
+    "CTX-D19",
+    "CTX-D20"
+  ],
+  "trigger_families": [
+    "CTX-T01",
+    "CTX-T02",
+    "CTX-T03",
+    "CTX-T04",
+    "CTX-T05",
+    "CTX-T06",
+    "CTX-T07",
+    "CTX-T08",
+    "CTX-T09",
+    "CTX-T10",
+    "CTX-T11",
+    "CTX-T12",
+    "CTX-T13",
+    "CTX-T14",
+    "CTX-T15",
+    "CTX-T16",
+    "CTX-T17",
+    "CTX-T18"
+  ],
+  "product_acceptance_scenarios": [
+    {
+      "id": "CTX-AC-001",
+      "status": "SPECIFIED_NOT_EXECUTED"
+    },
+    {
+      "id": "CTX-AC-002",
+      "status": "SPECIFIED_NOT_EXECUTED"
+    },
+    {
+      "id": "CTX-AC-003",
+      "status": "SPECIFIED_NOT_EXECUTED"
+    },
+    {
+      "id": "CTX-AC-004",
+      "status": "SPECIFIED_NOT_EXECUTED"
+    },
+    {
+      "id": "CTX-AC-005",
+      "status": "SPECIFIED_NOT_EXECUTED"
+    },
+    {
+      "id": "CTX-AC-006",
+      "status": "SPECIFIED_NOT_EXECUTED"
+    },
+    {
+      "id": "CTX-AC-007",
+      "status": "SPECIFIED_NOT_EXECUTED"
+    },
+    {
+      "id": "CTX-AC-008",
+      "status": "SPECIFIED_NOT_EXECUTED"
+    },
+    {
+      "id": "CTX-AC-009",
+      "status": "SPECIFIED_NOT_EXECUTED"
+    },
+    {
+      "id": "CTX-AC-010",
+      "status": "SPECIFIED_NOT_EXECUTED"
+    },
+    {
+      "id": "CTX-AC-011",
+      "status": "SPECIFIED_NOT_EXECUTED"
+    },
+    {
+      "id": "CTX-AC-012",
+      "status": "SPECIFIED_NOT_EXECUTED"
+    },
+    {
+      "id": "CTX-AC-013",
+      "status": "SPECIFIED_NOT_EXECUTED"
+    },
+    {
+      "id": "CTX-AC-014",
+      "status": "SPECIFIED_NOT_EXECUTED"
+    },
+    {
+      "id": "CTX-AC-015",
+      "status": "SPECIFIED_NOT_EXECUTED"
+    },
+    {
+      "id": "CTX-AC-016",
+      "status": "SPECIFIED_NOT_EXECUTED"
+    },
+    {
+      "id": "CTX-AC-017",
+      "status": "SPECIFIED_NOT_EXECUTED"
+    },
+    {
+      "id": "CTX-AC-018",
+      "status": "SPECIFIED_NOT_EXECUTED"
+    },
+    {
+      "id": "CTX-AC-019",
+      "status": "SPECIFIED_NOT_EXECUTED"
+    },
+    {
+      "id": "CTX-AC-020",
+      "status": "SPECIFIED_NOT_EXECUTED"
+    },
+    {
+      "id": "CTX-AC-021",
+      "status": "SPECIFIED_NOT_EXECUTED"
+    },
+    {
+      "id": "CTX-AC-022",
+      "status": "SPECIFIED_NOT_EXECUTED"
+    },
+    {
+      "id": "CTX-AC-023",
+      "status": "SPECIFIED_NOT_EXECUTED"
+    },
+    {
+      "id": "CTX-AC-024",
+      "status": "SPECIFIED_NOT_EXECUTED"
+    },
+    {
+      "id": "CTX-AC-025",
+      "status": "SPECIFIED_NOT_EXECUTED"
+    },
+    {
+      "id": "CTX-AC-026",
+      "status": "SPECIFIED_NOT_EXECUTED"
+    },
+    {
+      "id": "CTX-AC-027",
+      "status": "SPECIFIED_NOT_EXECUTED"
+    },
+    {
+      "id": "CTX-AC-028",
+      "status": "SPECIFIED_NOT_EXECUTED"
+    },
+    {
+      "id": "CTX-AC-029",
+      "status": "SPECIFIED_NOT_EXECUTED"
+    },
+    {
+      "id": "CTX-AC-030",
+      "status": "SPECIFIED_NOT_EXECUTED"
+    },
+    {
+      "id": "CTX-AC-031",
+      "status": "SPECIFIED_NOT_EXECUTED"
+    },
+    {
+      "id": "CTX-AC-032",
+      "status": "SPECIFIED_NOT_EXECUTED"
+    },
+    {
+      "id": "CTX-AC-033",
+      "status": "SPECIFIED_NOT_EXECUTED"
+    },
+    {
+      "id": "CTX-AC-034",
+      "status": "SPECIFIED_NOT_EXECUTED"
+    },
+    {
+      "id": "CTX-AC-035",
+      "status": "SPECIFIED_NOT_EXECUTED"
+    },
+    {
+      "id": "CTX-AC-036",
+      "status": "SPECIFIED_NOT_EXECUTED"
+    },
+    {
+      "id": "CTX-AC-037",
+      "status": "SPECIFIED_NOT_EXECUTED"
+    },
+    {
+      "id": "CTX-AC-038",
+      "status": "SPECIFIED_NOT_EXECUTED"
+    },
+    {
+      "id": "CTX-AC-039",
+      "status": "SPECIFIED_NOT_EXECUTED"
+    },
+    {
+      "id": "CTX-AC-040",
+      "status": "SPECIFIED_NOT_EXECUTED"
+    },
+    {
+      "id": "CTX-AC-041",
+      "status": "SPECIFIED_NOT_EXECUTED"
+    },
+    {
+      "id": "CTX-AC-042",
+      "status": "SPECIFIED_NOT_EXECUTED"
+    },
+    {
+      "id": "CTX-AC-043",
+      "status": "SPECIFIED_NOT_EXECUTED"
+    },
+    {
+      "id": "CTX-AC-044",
+      "status": "SPECIFIED_NOT_EXECUTED"
+    },
+    {
+      "id": "CTX-AC-045",
+      "status": "SPECIFIED_NOT_EXECUTED"
+    },
+    {
+      "id": "CTX-AC-046",
+      "status": "SPECIFIED_NOT_EXECUTED"
+    },
+    {
+      "id": "CTX-AC-047",
+      "status": "SPECIFIED_NOT_EXECUTED"
+    },
+    {
+      "id": "CTX-AC-048",
+      "status": "SPECIFIED_NOT_EXECUTED"
+    }
+  ],
+  "architecture_files": [
+    "docs/architecture/CALPQ_CONTEXT_0001_SPATIOTEMPORAL_COMPLIANCE.md",
+    "docs/adr/ADR-0007-contextual-spatiotemporal-compliance.md",
+    "docs/contracts/CONTEXTUAL_JURISDICTION_RUNTIME.md",
+    "docs/contracts/SPATIOTEMPORAL_TRIGGER_MODEL.md",
+    "docs/contracts/CONTEXTUAL_RULE_DELTA_BRIEFING.md",
+    "docs/contracts/DYNAMIC_OPERATIONAL_SOURCE_MODEL.md",
+    "docs/security/CONTEXTUAL_LOCATION_PRIVACY_SAFETY.md",
+    "docs/planning/CALPQ_CONTEXT_0001_TRACEABILITY.md",
+    "docs/planning/context_scope.json",
+    "docs/foundation/ARCHITECTURE.md",
+    "docs/foundation/BOOK.md",
+    "docs/foundation/REGULATORY_SOURCE_GOVERNANCE.md"
+  ]
+}
