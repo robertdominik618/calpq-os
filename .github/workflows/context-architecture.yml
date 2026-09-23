@@ -28,6 +28,10 @@ permissions:
 env:
   PYTHONDONTWRITEBYTECODE: '1'
 
+concurrency:
+  group: context-architecture-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
 jobs:
   context-architecture:
     name: CONTEXT architecture integrity
