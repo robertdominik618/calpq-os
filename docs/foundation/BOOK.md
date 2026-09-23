@@ -36,3 +36,20 @@ Technology selection is approved, M00 remains blocked and product feature develo
 ## Change intake
 
 New product ideas enter through `CALPQ-PRIPOJ`. Material architecture changes require impact analysis and an ADR before implementation.
+
+
+## Contextual rules extension register — CALPQ-CONTEXT-0001 (2026-09-23)
+
+| Area | Canonical artifact |
+|---|---|
+| Product/architecture baseline | [CALPQ-CONTEXT-0001](../architecture/CALPQ_CONTEXT_0001_SPATIOTEMPORAL_COMPLIANCE.md) |
+| Architecture decision | [ADR-0007](../adr/ADR-0007-contextual-spatiotemporal-compliance.md) |
+| Context/applicability semantic contract | [Contextual jurisdiction runtime](../contracts/CONTEXTUAL_JURISDICTION_RUNTIME.md) |
+| Position/time trigger model | [Spatiotemporal triggers](../contracts/SPATIOTEMPORAL_TRIGGER_MODEL.md) |
+| Before/after change briefing | [Contextual rule delta](../contracts/CONTEXTUAL_RULE_DELTA_BRIEFING.md) |
+| Dynamic/geospatial/operational source classes | [Dynamic operational source model](../contracts/DYNAMIC_OPERATIONAL_SOURCE_MODEL.md) |
+| Privacy and anti-surveillance boundary | [Contextual location privacy](../security/CONTEXTUAL_LOCATION_PRIVACY_SAFETY.md) |
+| Owner intake, impact, source discovery, scenarios | [Traceability](../planning/CALPQ_CONTEXT_0001_TRACEABILITY.md) |
+| Machine-readable registry | [Context scope](../planning/context_scope.json) |
+
+The extension is architecture only. It does not add runtime GPS/background permissions or production alerts. GLOBAL PR #138 remains a dependency for future global rule-pack binding, not an implicitly merged component.
