@@ -62,3 +62,13 @@ This dated addition does not change the original Foundation text, the accepted t
 Normative contracts: [jurisdiction/applicability](../contracts/GLOBAL_JURISDICTION_APPLICABILITY.md), [CountryCredentialPack](../contracts/GLOBAL_COUNTRY_PACK.md), [directional recognition](../contracts/GLOBAL_RECOGNITION_EXTENSION.md), [source/authority governance](../contracts/GLOBAL_SOURCE_AUTHORITY_GOVERNANCE.md), [market/commercial boundary](../contracts/GLOBAL_MARKET_COMMERCIAL_BOUNDARY.md), [privacy/operations](../security/GLOBAL_PRIVACY_OPERATIONS.md). Shared localization and the existing recognition model contain explicit links to their global extensions.
 
 [Adoption and full traceability](../planning/global/ADOPTION_AND_TRACEABILITY.md) preserves all 93 proposed markets, 94 seed records, 35 target languages, 20 sectors, 16 work packages and 40 specified product acceptance scenarios, including source limitations and original hashes. Global history and current market availability remain separate from legal applicability, translation coverage and paid software access. This architecture change neither implements production features nor admits a milestone, publishes rules, activates sales or merges EXPATS #135. Its integration remains subject to #136 and a separate reviewed merge.
+
+## 10. Accepted transport applicability intake — CALPQ-TRANSPORT-0001 (2026-10-01)
+
+[CALPQ-TRANSPORT-0001](../architecture/CALPQ_TRANSPORT_0001_TACHOGRAPH_DRIVER_HOURS.md) adds the owner-requested target architecture for tachograph, driver-hours/break/rest and pickup/camper applicability. [ADR-0006](../adr/ADR-0006-road-transport-tachograph-applicability.md) requires the feature to compose over the existing GLOBAL jurisdiction model and single deterministic Core.
+
+The normative semantic contract is [ROAD_TRANSPORT_TACHOGRAPH_APPLICABILITY](../contracts/ROAD_TRANSPORT_TACHOGRAPH_APPLICABILITY.md). [Traceability and acceptance](../planning/CALPQ_TRANSPORT_0001_TRACEABILITY.md) specifies 20 requirements, 24 product scenarios and source candidates.
+
+The architecture separates vehicle technical state, registration state, approved conversion, full-combination maximum mass, actual carriage purpose, commerciality, domestic/international/cabotage context and effective time. It also separates driver-hours applicability, tachograph installation, tachograph use and alternative recordkeeping. “Camper” or a removable camping body is never an automatic exemption or category mutation.
+
+This intake publishes no executable legal rule, implements no runtime transport evaluator and changes no milestone/admission state. Parent EXPATS/GLOBAL merge dependencies remain separate.

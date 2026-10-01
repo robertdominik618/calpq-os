@@ -68,3 +68,15 @@ Architecture approval and repository storage are separate from reviewed merge, r
 | Owner approval, lossless source archive, source errata, 93 markets/94 seeds/35 languages/20 sectors/16 packages/40 scenarios | [Adoption and traceability](../planning/global/ADOPTION_AND_TRACEABILITY.md) |
 
 Global adoption is a source-preserving architecture addition on top of the EXPATS branch, not a copy of its Core. The original proposal status is retained in the archive; current scope approval is separate from source validation, actual runtime, reviewed merge and deployment. Old milestone prose remains historical; this intake does not change the 60/130 original-plan metric or resolve #136 implicitly.
+
+## Transport applicability register — CALPQ-TRANSPORT-0001 (2026-10-01)
+
+| Area | Canonical artifact |
+|---|---|
+| Tachograph, driving/break/rest and pickup/camper target | [CALPQ-TRANSPORT-0001](../architecture/CALPQ_TRANSPORT_0001_TACHOGRAPH_DRIVER_HOURS.md) |
+| Architecture decision | [ADR-0006](../adr/ADR-0006-road-transport-tachograph-applicability.md) |
+| Applicability semantics and independent outputs | [ROAD_TRANSPORT_TACHOGRAPH_APPLICABILITY](../contracts/ROAD_TRANSPORT_TACHOGRAPH_APPLICABILITY.md) |
+| 20 requirements, 24 acceptance scenarios and source candidates | [Transport traceability](../planning/CALPQ_TRANSPORT_0001_TRACEABILITY.md) |
+| Owner intake / research record | [Issue #171](https://github.com/robertdominik618/calpq-os/issues/171) |
+
+This register is an architectural intake, not a statement that the legal content is already reviewed, executable, merged or deployed. The transport pack reuses GLOBAL jurisdiction/effective-date semantics and keeps installation, use, alternative recording and driver-hours obligations separate.
