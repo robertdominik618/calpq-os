@@ -34,3 +34,9 @@ GJ-08 Classifier/source hints are proposals until appropriate review; no rules i
 6. Produce an explanation and version-pinned snapshot; enqueue affected re-evaluation through the existing dependency mechanism.
 
 No network or database access belongs inside deterministic Core. Future admission must bind these semantic concepts to existing strict types, runtime validation, migration/compatibility and error contracts. This document neither adds a public endpoint nor changes the existing admission ledger.
+
+## Transport specialization
+
+[CALPQ-TRANSPORT-0001](../architecture/CALPQ_TRANSPORT_0001_TACHOGRAPH_DRIVER_HOURS.md) is a specialization of this contract for road-transport social-rule/tachograph applicability. Its semantic contract is [ROAD_TRANSPORT_TACHOGRAPH_APPLICABILITY](ROAD_TRANSPORT_TACHOGRAPH_APPLICABILITY.md).
+
+Transport composition demonstrates why GJ-02 and GJ-03 are normative: EU base scope, EU exclusions and Member-State supplemental national rules may coexist. A German national 2.8–3.5 t driver-hours/recording layer must not leak into Czech or generic EU results, and no universal “strictest threshold wins” rule may be introduced.
