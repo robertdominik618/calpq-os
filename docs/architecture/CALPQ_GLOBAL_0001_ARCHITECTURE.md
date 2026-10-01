@@ -182,3 +182,9 @@ Samostatná navazující větev nad přesným EXPATS headem 5b8b655b4b0102c4513c
 ## 5. Proč a konečný cíl
 
 Široce dostupná bezpečná osobní historie, selektivně hluboké právní katalogy a první příjmy z kvalifikační administrace jsou společná strategie. Kompletní světový katalog není podmínkou prvního užitečného produktu; neověřené právní sliby nejsou způsob rychlé monetizace. Globální plán zachovává právo člověka rozhodovat, chrání soukromí a nehodnotí hodnotu osoby nebo politické preference. Tato implementace architektury nepřidává žádné oprávnění držiteli, žádný aktivovaný trh, žádný hotový překlad ani prodanou službu.
+
+## Transport domain specialization — CALPQ-TRANSPORT-0001
+
+The owner-requested road-transport specialization is defined in [CALPQ-TRANSPORT-0001](CALPQ_TRANSPORT_0001_TACHOGRAPH_DRIVER_HOURS.md). It uses S04 Silniční doprava and the shared jurisdiction/effective-date/source governance model to evaluate tachograph, driver-hours and recording applicability without introducing a country-specific Core.
+
+The first explicit cross-jurisdiction comparison is CZ/DE, including the German national 2.8–3.5 t goods-vehicle layer, the EU international/cabotage >2.5 t change effective 2026-07-01, non-commercial exemptions, full-combination mass and pickup/camper conversion evidence. The architecture stores these as reviewed-source candidates and test scenarios; no live legal rule pack is published by the documentation change.
